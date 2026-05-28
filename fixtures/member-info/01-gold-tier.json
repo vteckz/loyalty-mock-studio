@@ -1,0 +1,22 @@
+{
+  "name": "Gold-tier member",
+  "description": "Active member with mid-cycle balance. Use this to drive the my-rewards page UI.",
+  "response": {
+    "status": 200,
+    "body": {
+      "membershipNumber": "MEM-100001",
+      "firstName": "Alex",
+      "lastName": "Walker",
+      "email": "alex.walker@example.com",
+      "enrollmentDate": "2024-09-12",
+      "memberStatus": "Active",
+      "currentTier": {
+        "tierName": "Gold",
+        "tierEffectiveDate": "2026-01-01",
+        "tierEndDate": "2026-12-31"
+      },
+      "nextTier": { "tierName": "Platinum", "pointsToNextTier": 1250 },
+      "pointsBalance": { "qualifying": 3750, "nonQualifying": 4200, "lifetime": 18450 }
+    }
+  }
+}

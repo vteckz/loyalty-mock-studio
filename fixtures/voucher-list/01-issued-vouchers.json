@@ -1,0 +1,38 @@
+{
+  "name": "Two issued vouchers (fixed + percentage)",
+  "description": "Response to GET .../vouchers?voucherStatus=Issued. Real shape: { voucherCount, vouchers[] }. A FixedValue voucher has faceValue/remainingValue; a percentage voucher has discountPercent.",
+  "response": {
+    "status": 200,
+    "body": {
+      "voucherCount": 2,
+      "vouchers": [
+        {
+          "voucherId": "0kDxx0000000001AAA",
+          "voucherCode": "SAVE20",
+          "voucherNumber": "00005852",
+          "voucherDefinition": "$20 Off Reward",
+          "status": "Issued",
+          "type": "FixedValue",
+          "faceValue": 20,
+          "remainingValue": 20,
+          "redeemedValue": 0,
+          "isVoucherPartiallyRedeemable": false,
+          "effectiveDate": "2026-04-01",
+          "expirationDate": "2026-08-01"
+        },
+        {
+          "voucherId": "0kDxx0000000002AAA",
+          "voucherCode": "TENOFF",
+          "voucherNumber": "00005853",
+          "voucherDefinition": "10% Birthday Voucher",
+          "status": "Issued",
+          "type": "DiscountPercentage",
+          "discountPercent": 10,
+          "isVoucherPartiallyRedeemable": false,
+          "effectiveDate": "2026-05-01",
+          "expirationDate": "2026-08-01"
+        }
+      ]
+    }
+  }
+}

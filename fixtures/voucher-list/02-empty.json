@@ -1,0 +1,8 @@
+{
+  "name": "No vouchers",
+  "description": "Member has no vouchers in the requested status. The cartridge should hide the voucher picker entirely.",
+  "response": {
+    "status": 200,
+    "body": { "voucherCount": 0, "vouchers": [] }
+  }
+}

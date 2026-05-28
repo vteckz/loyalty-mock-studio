@@ -1,0 +1,86 @@
+{
+  "name": "Line + cart discounts (the canonical example)",
+  "description": "Modelled on the official guide example. A 5% line discount on Pizza plus a 10% cart-level discount, distributed across lines. The cartridge should apply each line's `totalCartLineItemDiscountAmount` as an AmountDiscount so the basket total lands on `adjustedCartAmount`.",
+  "request": {
+    "body": {
+      "cart": {
+        "cartDetails": [
+          {
+            "cartHeaderId__std": "<sfcc-basket-uuid>",
+            "currencyISOCode": "USD",
+            "membershipNumber": "MEM-100001",
+            "transactionAmount": 110,
+            "cartLineDetails": [
+              { "cartLineItemId": "abcd1", "cartLineProductId": "01t...PIZZA", "cartLineItemQuantity": 2, "cartLineItemAmount": 100, "cartLineNetUnitPrice__std": 50 },
+              { "cartLineItemId": "abcd2", "cartLineProductId": "01t...BURGER", "cartLineItemQuantity": 2, "cartLineItemAmount": 10, "cartLineNetUnitPrice__std": 5 }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "cart": {
+        "cartDetails": [
+          {
+            "cartHeaderId": "<sfcc-basket-uuid>",
+            "initialCartAmount": 110,
+            "adjustedCartAmount": 69.5,
+            "totalDiscountAmount": 40.5,
+            "totalCartLevelDiscountAmount": 30,
+            "totalLineLevelDiscountAmount": 10.5,
+            "appliedCartPromotionDetails": [
+              {
+                "promotionId": "0c8xx00000005R7AAI",
+                "displayName": "10% off on Cart",
+                "cartAmountBeforeDiscount": 99.5,
+                "cartAmountAfterDiscount": 89.5,
+                "cartLevelDiscountAmount": 10,
+                "isAutomatic": true,
+                "nonPricingRewards": {}
+              }
+            ],
+            "cartLineDetails": [
+              {
+                "cartLineItemId": "abcd1",
+                "cartLineProduct": "Pizza",
+                "cartLineItemQuantity": 2,
+                "cartLineItemAmountBeforeDiscount": 100,
+                "cartLineItemAmountAfterDiscount": 66.36,
+                "totalCartLineItemDiscountAmount": 33.64,
+                "totalCartLinePromotionsDiscountAmount": 5,
+                "totalCartPromotionsDistributedDiscountAmount": 28.64,
+                "appliedCartLinePromotionDetails": [
+                  {
+                    "promotionId": "0c8xx00000005NtAAI",
+                    "displayName": "5% off on Pizza",
+                    "cartLineItemAmountBeforeDiscount": 100,
+                    "cartLineItemAmountAfterDiscount": 95,
+                    "cartLineItemDiscountAmount": 5,
+                    "couponCode": "PIZZA5",
+                    "currencyIsoCode": "USD",
+                    "isAutomatic": false
+                  }
+                ]
+              },
+              {
+                "cartLineItemId": "abcd2",
+                "cartLineProduct": "Burger",
+                "cartLineItemQuantity": 2,
+                "cartLineItemAmountBeforeDiscount": 10,
+                "cartLineItemAmountAfterDiscount": 3.14,
+                "totalCartLineItemDiscountAmount": 6.86,
+                "totalCartLinePromotionsDiscountAmount": 5.5,
+                "totalCartPromotionsDistributedDiscountAmount": 1.36,
+                "appliedCartLinePromotionDetails": []
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "notes": "Per-line totalCartLineItemDiscountAmount already includes the line's share of cart-level discounts (5 + 28.64 = 33.64). Summing the line totals (33.64 + 6.86 = 40.5) equals totalDiscountAmount, so applying them per line — and NOT the cart-level discount separately — makes the basket total equal adjustedCartAmount (69.5) with no double-counting. The cartLineItemId values must echo the ids the cartridge sent (it sends the SFCC line-item UUID)."
+}

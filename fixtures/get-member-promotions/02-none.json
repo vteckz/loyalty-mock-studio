@@ -1,0 +1,12 @@
+{
+  "name": "No eligible promotions",
+  "description": "Member valid, nothing eligible. The adapter clears any prior LOYALTY_ order adjustments and applies nothing.",
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "Success",
+      "message": "Processed successfully",
+      "outputParameters": { "memberPromotions": [] }
+    }
+  }
+}

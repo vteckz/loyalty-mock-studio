@@ -1,0 +1,13 @@
+{
+  "name": "Error — voucher already redeemed / not redeemable",
+  "description": "Verify the cartridge handles a double-redeem (retry, webhook redelivery) gracefully at order placement rather than failing the order.",
+  "response": {
+    "status": 400,
+    "body": [
+      {
+        "errorCode": "VOUCHER_NOT_REDEEMABLE",
+        "message": "The voucher is not in a redeemable state. Its status may be Redeemed, Expired, or Cancelled."
+      }
+    ]
+  }
+}

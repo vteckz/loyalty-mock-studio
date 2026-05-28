@@ -1,0 +1,35 @@
+{
+  "name": "No promotions apply (cart unchanged)",
+  "description": "Member is valid but nothing triggers. adjustedCartAmount == initialCartAmount, zero discounts, empty applied arrays. The cartridge must clear any prior LOYALTY_ adjustments so a previously-applied discount doesn't linger.",
+  "response": {
+    "status": 200,
+    "body": {
+      "cart": {
+        "cartDetails": [
+          {
+            "cartHeaderId": "<sfcc-basket-uuid>",
+            "initialCartAmount": 50,
+            "adjustedCartAmount": 50,
+            "totalDiscountAmount": 0,
+            "totalCartLevelDiscountAmount": 0,
+            "totalLineLevelDiscountAmount": 0,
+            "appliedCartPromotionDetails": [],
+            "cartLineDetails": [
+              {
+                "cartLineItemId": "line-1",
+                "cartLineProduct": "Hoodie",
+                "cartLineItemQuantity": 1,
+                "cartLineItemAmountBeforeDiscount": 50,
+                "cartLineItemAmountAfterDiscount": 50,
+                "totalCartLineItemDiscountAmount": 0,
+                "totalCartLinePromotionsDiscountAmount": 0,
+                "totalCartPromotionsDistributedDiscountAmount": 0,
+                "appliedCartLinePromotionDetails": []
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

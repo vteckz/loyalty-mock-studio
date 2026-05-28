@@ -1,0 +1,13 @@
+{
+  "name": "Error — GPM/feature not available (sad path)",
+  "description": "Representative error to verify the cartridge surfaces it cleanly and falls back to normal pricing rather than breaking the cart. Real Salesforce error envelopes are an array of { errorCode, message }.",
+  "response": {
+    "status": 400,
+    "body": [
+      {
+        "errorCode": "FUNCTIONALITY_NOT_ENABLED",
+        "message": "Global Promotions Management is not enabled, or the Promotion Evaluation and Execution setting is off for this org."
+      }
+    ]
+  }
+}

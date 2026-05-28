@@ -1,0 +1,28 @@
+{
+  "name": "Recent transaction journals",
+  "description": "GET .../transaction-history. Path is doc-confirmed; this body is illustrative — confirm field names against the org before relying on them.",
+  "response": {
+    "status": 200,
+    "body": {
+      "transactionJournalCount": 2,
+      "transactionJournals": [
+        {
+          "transactionJournalId": "0lJxx0000000010AAA",
+          "journalType": "Accrual",
+          "journalSubType": "Purchase",
+          "activityDate": "2026-05-25T14:22:00.000Z",
+          "transactionAmount": 125,
+          "currencyIsoCode": "USD",
+          "pointsChange": 125
+        },
+        {
+          "transactionJournalId": "0lJxx0000000009AAA",
+          "journalType": "Redemption",
+          "journalSubType": "Voucher",
+          "activityDate": "2026-05-20T09:13:00.000Z",
+          "pointsChange": -500
+        }
+      ]
+    }
+  }
+}

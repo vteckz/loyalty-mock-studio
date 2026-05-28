@@ -1,0 +1,12 @@
+{
+  "name": "Process error (sad path)",
+  "description": "Program process returns a non-Success status. The adapter must surface this as an error and fall through to non-loyalty pricing.",
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "Error",
+      "message": "GetMemberPromotions process failed: member not found or process misconfigured",
+      "outputParameters": {}
+    }
+  }
+}

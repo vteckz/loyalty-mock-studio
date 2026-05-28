@@ -1,0 +1,45 @@
+{
+  "name": "Simple 10% off a single line",
+  "description": "One line, one automatic line-level promotion. The simplest happy path for first wiring up the applier.",
+  "response": {
+    "status": 200,
+    "body": {
+      "cart": {
+        "cartDetails": [
+          {
+            "cartHeaderId": "<sfcc-basket-uuid>",
+            "initialCartAmount": 50,
+            "adjustedCartAmount": 45,
+            "totalDiscountAmount": 5,
+            "totalCartLevelDiscountAmount": 0,
+            "totalLineLevelDiscountAmount": 5,
+            "appliedCartPromotionDetails": [],
+            "cartLineDetails": [
+              {
+                "cartLineItemId": "line-1",
+                "cartLineProduct": "Hoodie",
+                "cartLineItemQuantity": 1,
+                "cartLineItemAmountBeforeDiscount": 50,
+                "cartLineItemAmountAfterDiscount": 45,
+                "totalCartLineItemDiscountAmount": 5,
+                "totalCartLinePromotionsDiscountAmount": 5,
+                "totalCartPromotionsDistributedDiscountAmount": 0,
+                "appliedCartLinePromotionDetails": [
+                  {
+                    "promotionId": "0c8xx0000000AAA01",
+                    "displayName": "Members 10% off",
+                    "cartLineItemAmountBeforeDiscount": 50,
+                    "cartLineItemAmountAfterDiscount": 45,
+                    "cartLineItemDiscountAmount": 5,
+                    "currencyIsoCode": "USD",
+                    "isAutomatic": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

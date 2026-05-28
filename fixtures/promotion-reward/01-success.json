@@ -1,0 +1,36 @@
+{
+  "name": "Success — transaction journals created",
+  "description": "Order-placement accrual. Send the order's transaction(s) with the appliedPromotions returned by the pricing call; Loyalty creates the transaction journals and accrues rewards (points, vouchers, etc.).",
+  "request": {
+    "body": {
+      "shouldCheckCouponUsageLimit": true,
+      "journalCreationMode": "CreateTransactionJournal",
+      "transactionJournalList": [
+        {
+          "ActivityDate": "2026-05-28T12:45:19Z",
+          "ReferredPartyId": "<loyaltyProgramMemberId>",
+          "TransactionAmount": "69.50",
+          "CurrencyIsoCode": "USD",
+          "Status": "Processed",
+          "appliedPromotions": [
+            { "promotionId": "0c8xx00000005R7AAI" },
+            { "promotionId": "0c8xx00000005NtAAI" }
+          ]
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "transactionJournalResults": [
+        {
+          "transactionJournalId": "0lJxx0000000001AAA",
+          "status": "Processed",
+          "pointsAccrued": 70
+        }
+      ]
+    }
+  },
+  "notes": "Response shape is illustrative — the documented Promotion Reward Application output should be confirmed against the org. The request shape (transactionJournalList[].appliedPromotions[]) is doc-aligned."
+}

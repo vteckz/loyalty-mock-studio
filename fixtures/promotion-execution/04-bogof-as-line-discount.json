@@ -1,0 +1,57 @@
+{
+  "name": "BOGOF — modelled as a line discount (NOT an injected product)",
+  "description": "Important reality check vs the original proposal. In the GPM Cart response, 'Buy 1 Pizza, Get 1 Burger Free' shows up as a discount on the Burger line that's ALREADY in the cart (its after-discount amount drops toward 0). There is NO field that tells Commerce to inject a product the shopper didn't add.",
+  "response": {
+    "status": 200,
+    "body": {
+      "cart": {
+        "cartDetails": [
+          {
+            "cartHeaderId": "<sfcc-basket-uuid>",
+            "initialCartAmount": 109,
+            "adjustedCartAmount": 100,
+            "totalDiscountAmount": 9,
+            "totalCartLevelDiscountAmount": 0,
+            "totalLineLevelDiscountAmount": 9,
+            "appliedCartPromotionDetails": [],
+            "cartLineDetails": [
+              {
+                "cartLineItemId": "line-pizza",
+                "cartLineProduct": "Pizza",
+                "cartLineItemQuantity": 1,
+                "cartLineItemAmountBeforeDiscount": 100,
+                "cartLineItemAmountAfterDiscount": 100,
+                "totalCartLineItemDiscountAmount": 0,
+                "totalCartLinePromotionsDiscountAmount": 0,
+                "totalCartPromotionsDistributedDiscountAmount": 0,
+                "appliedCartLinePromotionDetails": []
+              },
+              {
+                "cartLineItemId": "line-burger",
+                "cartLineProduct": "Burger",
+                "cartLineItemQuantity": 1,
+                "cartLineItemAmountBeforeDiscount": 9,
+                "cartLineItemAmountAfterDiscount": 0,
+                "totalCartLineItemDiscountAmount": 9,
+                "totalCartLinePromotionsDiscountAmount": 9,
+                "totalCartPromotionsDistributedDiscountAmount": 0,
+                "appliedCartLinePromotionDetails": [
+                  {
+                    "promotionId": "0c8xx00000006TdAAI",
+                    "displayName": "Buy 1 Pizza, Get 1 Burger Free",
+                    "cartLineItemAmountBeforeDiscount": 9,
+                    "cartLineItemAmountAfterDiscount": 0,
+                    "cartLineItemDiscountAmount": 9,
+                    "currencyIsoCode": "USD",
+                    "isAutomatic": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "notes": "OPEN QUESTION for the Salesforce-side team: if a promotion is supposed to give a product the shopper did NOT add, this API does not express it. That scenario would need a custom mechanism. The adapter keeps a BasketHelper.addBonusProduct utility for that case, but the standard GPM response does not drive it."
+}

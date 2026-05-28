@@ -1,0 +1,31 @@
+{
+  "name": "Two eligible promotions (percent + fixed amount)",
+  "description": "GetMemberPromotions program-process response. Envelope is { status, message, outputParameters } per the Run Program Process docs; the contents of outputParameters are IMPLEMENTER-DEFINED — `memberPromotions` here is a plausible default the adapter reads. Each promotion carries a reward the adapter applies as an ORDER-LEVEL discount.",
+  "request": {
+    "body": { "processParameters": [{ "MembershipNumber": "MEM-100001" }] }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "Success",
+      "message": "Processed successfully",
+      "outputParameters": {
+        "memberPromotions": [
+          {
+            "promotionId": "0c8xx0000000AAA01",
+            "promotionName": "Members 10% off order",
+            "rewardType": "Percent",
+            "discountValue": 10
+          },
+          {
+            "promotionId": "0c8xx0000000AAA02",
+            "promotionName": "$15 loyalty credit",
+            "rewardType": "FixedAmount",
+            "discountValue": 15
+          }
+        ]
+      }
+    }
+  },
+  "notes": "Unlike GPM promotion-execution, this does NOT return a priced cart — just eligible promotions. The adapter (PromotionApplier.applyMemberPromotions) applies each reward as an order-level discount. Confirm the real outputParameters field names with whoever configures the GetMemberPromotions process."
+}

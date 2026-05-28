@@ -1,0 +1,15 @@
+{
+  "name": "Success — voucher redeemed",
+  "description": "POST .../vouchers/{voucherCode}/redeem. Status goes Issued → Redeemed and the use date is set. Called at order placement.",
+  "response": {
+    "status": 200,
+    "body": {
+      "voucherCode": "SAVE20",
+      "voucherId": "0kDxx0000000001AAA",
+      "status": "Redeemed",
+      "redeemedValue": 20,
+      "remainingValue": 0,
+      "useDate": "2026-05-28T11:05:14.000Z"
+    }
+  }
+}
