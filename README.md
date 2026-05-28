@@ -21,6 +21,7 @@ Open <http://localhost:3000>.
 - **Left** — the scenarios available for that endpoint (each is one JSON file in `fixtures/`)
 - **Middle** — Monaco editor: edit the response, change HTTP status, inject latency, save back to disk
 - **Right** — live request log streamed over SSE; click a row to see headers, request body and response body
+- **Guide** button (top-right) — an in-app developer guide covering wiring, scenarios, the promotion-mode switch, the `x-mock-scenario` test header and the tunnel caveat. It opens automatically on your first visit.
 
 The green dot next to a scenario = the one your cartridge calls will currently receive.
 
@@ -35,9 +36,9 @@ These shapes were reconciled against the official **Loyalty Management Developer
 | POST | `/api/loyalty/get-member-promotions` | `…/program-processes/GetMemberPromotions` |
 | POST | `/api/loyalty/promotion-reward` | `/global-promotions-management/promotion-reward` |
 | GET | `/api/loyalty/vouchers` | `…/loyalty/programs/{program}/members/{membershipNumber}/vouchers` |
-| POST | `/api/loyalty/vouchers/redeem` | `…/vouchers/{voucherCode}/redeem` |
+| POST | `/api/loyalty/vouchers/redeem` | `…/vouchers/{voucherCode}/redeem` (action: Reserve \| Reinstate \| Redeem) |
 | GET | `/api/loyalty/members` | `/loyalty-programs/{program}/members` |
-| GET | `/api/loyalty/transaction-history` | `…/connect/loyalty/programs/{program}/transaction-history` |
+| POST | `/api/loyalty/transaction-history` | `…/connect/loyalty/programs/{program}/transaction-history` |
 
 **Promotion Evaluation & Execution** is the core pricing call: send a cart, get back the adjusted cart + line items with discount amounts already computed (`adjustedCartAmount`, per-line `totalCartLineItemDiscountAmount`). **Promotion Reward Application** is the order-placement accrual step.
 
@@ -50,7 +51,7 @@ The header has a **Promotion API** toggle — `Auto | GPM | GetMember` — that 
 - **Auto** (default) — both promotion endpoints answer normally.
 - **GPM** / **GetMember** — the chosen promotion endpoint answers normally; the *other* one returns a **409** with a message pointing at `LoyaltyConfig.PROMOTION_API`. So if the cartridge is pointed at the wrong resource for the mode you set, you find out loudly instead of via a silent wrong answer. The guarded tab is dimmed and badged `409`; the active one is badged `mode`.
 
-> **Two things to know vs. the original proposal.** (1) There is **no voucher reserve/release** in the standard API — a voucher goes Issued → Redeemed, so the cart just holds the chosen `voucherCode` and redeems it at order placement. (2) **BOGOF is modelled as a discount on a line already in the cart**, not as an injected product — see the `04-bogof-as-line-discount` fixture. Injecting a product the shopper didn't add isn't expressible in this API and is an open question for the Salesforce-side team.
+> **Two things to know.** (1) **Voucher reserve/release IS supported** — the Redeem Voucher resource takes an `action` field (type `ReservationAction`, standard since API **v62.0**): `Reserve` (Issued→Reserved, returns a `reservationKey`), `Reinstate` (Reserved→Issued, the "release"), and `Redeem` (the default). It's the same `/redeem` resource for all three, not separate endpoints — see the `03-reserve-success` / `04-reinstate-success` fixtures. This matches the original proposal's "list → reserve → redeem/release" flow. (2) **BOGOF is modelled as a discount on a line already in the cart**, not as an injected product — see the `04-bogof-as-line-discount` fixture. Injecting a product the shopper didn't add isn't expressible in the GPM Cart response and is an open question for the Salesforce-side team.
 
 ## How a request gets answered
 
@@ -108,7 +109,7 @@ Two ways:
    - `04-bogof-as-line-discount` → the free item is a discount on a line already in the cart (no product injection)
    - `05-error-gpm-not-enabled` → cartridge falls through to non-loyalty pricing, does NOT error the cart
 4. **Order placement** → `/api/loyalty/promotion-reward` (accrue) + `/api/loyalty/vouchers/redeem`.
-5. **Voucher flow** — list (`?voucherStatus=Issued`) → apply as a basket adjustment → redeem at order placement. The `03-mixed-statuses` fixture tests that you only offer `status=Issued`. There is no reserve/release.
+5. **Voucher flow** — list (`?voucherStatus=Issued`) → apply as a basket adjustment + **Reserve** (Issued→Reserved, keep the `reservationKey`) → on removal/abandon **Reinstate** (release) → **Redeem** with the `reservationKey` at order placement. The `03-mixed-statuses` fixture tests that you only offer `status=Issued` (Reserved is held, so it isn't offered either). Reservation is governed by the adapter's `LoyaltyConfig.VOUCHER_USE_RESERVATION` — turn it off to fall back to hold-the-code (e.g. for orgs below API v62.0).
 
 ## State persistence
 

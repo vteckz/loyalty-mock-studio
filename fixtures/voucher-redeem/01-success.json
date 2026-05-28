@@ -1,15 +1,20 @@
 {
-  "name": "Success — voucher redeemed",
-  "description": "POST .../vouchers/{voucherCode}/redeem. Status goes Issued → Redeemed and the use date is set. Called at order placement.",
+  "name": "Redeem — voucher redeemed",
+  "description": "POST .../redeem (default action = Redeem). Matches the documented Redeem Voucher Output exactly: { remainingAmount, status, currencyIsoCode }. Note the output does NOT echo voucherCode/voucherId, and the field is remainingAmount (not remainingValue). Called at order placement.",
+  "request": {
+    "body": {
+      "action": "Redeem",
+      "voucherCode": "SAVE20",
+      "membershipNumber": "MEM-100001",
+      "reservationKey": "RSV-7F3K-92Q2"
+    }
+  },
   "response": {
     "status": 200,
     "body": {
-      "voucherCode": "SAVE20",
-      "voucherId": "0kDxx0000000001AAA",
+      "remainingAmount": 0,
       "status": "Redeemed",
-      "redeemedValue": 20,
-      "remainingValue": 0,
-      "useDate": "2026-05-28T11:05:14.000Z"
+      "currencyIsoCode": "USD"
     }
   }
 }

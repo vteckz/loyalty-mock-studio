@@ -1,22 +1,55 @@
 {
   "name": "Silver-tier member",
-  "description": "Newer member, lower balance.",
+  "description": "Newer member, lower balance. Same documented Member Profile Output (ConnectApi.MemberDetailsOutput) shape as the gold-tier fixture.",
   "response": {
     "status": 200,
     "body": {
       "membershipNumber": "MEM-100042",
-      "firstName": "Sam",
-      "lastName": "Chen",
-      "email": "sam.chen@example.com",
-      "enrollmentDate": "2026-02-04",
+      "loyaltyProgramMemberId": "0lMxx0000000042AAA",
+      "loyaltyProgramName": "YourLoyaltyProgram",
       "memberStatus": "Active",
-      "currentTier": {
-        "tierName": "Silver",
-        "tierEffectiveDate": "2026-02-04",
-        "tierEndDate": "2026-12-31"
+      "memberType": "Individual",
+      "enrollmentDate": "2026-02-04T00:00:00.000Z",
+      "lastActivityDate": "2026-05-18T00:00:00.000Z",
+      "enrollmentChannel": "Online",
+      "canReceivePromotions": true,
+      "canReceivePartnerPromotions": false,
+      "associatedContact": {
+        "contactId": "003xx000004WkhEAAS",
+        "firstName": "Sam",
+        "lastName": "Chen",
+        "email": "sam.chen@example.com"
       },
-      "nextTier": { "tierName": "Gold", "pointsToNextTier": 4200 },
-      "pointsBalance": { "qualifying": 800, "nonQualifying": 950, "lifetime": 1100 }
+      "memberCurrencies": [
+        {
+          "memberCurrencyId": "0lcxx0000000042AAA",
+          "loyaltyProgramCurrencyName": "Reward Points",
+          "pointsBalance": 950,
+          "escrowPointsBalance": 0,
+          "expirablePoints": 950,
+          "totalPointsAccrued": 1100,
+          "totalPointsRedeemed": 150,
+          "totalPointsExpired": 0
+        },
+        {
+          "memberCurrencyId": "0lcxx0000000043AAA",
+          "loyaltyProgramCurrencyName": "Tier Points",
+          "pointsBalance": 800,
+          "totalPointsAccrued": 800
+        }
+      ],
+      "memberTiers": [
+        {
+          "loyaltyMemberTierId": "0lyxx0000000042AAA",
+          "loyaltyMemberTierName": "Silver",
+          "tierId": "0ltxx0000000002AAA",
+          "tierGroupName": "Status Tiers",
+          "tierEffectiveDate": "2026-02-04T00:00:00.000Z",
+          "tierExpirationDate": "2026-12-31T00:00:00.000Z",
+          "tierSequenceNumber": 2,
+          "areTierBenefitsAssigned": true
+        }
+      ]
     }
   }
 }

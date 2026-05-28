@@ -56,12 +56,14 @@ export function RequestLog({ entries, highlightEndpointId, onClear }: Props) {
       </div>
       <ScrollArea className="flex-1">
         {visible.length === 0 && (
-          <div className="p-6 text-center text-xs text-muted-foreground">
-            Waiting for requests… try
-            <br />
-            <code className="mt-2 inline-block rounded bg-muted px-2 py-1 text-[10px]">
-              curl -X POST localhost:3000/api/loyalty/promotion-evaluation
+          <div className="space-y-2 p-6 text-center text-xs text-muted-foreground">
+            <p>Waiting for requests… try</p>
+            <code className="inline-block rounded bg-muted px-2 py-1 text-[10px]">
+              curl -X POST localhost:3000/api/loyalty/promotion-execution
             </code>
+            <p className="text-[11px]">
+              New here? Open the <strong>Guide</strong> (top-right).
+            </p>
           </div>
         )}
         {visible.map((e) => {

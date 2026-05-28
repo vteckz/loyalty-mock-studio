@@ -1,22 +1,55 @@
 {
   "name": "Gold-tier member",
-  "description": "Active member with mid-cycle balance. Use this to drive the my-rewards page UI.",
+  "description": "Active member, mid-cycle balance. Matches the documented Member Profile Output (ConnectApi.MemberDetailsOutput): identity in associatedContact, points in memberCurrencies[] (qualifying vs non-qualifying are separate currencies), tier in memberTiers[].",
   "response": {
     "status": 200,
     "body": {
       "membershipNumber": "MEM-100001",
-      "firstName": "Alex",
-      "lastName": "Walker",
-      "email": "alex.walker@example.com",
-      "enrollmentDate": "2024-09-12",
+      "loyaltyProgramMemberId": "0lMxx0000000001AAA",
+      "loyaltyProgramName": "YourLoyaltyProgram",
       "memberStatus": "Active",
-      "currentTier": {
-        "tierName": "Gold",
-        "tierEffectiveDate": "2026-01-01",
-        "tierEndDate": "2026-12-31"
+      "memberType": "Individual",
+      "enrollmentDate": "2024-09-12T00:00:00.000Z",
+      "lastActivityDate": "2026-05-20T00:00:00.000Z",
+      "enrollmentChannel": "Online",
+      "canReceivePromotions": true,
+      "canReceivePartnerPromotions": true,
+      "associatedContact": {
+        "contactId": "003xx000004WjzAAAS",
+        "firstName": "Alex",
+        "lastName": "Walker",
+        "email": "alex.walker@example.com"
       },
-      "nextTier": { "tierName": "Platinum", "pointsToNextTier": 1250 },
-      "pointsBalance": { "qualifying": 3750, "nonQualifying": 4200, "lifetime": 18450 }
+      "memberCurrencies": [
+        {
+          "memberCurrencyId": "0lcxx0000000001AAA",
+          "loyaltyProgramCurrencyName": "Reward Points",
+          "pointsBalance": 4200,
+          "escrowPointsBalance": 150,
+          "expirablePoints": 4200,
+          "totalPointsAccrued": 18450,
+          "totalPointsRedeemed": 14250,
+          "totalPointsExpired": 0
+        },
+        {
+          "memberCurrencyId": "0lcxx0000000002AAA",
+          "loyaltyProgramCurrencyName": "Tier Points",
+          "pointsBalance": 3750,
+          "totalPointsAccrued": 3750
+        }
+      ],
+      "memberTiers": [
+        {
+          "loyaltyMemberTierId": "0lyxx0000000001AAA",
+          "loyaltyMemberTierName": "Gold",
+          "tierId": "0ltxx0000000001AAA",
+          "tierGroupName": "Status Tiers",
+          "tierEffectiveDate": "2026-01-01T00:00:00.000Z",
+          "tierExpirationDate": "2026-12-31T00:00:00.000Z",
+          "tierSequenceNumber": 3,
+          "areTierBenefitsAssigned": true
+        }
+      ]
     }
   }
 }

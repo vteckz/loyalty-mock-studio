@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
+import { BookOpenIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type {
@@ -14,6 +15,9 @@ import { EndpointTabs } from "@/components/studio/endpoint-tabs";
 import { ScenarioList } from "@/components/studio/scenario-list";
 import { ScenarioEditor } from "@/components/studio/scenario-editor";
 import { RequestLog } from "@/components/studio/request-log";
+import { HelpGuide } from "@/components/studio/help-guide";
+
+const GUIDE_SEEN_KEY = "lms-guide-seen";
 
 interface StudioBootstrap {
   endpoints: EndpointMeta[];
@@ -34,6 +38,7 @@ export function StudioApp() {
   const [selectedScenarioId, setSelectedScenarioId] = useState<string | null>(null);
   const [logEntries, setLogEntries] = useState<RequestLogEntry[]>([]);
   const [baseUrl, setBaseUrl] = useState<string>("");
+  const [helpOpen, setHelpOpen] = useState(false);
   const streamRef = useRef<EventSource | null>(null);
 
   const refresh = useCallback(async () => {
@@ -49,6 +54,10 @@ export function StudioApp() {
       .then((r) => r.json())
       .then((d: { entries: RequestLogEntry[] }) => setLogEntries(d.entries));
     setBaseUrl(`${window.location.origin}`);
+    if (!localStorage.getItem(GUIDE_SEEN_KEY)) {
+      setHelpOpen(true);
+      localStorage.setItem(GUIDE_SEEN_KEY, "1");
+    }
   }, [refresh]);
 
   useEffect(() => {
@@ -211,6 +220,15 @@ export function StudioApp() {
               Copy base URL
             </Button>
           </div>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => setHelpOpen(true)}
+            className="gap-1.5"
+          >
+            <BookOpenIcon className="size-3.5" />
+            Guide
+          </Button>
         </div>
       </header>
 
@@ -245,6 +263,13 @@ export function StudioApp() {
           onClear={() => setLogEntries([])}
         />
       </div>
+
+      <HelpGuide
+        open={helpOpen}
+        onClose={() => setHelpOpen(false)}
+        endpoints={boot.endpoints}
+        baseUrl={baseUrl}
+      />
     </div>
   );
 }

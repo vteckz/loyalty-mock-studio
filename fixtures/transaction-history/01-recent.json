@@ -1,26 +1,50 @@
 {
   "name": "Recent transaction journals",
-  "description": "GET .../transaction-history. Path is doc-confirmed; this body is illustrative — confirm field names against the org before relying on them.",
+  "description": "POST .../transaction-history with body { membershipNumber, journalType, periodStartDate, periodEndDate }. Matches the documented Loyalty View Transaction Journal History Output exactly: top level { message, status (bool), totalCount, transactionJournals[] } and PascalCase journal fields (ActivityDate, JournalTypeId, TransactionAmount, …) — not camelCase.",
+  "request": {
+    "body": {
+      "membershipNumber": "MEM-100001",
+      "journalType": "Accrual",
+      "periodStartDate": "2026-01-01T00:00:00Z",
+      "periodEndDate": "2026-05-29T00:00:00Z"
+    }
+  },
   "response": {
     "status": 200,
     "body": {
-      "transactionJournalCount": 2,
+      "message": null,
+      "status": true,
+      "totalCount": 2,
       "transactionJournals": [
         {
-          "transactionJournalId": "0lJxx0000000010AAA",
-          "journalType": "Accrual",
-          "journalSubType": "Purchase",
-          "activityDate": "2026-05-25T14:22:00.000Z",
-          "transactionAmount": 125,
-          "currencyIsoCode": "USD",
-          "pointsChange": 125
+          "ActivityDate": "2026-05-25T14:22:00.000Z",
+          "JournalDate": "2026-05-25T14:22:00.000Z",
+          "JournalTypeId": "0lExx0000000001AAA",
+          "JournalSubTypeId": "0lSxx0000000001AAA",
+          "LoyaltyProgramId": "0lpxx0000000001AAA",
+          "MemberId": "0lMxx0000000001AAA",
+          "ProductId": "01txx0000000ABCAAW",
+          "Quantity": 1,
+          "TransactionAmount": 125,
+          "Channel": "Online",
+          "ExternalTransactionNumber": "SO-58213",
+          "PromotionId": "",
+          "VoucherCode": ""
         },
         {
-          "transactionJournalId": "0lJxx0000000009AAA",
-          "journalType": "Redemption",
-          "journalSubType": "Voucher",
-          "activityDate": "2026-05-20T09:13:00.000Z",
-          "pointsChange": -500
+          "ActivityDate": "2026-05-20T09:13:00.000Z",
+          "JournalDate": "2026-05-20T09:13:00.000Z",
+          "JournalTypeId": "0lExx0000000002AAA",
+          "JournalSubTypeId": "0lSxx0000000002AAA",
+          "LoyaltyProgramId": "0lpxx0000000001AAA",
+          "MemberId": "0lMxx0000000001AAA",
+          "ProductId": "",
+          "Quantity": 1,
+          "TransactionAmount": 0,
+          "Channel": "Online",
+          "ExternalTransactionNumber": "SO-58107",
+          "PromotionId": "",
+          "VoucherCode": "SAVE20"
         }
       ]
     }

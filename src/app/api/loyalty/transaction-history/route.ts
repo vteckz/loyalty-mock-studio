@@ -1,3 +1,3 @@
 import { makeHandler } from "@/lib/handler";
 
-export const GET = makeHandler("transaction-history");
+export const POST = makeHandler("transaction-history");

@@ -1,0 +1,22 @@
+{
+  "name": "Reserve — voucher held against the cart",
+  "description": "POST .../redeem with body { action: 'Reserve', reservedValue? }. Moves the voucher Issued → Reserved and returns a reservationKey the cartridge keeps on the basket to reinstate (release) or redeem it later. Response matches the documented Redeem Voucher Output 'Reserve' sample exactly.",
+  "request": {
+    "body": {
+      "action": "Reserve",
+      "voucherCode": "SAVE20",
+      "membershipNumber": "MEM-100001",
+      "reservedValue": 20
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "reservationKey": "RSV-7F3K-92Q2",
+      "reservedValue": 20,
+      "status": "Reserved",
+      "currencyIsoCode": "USD"
+    }
+  },
+  "notes": "VoucherApplier.apply reads reservationKey and stashes it in basket.custom.loyaltyVoucherReservationKey. Reserving prevents the same voucher being applied to a second concurrent basket. A reserve failure must NOT break the basket — the adapter falls back to hold-the-code."
+}

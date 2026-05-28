@@ -1,12 +1,13 @@
 {
-  "name": "Mixed statuses (Issued / Redeemed / Expired / Cancelled)",
-  "description": "Verifies the cartridge only offers status === 'Issued'. These are the four real voucher statuses — there is no 'Reserved'.",
+  "name": "Mixed statuses (Issued / Reserved / Redeemed / Expired / Cancelled)",
+  "description": "Verifies the cartridge only offers status === 'Issued'. RESERVED is excluded too — a voucher already held against another basket shouldn't be offered again. These are the five real voucher statuses.",
   "response": {
     "status": 200,
     "body": {
-      "voucherCount": 4,
+      "voucherCount": 5,
       "vouchers": [
         { "voucherId": "0kDxx0000000010AAA", "voucherCode": "ACTIVE20", "voucherNumber": "00006001", "voucherDefinition": "$20 Off", "status": "Issued", "type": "FixedValue", "faceValue": 20, "remainingValue": 20, "redeemedValue": 0, "effectiveDate": "2026-05-01", "expirationDate": "2026-08-01" },
+        { "voucherId": "0kDxx0000000014AAA", "voucherCode": "HELD25", "voucherNumber": "00006005", "voucherDefinition": "$25 Off", "status": "Reserved", "type": "FixedValue", "faceValue": 25, "remainingValue": 25, "redeemedValue": 0, "effectiveDate": "2026-05-01", "expirationDate": "2026-08-01" },
         { "voucherId": "0kDxx0000000011AAA", "voucherCode": "USED50", "voucherNumber": "00006002", "voucherDefinition": "$50 Off", "status": "Redeemed", "type": "FixedValue", "faceValue": 50, "remainingValue": 0, "redeemedValue": 50, "effectiveDate": "2026-03-01", "expirationDate": "2026-08-01" },
         { "voucherId": "0kDxx0000000012AAA", "voucherCode": "OLD15", "voucherNumber": "00006003", "voucherDefinition": "15% Off", "status": "Expired", "type": "DiscountPercentage", "discountPercent": 15, "effectiveDate": "2026-01-01", "expirationDate": "2026-04-01" },
         { "voucherId": "0kDxx0000000013AAA", "voucherCode": "VOID10", "voucherNumber": "00006004", "voucherDefinition": "$10 Off", "status": "Cancelled", "type": "FixedValue", "faceValue": 10, "remainingValue": 10, "redeemedValue": 0, "effectiveDate": "2026-02-01", "expirationDate": "2026-08-01" }

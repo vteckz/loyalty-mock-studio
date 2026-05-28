@@ -59,17 +59,17 @@ export const ENDPOINTS: EndpointMeta[] = [
     sfPath:
       "/services/data/v58.0/loyalty/programs/{programName}/members/{membershipNumber}/vouchers",
     description:
-      "Returns the vouchers issued to a member. Filter with ?voucherStatus=Issued. Real statuses: Issued | Redeemed | Expired | Cancelled.",
+      "Returns the vouchers issued to a member. Filter with ?voucherStatus=Issued. Statuses: Issued | Reserved | Redeemed | Expired | Cancelled.",
   },
   {
     id: "voucher-redeem",
-    name: "Redeem Voucher",
+    name: "Voucher Action (Reserve / Reinstate / Redeem)",
     method: "POST",
     mockPath: "/api/loyalty/vouchers/redeem",
     sfPath:
-      "/services/data/v58.0/loyalty/programs/{programName}/members/{membershipNumber}/vouchers/{voucherCode}/redeem",
+      "/services/data/v62.0/loyalty/programs/{programName}/members/{membershipNumber}/vouchers/{voucherCode}/redeem",
     description:
-      "Redeems a voucher by voucherCode. There is NO reserve/release in the standard API — a voucher goes Issued → Redeemed.",
+      "One resource, three actions via the body `action` field (type ReservationAction, since API v62.0): Reserve (Issued→Reserved, returns a reservationKey), Reinstate (Reserved→Issued, the 'release'), Redeem (→Redeemed; default when no action is sent). Pick the matching scenario per action.",
   },
   {
     id: "member-info",
@@ -83,11 +83,11 @@ export const ENDPOINTS: EndpointMeta[] = [
   {
     id: "transaction-history",
     name: "Transaction History",
-    method: "GET",
+    method: "POST",
     mockPath: "/api/loyalty/transaction-history",
     sfPath: "/services/data/v67.0/connect/loyalty/programs/{programName}/transaction-history",
     description:
-      "Recent transaction journals for the member. Path is doc-confirmed; the body below is illustrative.",
+      "Recent transaction journals for the member. POST (not GET) with a body { membershipNumber, journalType: Accrual|Redemption, periodStartDate, periodEndDate } + ?page=. Path + method are doc-confirmed; the response body below is illustrative.",
   },
 ];
 
