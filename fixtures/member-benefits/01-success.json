@@ -1,0 +1,36 @@
+{
+  "name": "Member benefits success",
+  "description": "Documented Member Benefits response for a member with two active benefits (luggage allowance and priority support). Built from the doc JSON example at lines 30485-30510, normalized to the documented top-level memberBenefits[] property from the property table (line 30522). Field names/casing exact per the Member Benefit Output property table (lines 30530-30557).",
+  "response": {
+    "status": 200,
+    "body": {
+      "memberBenefits": [
+        {
+          "benefitId": "0lB000000abc123",
+          "benefitName": "15 Kg Luggage",
+          "benefitTypeId": "0lo0000000afja435",
+          "benefitTypeName": "Carry On Luggage",
+          "startDate": "23-05-2015",
+          "endDate": "22-05-2035",
+          "isActive": true,
+          "createdRecordId": "570000000ak123",
+          "createdRecordName": "15 Kg Luggage Carry On",
+          "description": "This is a carry on luggage member benefit"
+        },
+        {
+          "benefitId": "0lB000000gsy88",
+          "benefitName": "Priority Support",
+          "benefitTypeId": "0lo0000000pi23ii",
+          "benefitTypeName": "Support Entitlements",
+          "startDate": "16-08-2020",
+          "endDate": "15-02-2021",
+          "isActive": true,
+          "createdRecordId": "550000000aj112",
+          "createdRecordName": "Priority Support Entitlement",
+          "description": "This is a support entitlement member benefit"
+        }
+      ]
+    }
+  },
+  "notes": "Resource definition at lines 21245-21270 (path, Available version 51.0, HTTP method GET, Requires Chatter: No, Response body = \"Member Benefits\"). Response schema \"Member Benefits\" at lines 30479-30525 with nested \"Member Benefit\" output at 30527-30557. CAVEAT: the doc's JSON example (lines 30485-30510) is malformed in the extracted PDF text — it wraps the array under a \"result\" key and uses a single object brace where two array elements are expected, and uses smart/curly quotes around the \"description\" field. The authoritative property table (line 30520-30523) states the top-level property is \"memberBenefits\" of type \"Member Benefit Output[]\" (array). I normalized the fixture to that documented shape (memberBenefits: [...]) using the two example benefit objects verbatim and fixed the smart quotes to standard JSON. memberId is a path placeholder (e.g. 0lM0000Abthl24242af per resource example at line 21251); no request body (GET). No error/empty example is shown in the doc, so only a success fixture is provided. The \"description\" field is Available Version 58.0 (newer than the 51.0 resource baseline) per line 30548 — included since it appears in the documented example."
+}

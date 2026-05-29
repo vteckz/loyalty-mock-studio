@@ -1,0 +1,38 @@
+{
+  "name": "Club member profile with benefits and promotions",
+  "description": "Response to GET /club/members?clubName=NAME5&programName=SampleProgram. Body is the documented Club Member Details schema (no JSON example in the guide; field names/casing taken verbatim from the property tables for Club Member Details, Club Member Benefits, and Club Member Promotions). Values are illustrative.",
+  "response": {
+    "status": 200,
+    "body": {
+      "clubId": "0lMxx0000000001AAA",
+      "clubName": "NAME5",
+      "clubMembershipId": "0lMxx0000000002AAA",
+      "clubMembershipNumber": "ARC0001",
+      "membershipStartDate": "2025-06-01T00:00:00.000Z",
+      "membershipEndDate": "2026-06-01T00:00:00.000Z",
+      "benefits": [
+        {
+          "benefitId": "0lMxx0000000010AAA",
+          "benefitName": "Free Standard Shipping",
+          "benefitTypeId": "0lMxx0000000011AAA",
+          "benefitTypeName": "Shipping",
+          "description": "Free standard shipping on all club orders.",
+          "isActive": true
+        }
+      ],
+      "promotions": [
+        {
+          "promotionId": "0lMxx0000000020AAA",
+          "promotionName": "Summer Member Bonus",
+          "loyaltyPromotionType": "Standard",
+          "memberEligibilityCategory": "AllMembers",
+          "promotionEnrollmentRqr": false,
+          "imageUrl": "https://example.com/promo/summer.png",
+          "startDate": "2026-06-01",
+          "endDate": "2026-08-31"
+        }
+      ]
+    }
+  },
+  "notes": "Source: Loyalty Management Developer Guide v67.0 (Summer 26). Resource definition at lines 20725-20757; response schema \"Club Member Details\" at 28743-28770; nested \"Club Member Benefits\" at 28718-28739; nested \"Club Member Promotions\" at 28802-28826. Resource path is /club/members (no /services/data/vXX.X prefix shown in the guide; no {placeholders} — all inputs are query parameters). Documented \"Available version\" for the resource is 64.0; the Club Member Details/Benefits/Promotions property fields list Available Version 63.0/64.0. HTTP method is GET only; request is GET so requestExample is null. IMPORTANT CAVEAT: the guide provides NO JSON example for the Club Member Details response body — only property tables. The fixture body field NAMES and CASING are taken verbatim from those tables (benefits, clubId, clubMembershipId, clubMembershipNumber, clubName, membershipStartDate, membershipEndDate, promotions; benefit* fields; promotion* fields), but all VALUES are implementer-chosen/illustrative. Field-name reconstruction from line-wrapped table cells: \"club MembershipId\"->clubMembershipId, \"club Membership Number\"->clubMembershipNumber, \"membershipEnd Date\"->membershipEndDate, \"membership StartDate\"->membershipStartDate, \"benefitType Name\"->benefitTypeName, \"loyalty PromotionType\"->loyaltyPromotionType, \"member Eligibility Category\"->memberEligibilityCategory, \"promotion EnrollmentRqr\"->promotionEnrollmentRqr. Date format (date vs datetime) is not specified by the guide and is a guess. No error/empty response example is shown in the guide, so only a success fixture is provided. Open question: exact JSON envelope (whether benefits/promotions are always present as arrays when empty) is undocumented."
+}

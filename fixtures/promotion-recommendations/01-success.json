@@ -1,0 +1,109 @@
+{
+  "name": "Recommended promotions returned",
+  "description": "Successful POST returning a list of promotion recommendations for a loyalty program member. Mirrors the documented Promotion Recommendations response body (recommendationCount, personalizationId, recommendationList[].rank + promotionDetails, loyaltyProgramName, membershipNumber, loyaltyProgramMemberId).",
+  "request": {
+    "body": {
+      "personalizationPoint": "Product_Promotion_Recommendation",
+      "dataspace": "default",
+      "membershipNumber": "M-10045",
+      "loyaltyProgramId": "0lp5g000000000001AAA",
+      "loyaltyProgramMemberId": "0lM5g000000000001AAA",
+      "individualId": "0PK5g000000000001AAA",
+      "eligibleChannel": {
+        "channel": {
+          "id": "0c95g000000000001AAA",
+          "name": "Web"
+        },
+        "retailStore": {
+          "id": "0RS5g000000000001AAA",
+          "name": "Auckland Central"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "recommendationCount": 2,
+      "personalizationId": "PZ-2026-0529-0001",
+      "recommendationList": [
+        {
+          "rank": 1,
+          "promotionDetails": {
+            "id": "0c85g000000000001AAA",
+            "promotionCode": "SUMMER25",
+            "name": "Summer Bonus Points",
+            "description": "Earn double points on summer beverages.",
+            "displayName": "Double Points - Summer",
+            "productDetails": {
+              "personalizationContentId": "0PC5g000000000001AAA",
+              "name": "Citrus Sparkling Water",
+              "id": "01t5g000000000001AAA",
+              "sku": "BEV-CSW-500",
+              "productImageUrl": "https://yourInstance.salesforce.com/img/products/csw-500.png"
+            },
+            "priority": 1,
+            "currencyIsoCode": "NZD",
+            "coupon": {
+              "couponAvailabilityMessage": "Coupon available",
+              "couponDetails": {
+                "couponCode": "SUMMER25-7F8G",
+                "startDateTime": "2026-06-01",
+                "endDateTime": "2026-08-31",
+                "status": "Active"
+              }
+            },
+            "isAutomatic": false,
+            "startDateTime": "2026-06-01",
+            "endDateTime": "2026-08-31",
+            "promotionPageUrl": "https://yourInstance.salesforce.com/promo/summer25",
+            "imageUrl": "https://yourInstance.salesforce.com/img/promo/summer25.png",
+            "isEnrollmentRequired": true,
+            "isEnrolled": false,
+            "termsAndCondition": "Valid for active members on qualifying summer beverages only."
+          }
+        },
+        {
+          "rank": 2,
+          "promotionDetails": {
+            "id": "0c85g000000000002AAA",
+            "promotionCode": "WELCOME10",
+            "name": "Welcome Discount",
+            "description": "10% off your next eligible purchase.",
+            "displayName": "10% Welcome Offer",
+            "productDetails": {
+              "personalizationContentId": "0PC5g000000000002AAA",
+              "name": "Cold Brew Concentrate",
+              "id": "01t5g000000000002AAA",
+              "sku": "BEV-CBC-250",
+              "productImageUrl": "https://yourInstance.salesforce.com/img/products/cbc-250.png"
+            },
+            "priority": 2,
+            "currencyIsoCode": "NZD",
+            "coupon": {
+              "couponAvailabilityMessage": "No coupon required",
+              "couponDetails": {
+                "couponCode": "",
+                "startDateTime": "2026-05-01",
+                "endDateTime": "2026-12-31",
+                "status": "Active"
+              }
+            },
+            "isAutomatic": true,
+            "startDateTime": "2026-05-01",
+            "endDateTime": "2026-12-31",
+            "promotionPageUrl": "https://yourInstance.salesforce.com/promo/welcome10",
+            "imageUrl": "https://yourInstance.salesforce.com/img/promo/welcome10.png",
+            "isEnrollmentRequired": false,
+            "isEnrolled": true,
+            "termsAndCondition": "One-time use per member."
+          }
+        }
+      ],
+      "loyaltyProgramName": "Frostbyte Rewards",
+      "membershipNumber": "M-10045",
+      "loyaltyProgramMemberId": "0lM5g000000000001AAA"
+    }
+  },
+  "notes": "Resource definition at lines 24552-24664; response schema \"Promotion Recommendations\" (doc page 604) with full JSON example + property table at lines 32508-32595. Resource path has NO {placeholders} — member/customer is identified via the request body, and count/promotionsPerProductLimit are query params (Resource Example line 24560 shows ?count=3&promotionsPerProductLimit=4). Available version of the resource is 64.0 (line 24563); note the request body 'cart' property table preceding it on page 467 belongs to the prior resource (Cart), not this one. Request body documented fields (lines 24592-24659): personalizationPoint (Required), dataspace (Required, only default data space supported), membershipNumber, loyaltyProgramId (Required when membershipNumber specified), loyaltyProgramMemberId, individualId, eligibleChannel{channel{id,name},retailStore{id,name}}. At least one identifier (membershipNumber+loyaltyProgramId, loyaltyProgramMemberId, or individualId) is required per the cross-conditional Required/Optional notes. recommendationList element type is \"Recommendation Details on page 612\" (not expanded here) — the inline JSON example fully shows its rank + promotionDetails shape, which I used verbatim for field names/casing (productDetails, coupon.couponDetails, isAutomatic, isEnrollmentRequired, isEnrolled, termsAndCondition, etc.). Doc dates use date-only strings (e.g. \"2025-03-06\") for start/end fields. The doc shows no error-response example for this resource, so fixture 02 is a documented-shape \"empty list\" success case rather than an HTTP error; IDs are realistic Salesforce-style but invented."
+}

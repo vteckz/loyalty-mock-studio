@@ -1,0 +1,32 @@
+{
+  "name": "Enroll member in promotion by membership number and promotion name",
+  "description": "Same documented Loyalty Process Output success envelope, but driven by the alternative documented request form using MembershipNumber + PromotionName (lines 22939-22947). Response body is the documented success shape (the doc shows only one Sample JSON Response for this process).",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "MembershipNumber": "M1234",
+          "PromotionName": "Flat20"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "outputParameters": {
+          "results": [
+            {
+              "MemberId": "0lMRM0000004GBn2AM",
+              "LoyaltyProgramMbrPromotionId": "1lpRM0000004CEmYAM"
+            }
+          ]
+        }
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  }
+}

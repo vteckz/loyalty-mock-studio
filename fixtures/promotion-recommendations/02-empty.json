@@ -1,0 +1,23 @@
+{
+  "name": "No recommendations available",
+  "description": "Successful POST where no promotions match the member and personalization point. recommendationCount is 0 and recommendationList is empty. Shape follows the documented response body; empty case is implementer-inferred (the doc does not show a dedicated empty example).",
+  "request": {
+    "body": {
+      "personalizationPoint": "Product_Promotion_Recommendation",
+      "dataspace": "default",
+      "membershipNumber": "M-99999",
+      "loyaltyProgramId": "0lp5g000000000001AAA"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "recommendationCount": 0,
+      "personalizationId": "PZ-2026-0529-0002",
+      "recommendationList": [],
+      "loyaltyProgramName": "Frostbyte Rewards",
+      "membershipNumber": "M-99999",
+      "loyaltyProgramMemberId": "0lM5g000000000099AAA"
+    }
+  }
+}

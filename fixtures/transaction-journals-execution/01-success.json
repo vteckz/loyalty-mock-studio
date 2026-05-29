@@ -1,0 +1,133 @@
+{
+  "name": "Transaction journal processed (purchase with rewards)",
+  "description": "Documented Loyalty Engine Realtime Output success response. status=true, message=null, processResult contains member points balance and per-journal transactionJournalResult with badgesAssigned, changeInMemberPoints, gamesAssigned, and voucherResult. simulationResults is null because the loyalty program process was run (not simulated). Values taken verbatim from the doc JSON example at lines 29825-29913.",
+  "request": {
+    "body": {
+      "transactionJournals": [
+        {
+          "ActivityDate": "2023-11-27T12:45:19Z",
+          "JournalTypeId": "0lERM00000001Bb2AI",
+          "LoyaltyProgramId": "0lpRM00000002YTYAY",
+          "MemberId": "0lMRM0000002Fmu2AE",
+          "Status": "Pending",
+          "ProductId": "01txx0000006iTsAAI",
+          "ProductCategoryId": "0ZSSB0000002d8X4AQ",
+          "Quantity": "4",
+          "TransactionAmount": "500",
+          "appliedPromotions": [
+            {
+              "promotionId": "0c8RM0000004FiXYAU",
+              "couponCode": "COUPON100",
+              "rewards": [
+                {
+                  "rewardType": "Discount",
+                  "discountAmount": 15
+                },
+                {
+                  "rewardType": "Points",
+                  "loyaltyProgramCurrencyName": "Coins",
+                  "points": 100,
+                  "relatedInformation": "Test",
+                  "notes": "points reward"
+                },
+                {
+                  "rewardType": "Voucher",
+                  "voucherDefinitionName": "10% Discount Voucher",
+                  "voucherExpirationDate": "2023-12-15",
+                  "voucherEffectiveDate": "2023-11-29",
+                  "notes": "discount voucher"
+                },
+                {
+                  "rewardType": "Badge",
+                  "loyaltyProgramBadgeName": "Gen AI Badge",
+                  "memberBadgeStatus": "Active",
+                  "badgeValidityEndDate": "2023-12-15",
+                  "reason": "purchase"
+                },
+                {
+                  "rewardType": "Game",
+                  "gameDefinitionName": "SpintheWheelGame"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "processResult": {
+        "memberPointsBalance": [
+          {
+            "memberCurrencies": [
+              {
+                "currencyName": "Tier Coins",
+                "currencyType": "Qualifying",
+                "escrowPointsBalance": 0,
+                "pointsBalance": 350
+              },
+              {
+                "currencyName": "Coins",
+                "currencyType": "NonQualifying",
+                "escrowPointsBalance": 0,
+                "pointsBalance": 300
+              }
+            ],
+            "memberShipNumber": "M5"
+          }
+        ],
+        "transactionJournalResult": [
+          {
+            "badgesAssigned": [
+              {
+                "badgeValidityEndDate": "2023-12-15",
+                "loyaltyProgramBadgeName": "Gen AI Badge",
+                "memberBadgeStatus": "1",
+                "reason": "Test"
+              }
+            ],
+            "changeInMemberPoints": [
+              {
+                "changeInMemberCurrencies": [
+                  {
+                    "changeInPointsBalance": 100,
+                    "currencyName": "Coins",
+                    "currencyType": "NonQualifying",
+                    "promotionId": "0c8RM0000004FiX"
+                  }
+                ],
+                "memberShipNumber": "M5"
+              }
+            ],
+            "gamesAssigned": [
+              {
+                "gameDefinitionName": "3PRRM0000004C98",
+                "gameExpirationDate": "2023-12-28T00:00:00.000Z",
+                "reason": "Test"
+              }
+            ],
+            "id": "0lVRM0000002qnB2AQ",
+            "voucherResult": {
+              "vouchersIssued": [
+                {
+                  "discountPercent": 10,
+                  "effectiveDate": "2023-11-29",
+                  "expirationDate": "2023-12-15",
+                  "promotionId": "0c8RM0000004FiX",
+                  "voucherDefinitionName": "10% Discount Voucher"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "programName": "NTO",
+      "simulationResults": null,
+      "status": true
+    }
+  },
+  "notes": "VERIFIED against Loyalty Management Developer Guide v67.0 text. Resource definition at lines 21799-21968; response schema \"Loyalty Engine Realtime Output\" (section header reads \"Loyalty Engine Realtime\", lines 29822-29943).\n\nPATH/PLACEHOLDER: Documented resource is /connect/realtime/loyalty/programs/${programName}. I converted the doc's ${programName} shell-style token to {programName} in sfPath. The {programName} segment in the URL is the loyalty program name (e.g. CloudKicksInnerCircle, StarAir_Program), NOT an ID. The doc shows the full URL as https://yourInstance.salesforce.com/services/data/vXX.X/connect/realtime/loyalty/programs/<name> so sfPath includes the /services/data/vXX.X prefix with literal vXX.X exactly as printed (no concrete version given in the example URL).\n\nVERSION: \"Available version\" = 54.0 for this resource. Individual response fields/inputs were added across versions (programName & simulationResults at 55.0; ID-based input at 55.0). I set available=54.0 per the resource's documented Available version line.\n\nREQUEST PROPERTY TABLE is thin: the only documented Properties row is processInput Map<String,Object> (Required, 54.0) described as \"List of the Transaction Journal records to process and create.\" The actual JSON wire format uses a top-level \"transactionJournals\" array (and optional \"shouldCheckCouponUsageLimit\" / \"appliedPromotions\" per-journal). I used the exact JSON examples for requestExample rather than the abstract processInput name. Per the doc, several request field names are interchangeable (see \"Loyalty Management Connect API Interchangeable Request Fields\").\n\nRESPONSE: Fixture 01 body is copied verbatim from the doc JSON example (lines 29825-29913) — exact field names/casing preserved (note camelCase response fields like memberShipNumber [sic, doc spelling], escrowPointsBalance, transactionJournalResult). Response top-level fields per property table (lines 29916-29937): message (String), processResult (Process Result), programName (String), simulationResults (Transaction Journal Map Output), status (Boolean). For a program-process run (not simulation), simulationResults is null and processResult is populated; for a simulation run it's the inverse (per the property descriptions).\n\nNO ERROR EXAMPLE in the doc for this resource — the schema only shows the status:true / message:null shape. The property table documents that on failure status=false and message carries the error string, but no concrete failure JSON is printed, so I did not fabricate a 4xx fixture. Fixture 02 is a second DOCUMENTED success variant (ID-based input), not an error case; I derived its empty reward collections from the doc's Important note (line 29941) stating the response only contains rewards the program rules actually produced — flagging this as a reasonable-inference fixture, not a verbatim doc example.\n\nID REALISM: success fixture ids are taken straight from the doc example. By-ID fixture uses a padded 18-char Salesforce-style id (0lVxx00000000cjAAA) extrapolated from the doc's 15-char 0lVxx00000000cj.\n\nIMPLEMENTER DECISIONS for the mock: (1) choose how strict to be on the {programName} path segment (doc accepts a program name string); (2) the same resource path /connect/realtime/loyalty/programs/${programName} is shared by \"Transaction Journals Simulation\" (also POST, v55.0) — disambiguated only by the runSetting/loyaltyEngineInput request shape, so a single mock route may need to branch on request body to serve both, or you expose them as distinct mock paths."
+}

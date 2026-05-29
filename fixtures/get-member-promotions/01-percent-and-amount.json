@@ -1,31 +1,36 @@
 {
   "name": "Two eligible promotions (percent + fixed amount)",
-  "description": "GetMemberPromotions program-process response. Envelope is { status, message, outputParameters } per the Run Program Process docs; the contents of outputParameters are IMPLEMENTER-DEFINED — `memberPromotions` here is a plausible default the adapter reads. Each promotion carries a reward the adapter applies as an ORDER-LEVEL discount.",
+  "description": "GetMemberPromotions program-process response. The ENVELOPE is the standard Loyalty Program Process Output, doc-confirmed across every process: { status (boolean), message, simulationDetails, outputParameters: { outputParameters: { results: [...] } } }. The CONTENTS of results[] are IMPLEMENTER-DEFINED — the per-promotion fields here (rewardType/discountValue) are the adapter's convention; promotionId/promotionName/loyaltyPromotionType mirror the doc's GetMemberPromotions sample.",
   "request": {
     "body": { "processParameters": [{ "MembershipNumber": "MEM-100001" }] }
   },
   "response": {
     "status": 200,
     "body": {
-      "status": "Success",
-      "message": "Processed successfully",
+      "status": true,
+      "message": null,
+      "simulationDetails": {},
       "outputParameters": {
-        "memberPromotions": [
-          {
-            "promotionId": "0c8xx0000000AAA01",
-            "promotionName": "Members 10% off order",
-            "rewardType": "Percent",
-            "discountValue": 10
-          },
-          {
-            "promotionId": "0c8xx0000000AAA02",
-            "promotionName": "$15 loyalty credit",
-            "rewardType": "FixedAmount",
-            "discountValue": 15
-          }
-        ]
+        "outputParameters": {
+          "results": [
+            {
+              "promotionId": "0c8xx0000000AAA01",
+              "promotionName": "Members 10% off order",
+              "loyaltyPromotionType": "Discount",
+              "rewardType": "Percent",
+              "discountValue": 10
+            },
+            {
+              "promotionId": "0c8xx0000000AAA02",
+              "promotionName": "$15 loyalty credit",
+              "loyaltyPromotionType": "Discount",
+              "rewardType": "FixedAmount",
+              "discountValue": 15
+            }
+          ]
+        }
       }
     }
   },
-  "notes": "Unlike GPM promotion-execution, this does NOT return a priced cart — just eligible promotions. The adapter (PromotionApplier.applyMemberPromotions) applies each reward as an order-level discount. Confirm the real outputParameters field names with whoever configures the GetMemberPromotions process."
+  "notes": "Unlike GPM promotion-execution, this does NOT return a priced cart — just eligible promotions. PromotionApplier.applyMemberPromotions applies each reward as an order-level discount. The envelope (status boolean, outputParameters.outputParameters.results, simulationDetails) is fixed and doc-confirmed; only the inner result fields are implementer-defined — confirm them with whoever configures the GetMemberPromotions process."
 }

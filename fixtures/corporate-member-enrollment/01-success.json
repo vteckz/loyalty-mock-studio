@@ -1,0 +1,63 @@
+{
+  "name": "Corporate member enrolled with transaction journals",
+  "description": "Documented success response for POST corporate-member-enrollments. Mirrors the developer guide JSON example: returns the created business account ID, loyalty program member ID, program name, membership number, and the list of created transaction journals (one Member Enrollment accrual for the new member, one Member Referral accrual for the referring member).",
+  "request": {
+    "body": {
+      "enrollmentDate": "2021-01-01T05:05:05",
+      "membershipNumber": "Member123",
+      "associatedAccountDetails": {
+        "name": "Name1",
+        "phone": "908989898",
+        "website": "www.ab.com",
+        "allowDuplicateRecords": "false",
+        "additionalAccountFieldValues": {
+          "attributes": {
+            "CustomNumber__c": "20.0"
+          }
+        }
+      },
+      "memberStatus": "Active",
+      "referredBy": "Member12",
+      "referredByMemberReferralCode": "MPX12adf",
+      "createTransactionJournals": "true",
+      "transactionJournalStatementFrequency": "Monthly",
+      "additionalMemberFieldValues": {
+        "attributes": {
+          "CustomBoolean__c": "true"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "accountId": "001xx000003GgHXAA0",
+      "loyaltyProgramMemberId": "0lMxx0000000008K9AAI",
+      "loyaltyProgramName": "program1",
+      "membershipNumber": "Member6",
+      "transactionJournals": [
+        {
+          "activityDate": "2021-01-01T08:00:00.000Z",
+          "journalSubType": "Member Enrollment",
+          "journalType": "Accrual",
+          "loyaltyProgram": "program1",
+          "loyaltyProgramMember": "Member6",
+          "referredMember": null,
+          "status": "Pending",
+          "transactionJournalId": "0lVxx00000002EjAAI"
+        },
+        {
+          "activityDate": "2021-01-01T08:00:00.000Z",
+          "journalSubType": "Member Referral",
+          "journalType": "Accrual",
+          "loyaltyProgram": "program1",
+          "loyaltyProgramMember": "Member1",
+          "referredMember": "Member6",
+          "status": "Pending",
+          "transactionJournalId": "0lVxx00000002EkAAI"
+        }
+      ]
+    }
+  },
+  "notes": "Source: Loyalty Management Developer Guide v67.0 (Summer 26). Resource definition at lines 20851-21009; response-body schema \"Corporate Member Enrollment\" at lines 28862-28915. Resource path uses ${loyaltyProgramName} as a path placeholder; full path is /loyalty-programs/${loyaltyProgramName}/corporate-member-enrollments under /services/data/vXX.X (doc shows literal vXX.X). Available version 55.0; method POST only; root XML tag <corporateMemberEnrollment>; Requires Chatter: No.\n\nREQUEST body (Loyalty Account Input via associatedAccountDetails): required fields are enrollmentDate (String), memberStatus (String: Active/Inactive/Custom), membershipNumber (String), associatedAccountDetails (Loyalty Account Input, Required). Optional: additionalMemberFieldValues (Map<String,String> attributes), canReceivePartnerPromotions, canReceivePromotions, createTransactionJournals, enrollmentChannel (CallCenter/Email/Franchise/Mobile/Partner/Pos/Print/Social/Store/Web), membershipEndDate, referredBy, referredByMemberReferralCode (v57.0), transactionJournalStatementFrequency (Daily/Monthly/Yearly), transactionJournalStatementMethod (Email/Mail).\n\nRESPONSE schema properties (all Available 55.0): accountId (String), loyaltyProgramMemberId (String), loyaltyProgramName (String), membershipNumber (String), transactionJournals (Transaction Journal Output[]). transactionJournals item fields taken verbatim from the doc's JSON example: activityDate, journalSubType, journalType, loyaltyProgram, loyaltyProgramMember, referredMember, status, transactionJournalId.\n\nCAVEATS: (1) The guide's response JSON example uses an indented-bullet (\"* key: *value*\") format rather than literal JSON; field names/casing/values transcribed exactly. (2) Doc IDs are truncated (e.g. loyaltyProgramMemberId 0lMxx00000008K9, transactionJournalId 0lVxx00000002Ej, accountId 001xx000003GgHX) — fixture pads them to full 18-char Salesforce-style IDs while keeping the documented prefixes. (3) No error/empty response example is documented for this resource, so only a success fixture was built. (4) HTTP status code is not stated in the doc; 200 used as a reasonable default — implementer may prefer 201 Created. (5) \"Transaction Journal Output[]\" is a referenced sub-schema; its full property table was not separately opened — the journal fields used come directly from this resource's own response example."
+}

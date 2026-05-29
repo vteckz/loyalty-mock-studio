@@ -1,0 +1,36 @@
+{
+  "name": "Usage decreased (mixed success/error per coupon)",
+  "description": "Documented response. The 'Coupon Usage' body wraps couponUsageResultList of 'Coupon Usage Result' objects. First coupon succeeds with remaining redemption counts; second coupon fails because the code doesn't exist (errorMessage + isSuccess=false). Built from the doc's Coupon Usage Result sample array (lines 28932-28955) wrapped in the Coupon Usage property couponUsageResultList (lines 28918-28925).",
+  "request": {
+    "body": {
+      "couponCodeList": [
+        "QWERTY",
+        "ABCD"
+      ],
+      "activityDateTime": "2024-10-05T12:45:19Z",
+      "externalTransactionNumber": "0lVxx000000006T",
+      "customerId": "0lMxx0000000001AAA"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "couponUsageResultList": [
+        {
+          "couponCode": "QWERTY",
+          "isSuccess": true,
+          "redemptionLimit": 10,
+          "redemptionLimitPerCustomer": 3,
+          "remainingRedemptionCount": 6,
+          "remainingRedemptionCountForCustomer": 1
+        },
+        {
+          "couponCode": "ABCD",
+          "errorMessage": "Coupon code doesn't exist.",
+          "isSuccess": false
+        }
+      ]
+    }
+  },
+  "notes": "Resource path, method (POST only), Available version (63.0), and the request body example + property table are all from the documented \"Coupon Usage Decrease (POST)\" definition (lines 24067-24127). Request properties: couponCodeList (List<String>, required), activityDateTime (DateTime, required), externalTransactionNumber (String, required), customerId (String, required). NOTE: the doc's request JSON example uses key \"activityDateTime\" but the property table labels it \"activity DateTime\" (line wrap) — kept as activityDateTime per the JSON example. Response body schema is \"Coupon Usage\" (lines 28918-28925), which has a single property: couponUsageResultList of type \"Coupon Usage Result[]\". CAVEAT: the doc's literal Sample Response (lines 28932-28955) is shown as a bare JSON array of Coupon Usage Result objects, NOT wrapped — but the \"Coupon Usage\" response-body property table indicates the actual POST response wraps that array under couponUsageResultList. I used the wrapped form to match the declared response schema; an implementer may need to confirm whether the real API returns the bare array vs the wrapped object. Coupon Usage Result fields (all documented, lines 28958-28980): couponCode (String), redemptionLimit (Integer), remainingRedemptionCount (Integer), redemptionLimitPerCustomer (Integer), remainingRedemptionCountForCustomer (Integer), isSuccess (Boolean), errorMessage (String). The doc shows success and error variants within the same sample array, so one fixture covers both cases (no separate error fixture is documented as a distinct HTTP error response — errors are per-coupon, returned with HTTP 200). customerId/externalTransactionNumber ids in the request example are realistic Salesforce-style placeholders adapted from the doc's truncated examples."
+}

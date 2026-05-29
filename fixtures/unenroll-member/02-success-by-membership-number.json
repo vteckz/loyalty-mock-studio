@@ -1,0 +1,30 @@
+{
+  "name": "Unenroll member by CurrentMembershipNumber",
+  "description": "Same documented success response shape, using the membership-number request variant (doc lines 23151-23158). Response schema is the standard Loyalty Process output (doc lines 29969-29988): message, outputParameters, simulationDetails, status.",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "CurrentMembershipNumber": "007"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "outputParameters": {
+          "results": [
+            {
+              "MemberId": "0lMRM0000004F152AE"
+            }
+          ]
+        }
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  }
+}

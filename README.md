@@ -27,7 +27,9 @@ The green dot next to a scenario = the one your cartridge calls will currently r
 
 ## Mocked endpoints
 
-These shapes were reconciled against the official **Loyalty Management Developer Guide** (Summer '26). The two promotion endpoints map to **Global Promotions Management (GPM)**; the voucher/member endpoints to the standard Loyalty Connect API.
+The studio mocks the **full out-of-the-box Loyalty Management Business API surface** — **37 endpoints across 9 groups** — all reconciled against the official **Loyalty Management Developer Guide v67.0 (Summer '26)**. Promotion endpoints map to **Global Promotions Management (GPM)**; the rest to the standard Loyalty Connect REST API. Every fixture's path, method, and response field names were verified against the guide (each new one passed an adversarial second-pass verification).
+
+### Core integration set (what the SFCC adapter actually calls)
 
 | Method | Studio URL | Real SF path |
 |---|---|---|
@@ -41,6 +43,21 @@ These shapes were reconciled against the official **Loyalty Management Developer
 | POST | `/api/loyalty/transaction-history` | `…/connect/loyalty/programs/{program}/transaction-history` |
 
 **Promotion Evaluation & Execution** is the core pricing call: send a cart, get back the adjusted cart + line items with discount amounts already computed (`adjustedCartAmount`, per-line `totalCartLineItemDiscountAmount`). **Promotion Reward Application** is the order-placement accrual step.
+
+### Full API surface (grouped, as shown in the tab bar)
+
+The remaining endpoints round out the OOTB Loyalty surface so the dev can mock any Loyalty call, not just the pricing/voucher flow. Mock paths are flat (`/api/loyalty/<id>`); the real documented SF path (with `{placeholders}`) is in each endpoint's `sfPath` and in the in-app **Guide**. Program processes (Issue/Cancel Voucher, Enroll/Unenroll, Credit/Debit Points, Update Member, Tier Processing) share the real `/connect/loyalty/programs/{program}/program-processes/{name}` resource and the standard process envelope (`{ status, message, simulationDetails, outputParameters: { outputParameters: { results: [] } } }`).
+
+- **Promotions (9):** promotion-execution, get-member-promotions, promotion-reward, eligible-promotions, promotion-recommendations, coupon-usage-increase, coupon-usage-decrease, promotion-enrollments, enroll-in-promotion
+- **Vouchers (4):** vouchers (list), vouchers/redeem (reserve/reinstate/redeem), issue-voucher, cancel-voucher
+- **Members (5):** members (profile), member-benefits, engagement-trail, update-member-details, tier-processing
+- **Enrollment (3):** individual-member-enrollment, corporate-member-enrollment, unenroll-member
+- **Transactions (6):** transaction-history, transaction-ledger-summary, credit-points, debit-points, transaction-journals-execution, transaction-journals-simulation
+- **Partners (2):** link-member-partner, unlink-member-partner
+- **Clubs (3):** club-member-enrollment, club-member-profile, club-membership-renewal
+- **Admin (4):** promotions-manage (create/list), promotion-detail (get/update), promotion-configuration, promotion-rule-configuration
+
+> Some responses are partly **implementer-defined** in Salesforce (program-process `results[]` contents, promotion-rule event/reward maps). Those fixtures use the documented envelope with a plausible inner shape and say so in their `notes`. Add a new endpoint by following the 3-step pattern in `src/lib/endpoints.ts`.
 
 **Get Member Promotions** is the *alternative* pricing path (still an open question for the Salesforce side). It's a program process returning the member's eligible promotions rather than a priced cart — its shape is implementer-defined, so those fixtures are a plausible default, not doc-confirmed. The adapter switches to it by setting `LoyaltyConfig.PROMOTION_API = 'GET_MEMBER_PROMOTIONS'`.
 

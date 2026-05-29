@@ -1,0 +1,34 @@
+{
+  "name": "Tier change success (by MemberId)",
+  "description": "Documented sample success response for the Update Member Tier (TierProcessing) process. Member upgraded from Silver to Gold. Body is the Loyalty Process Output object. Request example uses MemberId.",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "MemberId": "0lMxx0000000001AAA",
+          "NewTier": "Gold",
+          "ReasonForChange": "update tier"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "results": [
+          {
+            "CurrentTier": "Gold",
+            "TierExpirationDate": "2023-10-31",
+            "PreviousTier": "Silver",
+            "EffectiveDate": "2023-09-07"
+          }
+        ]
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  },
+  "notes": "IMPLEMENTER-DEFINED: The doc states explicitly (line ~23339) that \"The request and response parameters vary depending on the input and output parameters configured for the TierProcessing process type in a Salesforce org.\" So the processParameters input fields (MemberId / MembershipNumber / NewTier / ReasonForChange) and the outputParameters.results fields (CurrentTier / TierExpirationDate / PreviousTier / EffectiveDate) come from the documented sample but are NOT guaranteed for every org — they reflect the default out-of-the-box TierProcessing template.\n\nPATH: The actual process name in the path is TierProcessing (per the resource example table at line 22592, group=Members). NOTE the doc's prose Example URL at line ~23323 shows the path ending in \"updateTier\" (a sample process name for that org's configured process), while the resource table lists the template/process API name as TierProcessing. I used TierProcessing in sfPath to match the target. Caller substitutes {programName} (doc uses DemoProgram).\n\nWRAPPER: processParameters is the standard required request wrapper (type: Loyalty Process Parameter Map). Response body schema name: Loyalty Process Output (top-level keys: message, outputParameters, simulationDetails, status — all confirmed from the documented JSON example).\n\nVERSIONS: Loyalty Program Process resource Available version = 56.0; TierProcessing value available in API version 56.0+ (line 8018). Resource Example URLs in the doc use v67.0 (Summer 26). MembershipNumber/MemberId are interchangeable request fields (doc note references \"Loyalty Management Connect API Interchangeable Request Fields\").\n\nNo documented error/empty fixture: the doc shows only success-shaped responses (status:true) for this process, so I did not fabricate an error fixture. An org error would surface via the standard Loyalty Process Output with status:false and a populated message string, but no concrete error example is in the doc."
+}

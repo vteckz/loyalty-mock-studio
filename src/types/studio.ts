@@ -15,7 +15,24 @@ export interface EndpointMeta {
   /** Reference path on the real Salesforce Loyalty REST API (for the dev's reading). */
   sfPath: string;
   description: string;
+  /** Functional grouping for the endpoint tab bar (e.g. "Promotions", "Vouchers"). */
+  group?: string;
+  /** Salesforce API version the resource became available (e.g. "65.0"). */
+  available?: string;
 }
+
+/** Display order for endpoint groups in the tab bar. Unknown groups sort last. */
+export const GROUP_ORDER = [
+  "Auth",
+  "Promotions",
+  "Vouchers",
+  "Members",
+  "Enrollment",
+  "Transactions",
+  "Partners",
+  "Clubs",
+  "Admin",
+] as const;
 
 export interface ScenarioFile {
   id: string;

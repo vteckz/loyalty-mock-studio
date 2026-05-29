@@ -1,0 +1,30 @@
+{
+  "name": "Issue voucher by membership number",
+  "description": "Same documented success response shape, using the second documented request variant (membership number + discount percentage, lines 23086-23095). Response body identical to the single documented Sample JSON Response.",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "MembershipNumber": "003",
+          "VoucherCode": "15OFF",
+          "VoucherDiscountPercentage": 20
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "outputParameters": {
+          "results": [
+            {}
+          ]
+        }
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "Credit points success (membership number)",
+  "description": "Same documented success response shape as fixture 01, paired with the documented membership-number variant of the request (lines 22770-22796). The response body is identical because the doc shows a single Sample JSON Response for both request variants.",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "TransactionJournal": {
+            "ActivityDate": "2023-08-27T00:00:00Z",
+            "ExternalTransactionNumber": "1",
+            "InvoiceDate": "2023-08-23",
+            "JournalTypeName": "Accrual",
+            "MembershipNumber": "M1256",
+            "TransactionAmount": "45.0",
+            "CurrencyIsoCode": "USD",
+            "Status": "Processed"
+          },
+          "PointsToCredit": 100
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "outputParameters": {
+          "results": [
+            {
+              "PointsCredited": 100
+            }
+          ]
+        }
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  }
+}

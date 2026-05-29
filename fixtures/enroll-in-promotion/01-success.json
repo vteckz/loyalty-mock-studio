@@ -1,0 +1,33 @@
+{
+  "name": "Enroll member in promotion by member ID and promotion ID",
+  "description": "Documented success response (Sample JSON Response, lines 22950-22976) for enrolling a member into a promotion. Inner outputParameters.results contains the enrolled MemberId and the newly created LoyaltyProgramMbrPromotionId. Request shape matches the documented member-ID + promotion-ID example (lines 22929-22937).",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "MemberId": "0lMxx00000000BJEAY",
+          "PromotionId": "0c8xx00000000BJEAY"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "outputParameters": {
+          "results": [
+            {
+              "MemberId": "0lMRM0000004GBn2AM",
+              "LoyaltyProgramMbrPromotionId": "1lpRM0000004CEmYAM"
+            }
+          ]
+        }
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  },
+  "notes": "AUTHORITATIVE: All fields, paths, method, and version taken verbatim from Loyalty Management Developer Guide v67.0. Resource definition + HTTP methods/Available version at lines 22596-22634; \"Enroll for Promotions\" section (Example URL, Sample JSON Requests, Sample JSON Response) at lines 22914-22980.\n\nORG-CONFIGURED: The doc explicitly states (line 22922-22923) that the request and response parameters vary depending on the input/output parameters configured for the EnrollInPromotion process type in a Salesforce org. So the SET of request fields (MemberId/PromotionId vs MembershipNumber/PromotionName, and any other inputs) and the SET of response result fields are implementer-defined. The two documented request variants and the single documented response shape are reproduced exactly; treat the specific field set as a documented EXAMPLE rather than a fixed contract.\n\nREQUEST WRAPPER: Standard processParameters (typed \"Loyalty Process Parameter Map\" in the property table, lines 22626-22629) — an array of objects. Required.\n\nRESPONSE SCHEMA: Named \"Loyalty Process Output\" (line 22633). The guide does not provide a separate Response Bodies property table for it; the shape is documented only via the Sample JSON Response (message:null, outputParameters.outputParameters.results[], simulationDetails:{}, status:true). The doubly-nested outputParameters.outputParameters is exactly as printed in the doc, not a transcription artifact.\n\nVERSION: \"Available version\" is 56.0 (line 22599); the example URL uses /services/data/v67.0/ (the guide's current version). available is set to the documented \"Available version\" 56.0; sfPath uses v67.0 as shown in the Example URL.\n\nIDS: Used the exact documented Salesforce IDs from the sample JSON (MemberId 0lMRM0000004GBn2AM, LoyaltyProgramMbrPromotionId 1lpRM0000004CEmYAM; request placeholder IDs 0lMxx00000000BJEAY / 0c8xx00000000BJEAY as shown).\n\nNO ERROR FIXTURE: The doc shows no error/failure JSON example for this process, so only success fixtures were created. Second fixture reuses the single documented success response under the alternative documented request form.\n\nOPEN QUESTION: A real org may return additional/different result fields or a status:false / message-populated error envelope; those shapes are not documented for this specific process and were therefore not fabricated."
+}

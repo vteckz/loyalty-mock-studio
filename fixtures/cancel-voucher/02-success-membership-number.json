@@ -1,0 +1,31 @@
+{
+  "name": "Voucher canceled by membership number and voucher code",
+  "description": "Second documented request variant (lines 22690-22701) using MembershipNumber + VoucherCode. Doc note: if the voucher code isn't unique, provide a voucher ID or number instead. Response body reuses the single documented Sample JSON Response shape (the doc shows only one response example for this process).",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "MembershipNumber": "003",
+          "VoucherCode": "15OFF"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "outputParameters": {
+          "results": [
+            {
+              "VoucherId": "0kDRM0000004Ct22AE"
+            }
+          ]
+        }
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  }
+}

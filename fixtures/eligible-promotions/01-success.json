@@ -1,0 +1,154 @@
+{
+  "name": "Eligible promotions for a loyalty program member's cart",
+  "description": "Documented success response: a promotions list with two eligible promotions. The first promotion includes coupon details, limits, and multiple rule benefit types (Discount at Cart and CartLineItem level, plus Voucher); the second offers Points and a Badge. Field names and casing are taken exactly from the Response Bodies JSON example; only the placeholder ids/lineItemid were left as documented.",
+  "request": {
+    "body": {
+      "cart": {
+        "cartDetails": [
+          {
+            "activityStartDate": "2023-06-14T12:45:19Z",
+            "loyaltyProgramMemberId": "0lMxx0000000001AAA",
+            "membershipNumber": "Member-005",
+            "currencyISOCode": "USD",
+            "transactionAmount": 499,
+            "cartLineDetails": [
+              {
+                "cartLineProductId": "01txx0000006iTsAAI",
+                "cartLineProductCode": "AnyProductCode",
+                "cartLineProductStockKeepingUnit": "AnySKU",
+                "cartLineItemQuantity": 2,
+                "cartLineItemAmount": 99,
+                "cartLineProductCatalogId": "0ZSxx00000002d8XAQ"
+              },
+              {
+                "cartLineProduct": "Coke",
+                "cartLineProductCode": "AnyProductCode",
+                "cartLineProductStockKeepingUnit": "AnySKU",
+                "cartLineItemQuantity": 10,
+                "cartLineItemAmount": 400,
+                "cartLineProductCatalog": "Beverages"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "promotions": [
+        {
+          "id": "0c8xx0000009c6DAAQ",
+          "promotionCode": "10OFF",
+          "displayName": "10% off on all electronics",
+          "priority": 1,
+          "currencyCode": "USD",
+          "coupon": {
+            "couponDetails": {
+              "couponCode": "COUPON-123",
+              "status": "Active",
+              "startDateTime": "2024-01-01",
+              "endDateTime": null
+            },
+            "message": "SingleActive"
+          },
+          "isAutomatic": false,
+          "additionalFields": {
+            "startDate": "2023-09-10",
+            "endDate": "2023-09-20",
+            "promotionLocation__c": "HYD"
+          },
+          "limits": [
+            {
+              "type": "PerLineItem",
+              "limit": 1
+            }
+          ],
+          "rules": [
+            {
+              "ruleName": "10PercentElectronics",
+              "benefits": [
+                {
+                  "type": "Discount",
+                  "discountLevel": "Cart",
+                  "discountType": "Amount",
+                  "discountValue": 10
+                },
+                {
+                  "type": "Discount",
+                  "discountLevel": "CartLineItem",
+                  "lines": [
+                    {
+                      "id": "6c139faa-b749-11ed-afa1-0242ac120002",
+                      "quantity": 3
+                    },
+                    {
+                      "id": "346bded6-b74a-11ed-afa1-0242ac120002",
+                      "quantity": 2
+                    }
+                  ],
+                  "discountType": "Amount",
+                  "discountValue": 10
+                },
+                {
+                  "type": "Voucher",
+                  "voucherDefinition": "ELEC10",
+                  "voucherExpiryDate": "2023-12-31"
+                }
+              ]
+            },
+            {
+              "ruleName": "5PercentAppliances",
+              "benefits": [
+                {
+                  "type": "Discount",
+                  "discountLevel": "Cart",
+                  "discountType": "Percent",
+                  "discountValue": 5
+                },
+                {
+                  "type": "FreeProduct",
+                  "lineItemid": "b749-11ed-afa1",
+                  "lines": [
+                    {
+                      "id": "6c139faa-b749-11ed-afa1-0242ac120002",
+                      "quantity": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0c8xx0000009c6EAAQ",
+          "promotionCode": "20OFF",
+          "displayName": "Get 100 points on all clothing",
+          "priority": 2,
+          "currencyCode": "USD",
+          "additionalFields": {
+            "startDate": "2023-09-10"
+          },
+          "rules": [
+            {
+              "ruleName": "100PointsClothing",
+              "benefits": [
+                {
+                  "type": "Points",
+                  "points": "10",
+                  "loyaltyProgramCurrencyName": "NQP"
+                },
+                {
+                  "type": "Badge",
+                  "loyaltyProgramBadgeName": "Ranger"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "notes": "Source: Resource definition at /tmp/loyalty_api.txt lines 23517-23722; response schema \"Eligible Promotions List\" at lines 29096-29236.\n\nVERIFIED FROM DOC:\n- Resource path: /global-promotions-management/eligible-promotions (Available version 60.0; contextInstanceId param added in 65.0). HTTP method: POST only.\n- Request root XML tag: CartInputMapRepresentation. Top-level request property is `cart` (Map<String,Object>, Required) — its inner fields (cartDetails, cartLineDetails, etc.) are configured per the CartDetailGetEligiblePromotion context service definition in the org, so they are implementer/org-defined, not a fixed schema. The doc notes the party identifier field key as \"contactId/loyaltyProgramMemberId/accountId\" in examples (i.e. you supply ONE of contactId, loyaltyProgramMemberId, or accountId; for a loyalty member, membershipNumber or loyaltyProgramMemberId + currencyISOCode are required).\n- Optional query/request parameter: ruleLibraryApiName (String, Available 59.0) — required only if multiple active Rule Libraries with usage type Global Promotion Management exist.\n- Response property table: only one documented top-level property: `promotions` (type \"Promotion Details[]\", Filter Group Small, Available 60.0). Note the property table capitalizes it \"Promotions\" but the JSON example uses lowercase \"promotions\" — I used the JSON-example casing \"promotions\" in the fixtures (that is what a client parses).\n\nCAVEATS / OPEN QUESTIONS:\n- The success fixture body is copied verbatim from the documented JSON example (field names/casing/benefit types exact); I only swapped the example ids (\"0c85i0000009c6D\") for fuller 18-char Salesforce-style ids per task instructions. The original doc reused the SAME id for both promotions (\"0c85i0000009c6D\") — I gave them distinct ids in the fixture since real responses would differ.\n- The doc does NOT show an explicit empty-result or error JSON for this resource. Fixture 02-empty.json is the logical empty form of the documented `promotions` array (the spec text explicitly says promotions that reach their PromotionLimit are EXCLUDED from the response, which can yield an empty list). docVerified overall is true because the success example + property table are real; the empty case is an inferred-but-schema-consistent variant.\n- Benefit object shape is heterogeneous in the doc (Discount has discountLevel/discountType/discountValue and optional lines; Voucher has voucherDefinition/voucherExpiryDate; FreeProduct has lineItemid/lines; Points has points/loyaltyProgramCurrencyName; Badge has loyaltyProgramBadgeName). No formal sub-schema property table for Promotion Details, coupon, limits, rules, or benefits is given near the example — those are only illustrated by the JSON, so treat field-level details as example-derived.\n- mockPath keeps the documented sub-path (global-promotions-management/eligible-promotions) rather than collapsing to a single kebab token, to stay faithful to the real resource path."
+}

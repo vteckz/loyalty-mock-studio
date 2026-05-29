@@ -1,0 +1,36 @@
+{
+  "name": "Update by current membership number",
+  "description": "Same documented success response shape, demonstrating the second documented request variant that identifies the member via CurrentMembershipNumber. Doc shows only one Sample JSON Response for this process, reused here.",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "CurrentMembershipNumber": "M1234",
+          "MembershipNumber": "M1234",
+          "Email": "adam.smith@nto.com",
+          "EnrollmentDate": "2023-05-28",
+          "LastName": "Smith"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "outputParameters": {
+          "results": [
+            {
+              "MemberId": "0lMRM0000004F102AE",
+              "ContactId": "003RM0000088CugYAE",
+              "TransactionJournalId": null
+            }
+          ]
+        }
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  }
+}

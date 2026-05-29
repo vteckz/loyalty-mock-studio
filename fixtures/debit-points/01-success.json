@@ -1,0 +1,41 @@
+{
+  "name": "Debit points - success (member ID)",
+  "description": "Documented sample JSON response for a successful DebitPointsFromMembers run. PointsToDebit was 200.0 in the request; response echoes PointsDebited 200.0. Mirrors the doc's 'Here's an example with a member ID' request and the single 'Sample JSON Response' (lines 22844-22907).",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "TransactionJournal": {
+            "ActivityDate": "2023-08-27T00:00:00Z",
+            "ExternalTransactionNumber": "1",
+            "InvoiceDate": "2023-08-23",
+            "JournalTypeName": "Redemption",
+            "MemberId": "0lMRM0000004G5h2AE",
+            "TransactionAmount": "45.0",
+            "CurrencyIsoCode": "USD",
+            "Status": "Processed"
+          },
+          "PointsToDebit": 200
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "outputParameters": {
+          "results": [
+            {
+              "PointsDebited": 200
+            }
+          ]
+        }
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  },
+  "notes": "AUTHORITATIVE: Loyalty Management Business APIs Developer Guide v67.0. Resource is the generic \"Loyalty Program Process\" (Run a loyalty process), path /connect/loyalty/programs/${programName}/program-processes/${processName}; DebitPointsFromMembers is the processName (doc line 22568, 22822). Available version 56.0, HTTP method POST only (lines 22598-22603). Request body wrapper = processParameters (type \"Loyalty Process Parameter Map\", Required, v56.0); Response body = \"Loyalty Process Output\" (line 22633). Path placeholders programName + processName are Request parameters (both Required, v56.0). IMPLEMENTER-DEFINED: the doc explicitly states \"The request and response parameters vary depending on the input and output parameters configured for the DebitPointsFromMembers process type in a Salesforce org\" (line 22830). So the inner contents of TransactionJournal, PointsToDebit, and the response results[] (PointsDebited) are org-configured — only the documented sample shapes are reproduced here. Two request variants are documented (MemberId vs MembershipNumber, lines 22844 & 22863); fixture uses the MemberId variant. Only ONE response example is shown in the doc and it is a success (status:true) — NO error/empty example is documented, so no error fixture was fabricated. Example URL in subsection uses v67.0 (line 22827). Note: a separate same-named \"Debit Points\" Standard Invocable Action exists at /actions/standard/debitPoints (line 34746) — that is a DIFFERENT API and was not used."
+}

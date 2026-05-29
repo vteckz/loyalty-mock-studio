@@ -1,0 +1,191 @@
+{
+  "name": "Promotion configuration returned",
+  "description": "Documented Promotion Configuration response body (top-level fields apiExecutedDateTime, promotionDetails, promotionLastModifiedDateTime, promotionRuleList, relatedRuleLibrary) with one eligibility rule and one reward rule. Structure and field names/casing taken verbatim from the JSON example on doc pages 584-594; large repeated rule arrays compacted to representative entries with realistic Salesforce-style ids.",
+  "response": {
+    "status": 200,
+    "body": {
+      "apiExecutedDateTime": "2026-05-29T09:02:38.809Z",
+      "promotionDetails": {
+        "additionalFieldValues": {
+          "attributes": {}
+        },
+        "displayName": "Tea Time",
+        "endDateTime": "2026-07-31T08:58:00.000Z",
+        "name": "Tea Time",
+        "priorityNumber": 1,
+        "promotionCode": "TEATIME",
+        "promotionLimits": {},
+        "startDateTime": "2026-05-01T08:58:00.000Z"
+      },
+      "promotionLastModifiedDateTime": "2026-05-29T09:01:51.000Z",
+      "promotionRuleList": [
+        {
+          "apiName": "Eligibility_Rule_Unified_Promotions_0c8xx000000034L",
+          "isEligibilityRule": true,
+          "name": "Eligibility_Rule_Unified_Promotions_0c8xx000000034L_v1",
+          "ruleActionList": [],
+          "ruleFilterCriteriaList": [
+            {
+              "conditionLogic": "1",
+              "name": "FilterCriteria1",
+              "ruleActionList": [],
+              "ruleConditionList": [
+                {
+                  "operator": "Equals",
+                  "parameterName": "CurrencyISOCode",
+                  "sequenceNumber": 1,
+                  "valueList": [
+                    "USD"
+                  ],
+                  "valueType": "Literal"
+                }
+              ],
+              "sequenceNumber": 1,
+              "type": "Exists"
+            }
+          ],
+          "ruleParameterList": [
+            {
+              "contextTag": "currencyISOCode",
+              "dataType": "Text",
+              "decimalPlaces": 0,
+              "hasContextTagMapping": true,
+              "isCollection": true,
+              "isInput": true,
+              "isOutput": false,
+              "name": "CurrencyISOCode",
+              "type": "Tag"
+            }
+          ],
+          "sequenceNumber": 2147483647
+        },
+        {
+          "apiName": "DiscountTea10Unified_Promotions_0c8xx000000034L",
+          "isEligibilityRule": false,
+          "name": "DiscountTea10Unified_Promotions_0c8xx000000034L_v1",
+          "ruleActionList": [],
+          "ruleFilterCriteriaList": [
+            {
+              "conditionLogic": "1",
+              "name": "FinalFilterCriteria",
+              "ruleActionList": [],
+              "ruleConditionList": [
+                {
+                  "operator": "GreaterThanOrEquals",
+                  "parameterName": "TransactionAmount",
+                  "sequenceNumber": 1,
+                  "valueList": [
+                    "25.0"
+                  ],
+                  "valueType": "Literal"
+                }
+              ],
+              "sequenceNumber": 1,
+              "type": "Exists"
+            },
+            {
+              "conditionLogic": "1",
+              "name": "NonLoyaltyMemberCriteria",
+              "parentFilterCriteria": "BranchCriteria",
+              "ruleActionList": [
+                {
+                  "actionType": "SetValue",
+                  "name": "pricingReward1",
+                  "ruleActionParameterList": [
+                    {
+                      "name": "type",
+                      "sequenceNumber": 1,
+                      "value": "ProvideDiscount",
+                      "valueType": "Literal"
+                    },
+                    {
+                      "name": "discountLevel",
+                      "sequenceNumber": 2,
+                      "value": "Cart",
+                      "valueType": "Literal"
+                    },
+                    {
+                      "name": "discountValue",
+                      "sequenceNumber": 3,
+                      "value": "10.0",
+                      "valueType": "Literal"
+                    },
+                    {
+                      "name": "discountType",
+                      "sequenceNumber": 4,
+                      "value": "PercentageOff",
+                      "valueType": "Literal"
+                    }
+                  ],
+                  "sequenceNumber": 1
+                }
+              ],
+              "ruleConditionList": [
+                {
+                  "operator": "GreaterThanOrEquals",
+                  "parameterName": "ActivityStartDateTime",
+                  "sequenceNumber": 1,
+                  "valueList": [
+                    "1970-01-01 08:00:00"
+                  ],
+                  "valueType": "Literal"
+                }
+              ],
+              "sequenceNumber": 3,
+              "type": "Exists"
+            },
+            {
+              "name": "BranchCriteria",
+              "parentFilterCriteria": "FinalFilterCriteria",
+              "ruleActionList": [],
+              "ruleConditionList": [],
+              "sequenceNumber": 2,
+              "type": "Branch"
+            }
+          ],
+          "ruleParameterList": [
+            {
+              "contextTag": "transactionAmount",
+              "dataType": "Currency",
+              "decimalPlaces": 0,
+              "hasContextTagMapping": true,
+              "isCollection": true,
+              "isInput": true,
+              "isOutput": false,
+              "name": "TransactionAmount",
+              "type": "Tag"
+            },
+            {
+              "dataType": "Text",
+              "decimalPlaces": 0,
+              "hasContextTagMapping": false,
+              "isCollection": false,
+              "isInput": false,
+              "isOutput": true,
+              "name": "discountLevel",
+              "type": "Variable"
+            },
+            {
+              "dataType": "Numeric",
+              "decimalPlaces": 0,
+              "hasContextTagMapping": false,
+              "isCollection": false,
+              "isInput": false,
+              "isOutput": true,
+              "name": "discountValue",
+              "type": "Variable"
+            }
+          ],
+          "sequenceNumber": 1
+        }
+      ],
+      "relatedRuleLibrary": {
+        "apiName": "GPMRuleLibrary",
+        "description": "GPMRuleLibrary",
+        "name": "GPMRuleLibrary_v1",
+        "relatedContextDefinitionDeveloperName": "GPMContext"
+      }
+    }
+  },
+  "notes": "Method is GET only (doc line 23744). Resource version 61.0 (doc line 23742) even though resource example URL shows v67.0 — sfPath keeps v67.0 path prefix as documented in the Resource example; available reflects the documented \"Available version\" 61.0. promotionId is a path placeholder (required, String) — must belong to a promotion whose rules use a non-Loyalty promotion template. Optional query param relatedObjectAndFieldApiNames is String[] (repeatable), one field per object as ObjectApiName.FieldApiName; not modeled in fixture. Response schema name is \"Promotion Configuration\" (doc Response Bodies, pages 584-594). Top-level properties per property table (lines 31936-31952): apiExecutedDateTime (String), promotionDetails (Unified Promotions Output[]), promotionLastModifiedDateTime (String), promotionRuleList (Promotion Rule[]), relatedRuleLibrary (Rule Library[]). The doc's JSON example is very large with deeply nested rule/criteria arrays (incl. additional reward rule TeaAndCoffeeDiscount10..., Loop/Branch criteria, Accumulate aggregate params) — the success fixture compacts those repeated structures to two representative rules while preserving exact field names and casing; an implementer wanting the full payload should copy lines 31252-31933 verbatim. No error or empty-result example is shown in the doc for this endpoint, so only a success fixture is provided. IDs in the example (0c8xx000000034L) are doc-style placeholders; kept as-is for fidelity."
+}

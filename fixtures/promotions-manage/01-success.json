@@ -1,0 +1,173 @@
+{
+  "name": "Create promotion success",
+  "description": "POST success. Response is the documented \"Promotion\" output schema (line 32491): top-level promotionConfigurationWarnings (String[]), promotionDetails (Unified Promotions Output[] — built from the documented Unified Promotions JSON example at line 33409), and rules (Template Configuration[] — fields from the property table at line 33044). requestExample built from the documented \"JSON example for POST and PUT\" at line 24204.",
+  "request": {
+    "body": {
+      "promotionDetails": {
+        "name": "Sample Promotion 6",
+        "displayName": "Sample Promotion",
+        "priorityNumber": 1,
+        "description": "Sample promotion description",
+        "promotionCode": "XYZ",
+        "startDateTime": "2023-06-30T00:00:00.000Z",
+        "endDateTime": "2023-12-30T00:00:00.000Z",
+        "objective": "To increase sales",
+        "isAutomatic": true,
+        "loyaltyProgram": {
+          "name": "NTO"
+        },
+        "additionalFieldValues": {
+          "attributes": {
+            "isUnifiedPromotion__c": true
+          }
+        },
+        "promotionEligibility": {
+          "productCatalog": {
+            "id": "0ZSxx000000001dGAA"
+          },
+          "eligibleProductCategories": [
+            {
+              "id": "0ZGxx0000000001GAA"
+            }
+          ],
+          "eligibleProducts": [
+            {
+              "name": "someProduct"
+            }
+          ],
+          "eligibleSegments": [
+            {
+              "name": "someSegment"
+            }
+          ],
+          "eligibleCustomerEvents": {
+            "event": "MemberBirthday",
+            "eventPeriodUnit": ""
+          },
+          "eligibleEnrollmentPeriod": {
+            "isEnrollmentRequired": true,
+            "enrollmentStartDate": "",
+            "enrollmentEndDate": ""
+          }
+        },
+        "promotionLimits": {
+          "perLineItemLimit": 10,
+          "pointsPerCustomerLimit": 5,
+          "vouchersPerCustomerLimit": 5,
+          "perCartLimit": 5,
+          "usePerCustomerLimit": 5,
+          "totalUseLimit": 25,
+          "pointsLimit": 1000,
+          "vouchersLimit": 100,
+          "liabilityLimit": 10000,
+          "loyaltyProgramCurrency": {
+            "id": "0lcxx0000000001AAA"
+          }
+        }
+      },
+      "rules": []
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "promotionConfigurationWarnings": [],
+      "promotionDetails": [
+        {
+          "additionalFieldValues": {
+            "attributes": {
+              "isUnifiedPromotion__c": "true"
+            }
+          },
+          "description": "Buy 2 Get 1 free",
+          "displayName": "Sample Promotion",
+          "endDateTime": "2023-12-30T00:00:00.000Z",
+          "id": "0c8SB0000000rCPYAY",
+          "loyaltyProgram": {
+            "id": "0lpSB00000001If",
+            "name": "Program-001"
+          },
+          "name": "Free Beverage",
+          "objective": "To increase sales",
+          "priorityNumber": 1,
+          "isAutomatic": true,
+          "promotionEligibility": {
+            "eligibleChannels": [
+              {
+                "channelType": "Offline",
+                "retailLocationGroup": {
+                  "id": "0Y2SB000000004r",
+                  "name": "test"
+                },
+                "store": {
+                  "id": "0YQSB000000006T",
+                  "name": "test Store"
+                }
+              }
+            ],
+            "eligibleCustomerEvents": {
+              "event": "MemberBirthday",
+              "eventPeriodUnit": "Date"
+            },
+            "eligibleEnrollmentPeriod": {
+              "enrollmentEndDate": "2023-12-30T00:00:00.000Z",
+              "enrollmentStartDate": "2023-06-30T00:00:00.000Z",
+              "isEnrollmentRequired": true
+            },
+            "eligibleLoyaltyTiers": [
+              {
+                "tier": {
+                  "id": "0lgSB00000000srYAA",
+                  "name": "Silver"
+                },
+                "tierGroup": {
+                  "id": "0ltSB00000000T3YAI",
+                  "name": "Group-001"
+                }
+              }
+            ],
+            "eligibleProductCategories": [
+              {
+                "id": "0ZGSB0000002td7",
+                "name": "Beverages"
+              }
+            ],
+            "eligibleProducts": [
+              {
+                "id": "01tSB0000008Lth",
+                "name": "Coke"
+              }
+            ]
+          },
+          "promotionLimits": {
+            "liabilityLimit": 10000,
+            "loyaltyProgramCurrency": {
+              "id": "NQP",
+              "name": "0lcSB00000001Tx"
+            },
+            "perCartLimit": 5,
+            "perLineItemLimit": 10,
+            "pointsPerCustomerLimit": 5,
+            "usePerCustomerLimit": 5,
+            "vouchersLimit": 100,
+            "vouchersPerCustomerLimit": 5
+          },
+          "startDateTime": "2023-06-30T00:00:00.000Z"
+        }
+      ],
+      "rules": [
+        {
+          "ruleName": "Free Beverage Rule",
+          "templateName": "Buy2Get1Free",
+          "journalType": "Reward",
+          "journalSubType": "Voucher",
+          "journalSubTypeName": "VoucherIssued",
+          "priority": 1,
+          "eventConfiguration": [],
+          "rewardConfiguration": []
+        }
+      ]
+    }
+  },
+  "notes": "VERIFIED against doc. Resource definition \"Promotions Creation (POST, PUT)\" at lines 24130-24158: Resource /global-promotions-management/promotions; HTTP methods POST PUT; Available version 64.0; request body = promotionDetails (Unified Promotions Input[]) + rules (Unified Promotion Template Input[]); Response body for POST = \"Promotion\". The task labels this \"Promotions (Create / List)\" with method POST — the doc only documents POST and PUT here; there is NO GET/list variant on the bare /promotions path (GET retrieval is on /promotions/{promotionId}, a separate resource at line 24190). mockPath kept generic kebab; could also be /api/loyalty/global-promotions-management/promotions.\n\nCAVEATS / implementer-defined:\n1) The \"Promotion\" response schema (line 32491) has NO standalone JSON example in the doc — only a property table listing promotionConfigurationWarnings (String[]), promotionDetails (Unified Promotions Output[]), rules (Template Configuration[]). The promotionDetails array element in the fixture is the verbatim documented \"Unified Promotions\" output JSON example (line 33409). The rules array element is SYNTHESIZED from the Template Configuration property-table field names (line 33044): event Configuration -> rendered as eventConfiguration (doc shows spaced label \"event Configuration\" due to PDF column wrap; exact JSON key not shown in any example), reward Configuration -> rewardConfiguration, journalSubTypeName, ruleName, templateName, journalType, journalSubType, priority. Casing of eventConfiguration/rewardConfiguration is INFERRED — no JSON example exists to confirm. Flag for implementer to verify against a live org.\n2) The request JSON example at line 24204 is truncated/page-broken in the source (e.g. eligibleChannels show \"***\" placeholders, eligibleCampaign/eligibleLoyaltyPartnerProducts/eligibleCoupons appear with empty strings); I trimmed the all-placeholder branches and kept the well-formed fields. rules in the requestExample left as [] because the doc's request example does not include a rules payload sample (only the property table names the type Unified Promotion Template Input[]).\n3) No error/empty fixture provided — the doc shows no error response example for this resource.\n4) The request \"Properties\" table (line 24335) lists promotion-level fields (additionalFieldValues, businessUnit, currencyIsoCode, description, displayName, endDateTime, isAutomatic, ...) that belong INSIDE promotionDetails; the nesting matches the JSON example."
+}

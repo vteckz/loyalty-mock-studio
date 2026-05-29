@@ -1,0 +1,33 @@
+{
+  "name": "Tier change success (by MembershipNumber)",
+  "description": "Same documented success response shape, invoked with MembershipNumber instead of MemberId (both are interchangeable request fields per the doc).",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "MembershipNumber": "M2_Chloe_Sun",
+          "NewTier": "Gold",
+          "ReasonForChange": "update tier"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "results": [
+          {
+            "CurrentTier": "Gold",
+            "TierExpirationDate": "2023-10-31",
+            "PreviousTier": "Silver",
+            "EffectiveDate": "2023-09-07"
+          }
+        ]
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "name": "Update promotion (PUT 200)",
+  "description": "PUT updates a promotion record (must first be deactivated). requestExample is the documented JSON for POST and PUT (doc p.462-464, root XML tag unifiedPromotionsInputRepresentation). Response is the same Promotion output representation echoing the updated promotionDetails.",
+  "request": {
+    "body": {
+      "promotionDetails": {
+        "name": "Sample Promotion 6",
+        "displayName": "Sample Promotion",
+        "priorityNumber": 1,
+        "description": "Sample promotion description",
+        "promotionCode": "XYZ",
+        "startDateTime": "2023-06-30T00:00:00.000Z",
+        "endDateTime": "2023-12-30T00:00:00.000Z",
+        "objective": "To increase sales",
+        "isAutomatic": true,
+        "loyaltyProgram": {
+          "name": "NTO"
+        },
+        "additionalFieldValues": {
+          "attributes": {
+            "isUnifiedPromotion__c": true
+          }
+        },
+        "promotionEligibility": {
+          "productCatalog": {
+            "id": "0ZSxx000000001dGAA"
+          },
+          "eligibleProductCategories": [
+            {
+              "id": "0ZGxx0000000001GAA"
+            }
+          ],
+          "eligibleProducts": [
+            {
+              "name": "someProduct"
+            }
+          ],
+          "eligibleSegments": [
+            {
+              "name": "someSegment"
+            }
+          ],
+          "eligibleCustomerEvents": {
+            "event": "MemberBirthday",
+            "eventPeriodUnit": ""
+          },
+          "eligibleEnrollmentPeriod": {
+            "isEnrollmentRequired": true,
+            "enrollmentStartDate": "",
+            "enrollmentEndDate": ""
+          }
+        },
+        "promotionLimits": {
+          "perLineItemLimit": 10,
+          "pointsPerCustomerLimit": 5,
+          "vouchersPerCustomerLimit": 5,
+          "perCartLimit": 5,
+          "usePerCustomerLimit": 5,
+          "totalUseLimit": 25,
+          "pointsLimit": 1000,
+          "vouchersLimit": 100,
+          "liabilityLimit": 10000,
+          "loyaltyProgramCurrency": {
+            "id": "0lcxx0000000001AAA"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "promotionConfigurationWarnings": [],
+      "promotionDetails": [
+        {
+          "additionalFieldValues": {
+            "attributes": {
+              "isUnifiedPromotion__c": "true"
+            }
+          },
+          "description": "Sample promotion description",
+          "displayName": "Sample Promotion",
+          "endDateTime": "2023-12-30T00:00:00.000Z",
+          "id": "0c8SB0000000rCPYAY",
+          "loyaltyProgram": {
+            "name": "NTO"
+          },
+          "name": "Sample Promotion 6",
+          "objective": "To increase sales",
+          "priorityNumber": 1,
+          "promotionCode": "XYZ",
+          "promotionLimits": {
+            "liabilityLimit": 10000,
+            "loyaltyProgramCurrency": {
+              "id": "0lcxx0000000001AAA"
+            },
+            "perCartLimit": 5,
+            "perLineItemLimit": 10,
+            "pointsPerCustomerLimit": 5,
+            "usePerCustomerLimit": 5,
+            "vouchersLimit": 100,
+            "vouchersPerCustomerLimit": 5
+          },
+          "startDateTime": "2023-06-30T00:00:00.000Z",
+          "isAutomatic": true
+        }
+      ],
+      "rules": []
+    }
+  }
+}

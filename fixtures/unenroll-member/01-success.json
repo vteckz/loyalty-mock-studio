@@ -1,0 +1,31 @@
+{
+  "name": "Unenroll member by MemberId",
+  "description": "Documented Sample JSON Response (doc lines 23161-23177): member successfully unenrolled, returning the MemberId in outputParameters.outputParameters.results. Request uses the MemberId variant of processParameters (doc lines 23142-23149).",
+  "request": {
+    "body": {
+      "processParameters": [
+        {
+          "MemberId": "0lMRM0000004G6f2AE"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "outputParameters": {
+        "outputParameters": {
+          "results": [
+            {
+              "MemberId": "0lMRM0000004F152AE"
+            }
+          ]
+        }
+      },
+      "simulationDetails": {},
+      "status": true
+    }
+  },
+  "notes": "SOURCE: official Loyalty Management Developer Guide v67.0 (Summer 26). The UnenrollMember endpoint has no dedicated resource block; it is one of the named processes under the generic \"Loyalty Program Process\" resource (doc lines 22538-22656). That generic block is where HTTP method (POST, line 22603), Available version (56.0, line 22599), the processParameters request wrapper (Loyalty Process Parameter Map, lines 22623-22629), and the response schema (Loyalty Process Output, line 22633) are defined. The UnenrollMember-specific \"Unenroll a Member\" section (doc lines 23121-23181) supplies the sample request JSON (MemberId variant + CurrentMembershipNumber variant) and the sample success response. The response property table is the \"Loyalty Process\" schema (doc lines 29969-29988): message (String, may be null), outputParameters (Map<String,Object>), simulationDetails (Map<String,Object> — doc notes \"This property is for future use\", so it is empty {}), status (Boolean true/false). IMPLEMENTER-DEFINED: doc explicitly states (lines 23129-23130) \"The request and response parameters vary depending on the input and output parameters configured for the UnenrollMember process type in a Salesforce org.\" So the inner field names inside processParameters[] and inside outputParameters.outputParameters.results[] (e.g. MemberId, CurrentMembershipNumber) are org-configured/process-template-configured, NOT fixed by the API. The doc also warns that some request field names are interchangeable (see \"Loyalty Management Connect API Interchangeable Request Fields\"). PATH NOTE: canonical resource template is /connect/loyalty/programs/${programName}/program-processes/${processName}; for this process the processName segment is the literal \"UnenrollMember\" (per resource-examples table, doc lines 22584-22586). The doc's prose \"Example URL\" wraps the word across lines as \"unenroll Member\" but that is a PDF line-wrap artifact of \"UnenrollMember\", not a space in the path. OPEN QUESTIONS: doc shows no documented error/failure-status example for this specific process, so no error fixture was fabricated; on failure the standard envelope would set status=false with a message string, but that exact shape is not shown in the doc for UnenrollMember. NOTE on doc index quirk: the appendix resource list (line 42498) mislabels UnenrollMember's description as \"Opt Out from a Promotion\" — that is a doc error; the authoritative description from the definition (line 22585 / 23122) is \"Unenroll a member from a loyalty program.\""
+}

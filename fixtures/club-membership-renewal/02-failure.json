@@ -1,0 +1,21 @@
+{
+  "name": "Renewal failed",
+  "description": "Error case built from the documented status/message properties of the Club Membership Renewal output schema (status=false indicates the request failed; message explains why).",
+  "request": {
+    "body": {
+      "clubMembershipNumber": "ARC9999",
+      "renewalPeriodType": "months",
+      "renewalPeriod": "3",
+      "notes": "",
+      "externalIdentifier": "",
+      "OrderItemId": ""
+    }
+  },
+  "response": {
+    "status": 400,
+    "body": {
+      "status": false,
+      "message": "The membership number of the club member could not be found."
+    }
+  }
+}

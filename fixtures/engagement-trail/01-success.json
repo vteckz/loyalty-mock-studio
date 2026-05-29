@@ -1,0 +1,63 @@
+{
+  "name": "Engagement trail with milestones and rewards",
+  "description": "Documented sample response from the Member Engagement Trail Output schema. Three engagement attributes (milestones) plus a points reward block. Mirrors the doc example verbatim (field names, casing, and null values preserved).",
+  "response": {
+    "status": 200,
+    "body": {
+      "memberEngagementAttributeOutputRepresentations": [
+        {
+          "attributeStatus": "Active",
+          "currentValue": null,
+          "defaultValue": "0",
+          "description": null,
+          "endDate": "2025-01-31",
+          "name": "Book A Cab",
+          "startDate": "2024-11-01",
+          "targetValue": "2.0"
+        },
+        {
+          "attributeStatus": "Active",
+          "currentValue": null,
+          "defaultValue": "0",
+          "description": null,
+          "endDate": "2025-01-31",
+          "name": "Book A Hotel Room",
+          "startDate": "2024-11-01",
+          "targetValue": "1.0"
+        },
+        {
+          "attributeStatus": "Active",
+          "currentValue": null,
+          "defaultValue": "0",
+          "description": null,
+          "endDate": "2025-01-31",
+          "name": "Book A Flight",
+          "startDate": "2024-11-01",
+          "targetValue": "1.0"
+        }
+      ],
+      "message": null,
+      "promotionName": "Engagement Trail",
+      "remainingResetCount": null,
+      "rewards": [
+        {
+          "badgeReward": [],
+          "pointsRewards": [
+            {
+              "currencyName": "Reward Points",
+              "points": 200
+            },
+            {
+              "currencyName": "Tier Points",
+              "points": 100
+            }
+          ],
+          "voucherRewards": []
+        }
+      ],
+      "status": true,
+      "totalResetCount": null
+    }
+  },
+  "notes": "Resource path in the guide uses literal placeholder syntax ${programName} and ${membershipNumber} and the query param is written as $promotionId={promotionId} (note the leading $ on the param name in the doc). Resource version shown is vXX.X (template); Available version is 63.0 for the endpoint itself, while the Member Engagement Trail Output response fields are listed at Available Version 62.0. CAVEAT: the response JSON example keys differ slightly from the property-table names — the example uses the array key \"memberEngagementAttributeOutputRepresentations\" and reward key \"badgeReward\" / \"pointsRewards\" / \"voucherRewards\", whereas the prose property tables refer to \"engagementAttribute\", \"BadgeRewards\", \"voucherRewards\", \"pointsRewards\". Fixtures follow the actual JSON example (authoritative for shape). Doc note: remainingResetCount and totalResetCount may be null if the set limit is 1. currentValue/defaultValue/targetValue are typed Integer in the table but appear as strings (\"0\", \"2.0\") in the example — example casing/types preserved. Failure fixture (02) is constructed from documented field semantics (status/message), NOT a literal doc example, since the guide shows no failure JSON. No request body (GET). No realistic Salesforce id placeholders were needed in the response body since the documented example contains none (ids only appear in path/query params)."
+}

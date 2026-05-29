@@ -1,0 +1,60 @@
+{
+  "name": "Transaction journal processed by existing ID (airline-style)",
+  "description": "Second documented input variant: process an existing transaction journal by its Id (supported in API v55.0+, doc lines 21937-21956). Response shape reuses the Loyalty Engine Realtime Output schema with a realistic Salesforce-style journal id; only points balance changed (no promotions/rewards applied), so badge/game/voucher collections are empty per the doc's note that the response contains only rewards the program process rules produced.",
+  "request": {
+    "body": {
+      "transactionJournals": [
+        {
+          "Id": "0lVxx00000000cj"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "message": null,
+      "processResult": {
+        "memberPointsBalance": [
+          {
+            "memberCurrencies": [
+              {
+                "currencyName": "Coins",
+                "currencyType": "NonQualifying",
+                "escrowPointsBalance": 0,
+                "pointsBalance": 117
+              }
+            ],
+            "memberShipNumber": "M5"
+          }
+        ],
+        "transactionJournalResult": [
+          {
+            "badgesAssigned": [],
+            "changeInMemberPoints": [
+              {
+                "changeInMemberCurrencies": [
+                  {
+                    "changeInPointsBalance": 117,
+                    "currencyName": "Coins",
+                    "currencyType": "NonQualifying",
+                    "promotionId": null
+                  }
+                ],
+                "memberShipNumber": "M5"
+              }
+            ],
+            "gamesAssigned": [],
+            "id": "0lVxx00000000cjAAA",
+            "voucherResult": {
+              "vouchersIssued": []
+            }
+          }
+        ]
+      },
+      "programName": "StarAir_Program",
+      "simulationResults": null,
+      "status": true
+    }
+  }
+}

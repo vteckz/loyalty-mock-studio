@@ -1,0 +1,34 @@
+{
+  "name": "Rule configuration list for a promotion",
+  "description": "GET response (Template List Configuration). Returns the `rules` array, each item a Template Configuration with documented fields: event, journalSubType, journalSubTypeName, journalType, priority, reward, ruleName, templateName. No top-level JSON example is given in the doc, so this fixture is built strictly from the Template List Configuration + Template Configuration property tables.",
+  "response": {
+    "status": 200,
+    "body": {
+      "rules": [
+        {
+          "event": [
+            {
+              "operator": "GreaterThanOrEqual",
+              "field": "TransactionAmount",
+              "value": "100"
+            }
+          ],
+          "journalSubType": "0lSxx0000000001AAA",
+          "journalSubTypeName": "Purchase",
+          "journalType": "Accrual",
+          "priority": 1,
+          "reward": [
+            {
+              "rewardType": "Points",
+              "pointType": "0lPxx0000000001AAA",
+              "value": "50"
+            }
+          ],
+          "ruleName": "Spend100Earn50",
+          "templateName": "FixedPointsAccrualTemplate"
+        }
+      ]
+    }
+  },
+  "notes": "Method documented as both GET and POST on the same resource; this entry models the GET (read) per the target. requestExample is null because GET has no body. The doc's \"Resource\" line writes the path variable literally as `promotionId` (no braces); I normalized it to `{promotionId}` to mark it as a placeholder. CAVEAT: the doc provides NO concrete JSON example for the GET \"Template List Configuration\" response — only property tables for the wrapper (single field `rules: Template Configuration[]`, line 33078) and the nested Template Configuration (lines 33049-33069). The `event` and `reward` fields are typed `List<Map<String,Object>>` (free-form maps), so their inner keys (operator/field/value, rewardType/pointType) are IMPLEMENTER-DEFINED illustrative values, NOT documented field names — only the top-level keys event/journalSubType/journalSubTypeName/journalType/priority/reward/ruleName/templateName are documented. journalSubTypeName available from 64.0; all other fields from 60.0 (resource Available version = 60.0). No error/empty example is shown in the doc, so only a success fixture was created. For POST (create), the request body property table is at lines 23854-23896 (adds promotionLimit, Optional, 63.0) and the POST response body is \"Unified Promotion Templates\" (line 33564) which the doc states \"varies based on the template selected\" with no schema/example."
+}

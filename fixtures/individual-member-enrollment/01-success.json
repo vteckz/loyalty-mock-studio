@@ -1,0 +1,70 @@
+{
+  "name": "Individual member enrolled successfully",
+  "description": "Documented POST success response (Individual Member Enrollment output) showing the created person account contactId, loyalty program member id, and the two created transaction journals (Member Enrollment accrual + Member Referral accrual). Mirrors the JSON example at lines 29728-29755 with realistic Salesforce ids.",
+  "request": {
+    "body": {
+      "enrollmentDate": "2021-01-01T00:00:00",
+      "membershipNumber": "Member3",
+      "associatedContactDetails": {
+        "firstName": "Name1",
+        "lastName": "Name2",
+        "email": "ab@email.com",
+        "allowDuplicateRecords": "false",
+        "additionalContactFieldValues": {
+          "attributes": {
+            "PersonMailingCity": "Delhi",
+            "CustomNumber__c": "20.0"
+          }
+        }
+      },
+      "memberStatus": "Active",
+      "referredBy": "Member1",
+      "referredByMemberReferralCode": "MPX12adf",
+      "createTransactionJournals": "true",
+      "transactionJournalStatementFrequency": "Monthly",
+      "transactionJournalStatementMethod": "Mail",
+      "enrollmentChannel": "Email",
+      "canReceivePromotions": "true",
+      "canReceivePartnerPromotions": "true",
+      "membershipEndDate": "2022-01-01T00:00:00",
+      "relatedCorporateMembershipNumber": "Member2",
+      "additionalMemberFieldValues": {
+        "attributes": {
+          "CustomBoolean__c": "true"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "contactId": "003xx000004WsO8AAE",
+      "loyaltyProgramMemberId": "0lMxx00000008FJAAY",
+      "loyaltyProgramName": "program1",
+      "membershipNumber": "Member3",
+      "transactionJournals": [
+        {
+          "activityDate": "2021-01-01T08:00:00.000Z",
+          "journalSubType": "Member Enrollment",
+          "journalType": "Accrual",
+          "loyaltyProgram": "program1",
+          "loyaltyProgramMember": "Member3",
+          "referredMember": null,
+          "status": "Pending",
+          "transactionJournalId": "0lVxx000000029tAAA"
+        },
+        {
+          "activityDate": "2021-01-01T08:00:00.000Z",
+          "journalSubType": "Member Referral",
+          "journalType": "Accrual",
+          "loyaltyProgram": "program1",
+          "loyaltyProgramMember": "Member1",
+          "referredMember": "Member3",
+          "status": "Pending",
+          "transactionJournalId": "0lVxx000000029uAAA"
+        }
+      ]
+    }
+  },
+  "notes": "Path uses ${loyaltyProgramName} placeholder exactly as documented (resource line 21019). Version shown as /services/data/vXX.X in the doc's Example (line 21023) - left literal in sfPath. Available version 55.0; note referredByMemberReferralCode is 57.0+ and linkNumber-style partner fields are unrelated. Request body Root XML tag is <individualMemberEnrollment>. Request properties: additionalMemberFieldValues (Required, Map<String,String>), associatedContactDetails (Required, Loyalty Contact Input), enrollmentDate (Required, Date YYYY-MM-DDTHH:mm:ss in org timezone NOT UTC), memberStatus (Required: Active/Inactive/Custom), membershipNumber (Required); optional: canReceivePromotions, canReceivePartnerPromotions, createTransactionJournals, enrollmentChannel (Pos/Web/Email/CallCenter/Social/Mobile/Store/Franchise/Partner/Print), membershipEndDate, referredBy, referredByMemberReferralCode (57.0), relatedCorporateMembershipNumber, transactionJournalStatementFrequency (Monthly/Quarterly), transactionJournalStatementMethod (Mail/Email). The doc lists request property table values \"true\"/\"false\" as quoted strings in the JSON example - kept as documented. Doc shows NO error/empty response example for this resource, so only one success fixture built. Documented ids were short (e.g. 0lMxx00000008FJ); I extended them to full 18-char Salesforce style per task instructions. transactionJournals item shape comes from the inline response JSON example (Transaction Journal Output[] - no separate property table grep hit found at line 29783). Open question: whether 200 or 201 is the real status code (doc does not state HTTP status); assumed 200."
+}

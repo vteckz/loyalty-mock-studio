@@ -1,0 +1,16 @@
+{
+  "name": "Request failed (status false with message)",
+  "description": "Derived from the documented Member Engagement Trail Output property table: status=false indicates the request failed and message carries the explanation. Doc does not provide a literal failure JSON example, so values are constructed from the documented field semantics only.",
+  "response": {
+    "status": 200,
+    "body": {
+      "memberEngagementAttributeOutputRepresentations": [],
+      "message": "No active engagement trail found for the specified promotion.",
+      "promotionName": null,
+      "remainingResetCount": null,
+      "rewards": [],
+      "status": false,
+      "totalResetCount": null
+    }
+  }
+}

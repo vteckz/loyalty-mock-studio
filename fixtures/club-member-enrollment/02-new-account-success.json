@@ -1,0 +1,26 @@
+{
+  "name": "Enroll a new account - success",
+  "description": "Successful enrollment of a new business account (associatedAccountDetails) into the club. Response uses the Club Member Enrollment Details schema with status true.",
+  "request": {
+    "body": {
+      "enrollmentDate": "2025-03-10T00:00:00",
+      "clubMembershipNumber": "NAME5",
+      "associatedAccountDetails": {
+        "name": "NAME5",
+        "phone": "0123456789",
+        "website": "www.name5.com",
+        "allowDuplicateRecords": "false"
+      },
+      "memberStatus": "Active",
+      "membershipEndDate": "2025-03-25T00:00:00"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "clubMembershipNumber": "NAME5",
+      "message": null,
+      "status": true
+    }
+  }
+}

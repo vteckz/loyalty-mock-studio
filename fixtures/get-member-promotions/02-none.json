@@ -1,12 +1,17 @@
 {
   "name": "No eligible promotions",
-  "description": "Member valid, nothing eligible. The adapter clears any prior LOYALTY_ order adjustments and applies nothing.",
+  "description": "Member valid, nothing eligible. Documented program-process envelope with an empty results[]. The adapter clears any prior LOYALTY_ order adjustments and applies nothing.",
   "response": {
     "status": 200,
     "body": {
-      "status": "Success",
-      "message": "Processed successfully",
-      "outputParameters": { "memberPromotions": [] }
+      "status": true,
+      "message": null,
+      "simulationDetails": {},
+      "outputParameters": {
+        "outputParameters": {
+          "results": []
+        }
+      }
     }
   }
 }

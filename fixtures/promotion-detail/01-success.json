@@ -1,0 +1,94 @@
+{
+  "name": "Get promotion details (GET 200)",
+  "description": "Documented Promotion output-representation response. The Promotion schema (doc p.604) wraps promotionDetails (Unified Promotions output, JSON example doc p.620), rules (Template Configuration[]), and promotionConfigurationWarnings (String[]). The promotionDetails object below is copied verbatim from the documented Unified Promotions JSON example.",
+  "response": {
+    "status": 200,
+    "body": {
+      "promotionConfigurationWarnings": [],
+      "promotionDetails": [
+        {
+          "additionalFieldValues": {
+            "attributes": {
+              "isUnifiedPromotion__c": "true"
+            }
+          },
+          "description": "Buy 2 Get 1 free",
+          "displayName": "Sample Promotion",
+          "endDateTime": "2023-12-30T00:00:00.000Z",
+          "id": "0c8SB0000000rCPYAY",
+          "loyaltyProgram": {
+            "id": "0lpSB00000001If",
+            "name": "Program-001"
+          },
+          "name": "Free Beverage",
+          "objective": "To increase sales",
+          "priorityNumber": 1,
+          "promotionEligibility": {
+            "eligibleChannels": [
+              {
+                "channelType": "Offline",
+                "retailLocationGroup": {
+                  "id": "0Y2SB000000004r",
+                  "name": "test"
+                },
+                "store": {
+                  "id": "0YQSB000000006T",
+                  "name": "test Store"
+                }
+              }
+            ],
+            "eligibleCustomerEvents": {
+              "event": "MemberBirthday",
+              "eventPeriodUnit": "Date"
+            },
+            "eligibleEnrollmentPeriod": {
+              "enrollmentEndDate": "2023-12-30T00:00:00.000Z",
+              "enrollmentStartDate": "2023-06-30T00:00:00.000Z",
+              "isEnrollmentRequired": true
+            },
+            "eligibleLoyaltyTiers": [
+              {
+                "tier": {
+                  "id": "0lgSB00000000srYAA",
+                  "name": "Silver"
+                },
+                "tierGroup": {
+                  "id": "0ltSB00000000T3YAI",
+                  "name": "Group-001"
+                }
+              }
+            ],
+            "eligibleProductCategories": [
+              {
+                "id": "0ZGSB0000002td7",
+                "name": "Beverages"
+              }
+            ],
+            "eligibleProducts": [
+              {
+                "id": "01tSB0000008Lth",
+                "name": "Coke"
+              }
+            ]
+          },
+          "promotionLimits": {
+            "liabilityLimit": 10000,
+            "loyaltyProgramCurrency": {
+              "id": "NQP",
+              "name": "0lcSB00000001Tx"
+            },
+            "perCartLimit": 5,
+            "perLineItemLimit": 10,
+            "pointsPerCustomerLimit": 5,
+            "usePerCustomerLimit": 5,
+            "vouchersLimit": 100,
+            "vouchersPerCustomerLimit": 5
+          },
+          "startDateTime": "2023-06-30T00:00:00.000Z"
+        }
+      ],
+      "rules": []
+    }
+  },
+  "notes": "SOURCE: Loyalty Mgmt Developer Guide v67.0 (Summer 26), /tmp/loyalty_api.txt. Resource definition \"Promotion Details (GET, PUT)\" at lines 24183-24199: Resource=/global-promotions-management/promotions/promotionId, Available version=60.0, HTTP methods=\"GET, PUT\". DISCREPANCY: the task target labeled this \"Get / Update / Delete\" but the authoritative doc lists ONLY GET and PUT for this resource — NO DELETE method is documented anywhere for /promotions/{promotionId}. I set method=GET per the expected method and added the PUT fixture; do not implement DELETE without a doc source. The doc does NOT print a dedicated JSON response example inside the GET/PUT resource block; it names the response schema as \"Promotion\" (the doc's adjacent configuration resource shows \"Response body for GET -> Promotion\" at line 24144). The \"Promotion\" Response Body schema (line 32491-32504) has exactly three properties: promotionConfigurationWarnings (String[]), promotionDetails (Unified Promotions Output[]), rules (Template Configuration[]). I populated promotionDetails verbatim from the documented \"Unified Promotions\" JSON example (lines 33409-33497). NOTE: in that example promotionDetails is a single object, but the Promotion schema types it as an array (Unified Promotions Output[]) — I wrapped it in an array to match the schema typing; an implementer may prefer a bare object to match the raw example. The PUT request uses root XML tag unifiedPromotionsInputRepresentation; request property table at lines 24335-24425 (name=Required, startDateTime=Required, others Optional; loyaltyProgram cannot be changed on an existing promotion). The Unified Promotions output table types loyaltyProgram as String, but the JSON example shows it as an object {id,name} — I kept the JSON-example form. No documented error/empty response example exists for this resource, so no error fixture was created. {promotionId} is a path placeholder (e.g. 0c8SB0000000rCPYAY style 15/18-char SF id)."
+}

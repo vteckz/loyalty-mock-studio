@@ -128,3 +128,22 @@
     @apply font-sans;
   }
 }
+
+/* Thin, always-visible horizontal scrollbar for the endpoint tab bar. */
+.tab-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.tab-scroller::-webkit-scrollbar {
+  height: 7px;
+}
+.tab-scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tab-scroller::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+.tab-scroller::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}

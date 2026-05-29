@@ -1,0 +1,33 @@
+{
+  "name": "No eligible promotions",
+  "description": "Empty-result case: the schema defines the response as a `promotions` array, so when no promotion is eligible (e.g. all matching promotions have reached their PromotionLimit usage cap for the member) the array is empty. The doc does not show this exact JSON literally; it is the natural empty form of the documented `promotions` array schema (see notes).",
+  "request": {
+    "body": {
+      "cart": {
+        "cartDetails": [
+          {
+            "activityStartDate": "2023-06-14T12:45:19Z",
+            "loyaltyProgramMemberId": "0lMxx0000000002AAA",
+            "membershipNumber": "Member-099",
+            "currencyISOCode": "USD",
+            "transactionAmount": 25,
+            "cartLineDetails": [
+              {
+                "cartLineProduct": "Sticker Pack",
+                "cartLineProductCode": "STK-01",
+                "cartLineItemQuantity": 1,
+                "cartLineItemAmount": 25
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "promotions": []
+    }
+  }
+}
