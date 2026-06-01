@@ -4,6 +4,8 @@ A local Salesforce Loyalty API mock with a GUI on top, built for the SFCC cartri
 
 Run it on `localhost`, point your SFCC service definitions at it, and develop the whole flow — Promotion Evaluation → Promotion Execution → Voucher lifecycle → Member Info — without a real SF sandbox.
 
+![Loyalty Mock Studio — grouped endpoint tabs, scenario picker, Monaco JSON editor, and a live request log](docs/screenshot.png)
+
 ## Why this exists
 
 The proposed integration has SFCC consuming the Loyalty Promotion Evaluation / Execution APIs and injecting `PriceAdjustment` objects into the cart at calculate-time, plus a separate voucher fetch/reserve/redeem/release flow as a payment method. Both flows need realistic responses to develop against. This studio gives you those without needing the sandbox.
