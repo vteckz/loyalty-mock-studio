@@ -6,6 +6,13 @@ Run it on `localhost`, point your SFCC service definitions at it, and develop th
 
 ![Loyalty Mock Studio — grouped endpoint tabs, scenario picker, Monaco JSON editor, and a live request log](docs/screenshot.png)
 
+> **Companion cartridge (required):** the SFCC B2C Commerce adapter that consumes this mock is **[int_loyalty_adapter](https://github.com/vteckz/int_loyalty_adapter)**. It's the other half of the integration — the adapter's offline contract tests read this repo's `fixtures/` straight off disk (default path `../loyalty-mock-studio/fixtures`), so clone the two **side by side**:
+>
+> ```bash
+> git clone https://github.com/vteckz/loyalty-mock-studio.git
+> git clone https://github.com/vteckz/int_loyalty_adapter.git
+> ```
+
 ## Why this exists
 
 The proposed integration has SFCC consuming the Loyalty Promotion Evaluation / Execution APIs and injecting `PriceAdjustment` objects into the cart at calculate-time, plus a separate voucher fetch/reserve/redeem/release flow as a payment method. Both flows need realistic responses to develop against. This studio gives you those without needing the sandbox.
