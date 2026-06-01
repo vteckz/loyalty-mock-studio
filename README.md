@@ -61,7 +61,7 @@ The remaining endpoints round out the OOTB Loyalty surface so the dev can mock a
 
 > Some responses are partly **implementer-defined** in Salesforce (program-process `results[]` contents, promotion-rule event/reward maps). Those fixtures use the documented envelope with a plausible inner shape and say so in their `notes`. Add a new endpoint by following the 3-step pattern in `src/lib/endpoints.ts`.
 
-**Get Member Promotions** is the *alternative* pricing path (still an open question for the Salesforce side). It's a program process returning the member's eligible promotions rather than a priced cart — its shape is implementer-defined, so those fixtures are a plausible default, not doc-confirmed. The adapter switches to it by setting `LoyaltyConfig.PROMOTION_API = 'GET_MEMBER_PROMOTIONS'`.
+**Get Member Promotions** is the *alternative* pricing path (still an open question for the Salesforce side). It's a program process returning the member's eligible promotions rather than a priced cart. Its response *envelope* is doc-confirmed (the standard Loyalty Program Process Output — boolean `status`, `outputParameters.outputParameters.results[]`, `simulationDetails`); only the *contents* of each `results[]` item are implementer-defined, so those inner fields in the fixtures are a plausible default. The adapter switches to it by setting `LoyaltyConfig.PROMOTION_API = 'GET_MEMBER_PROMOTIONS'`.
 
 ### Promotion API switch (header)
 
@@ -142,28 +142,30 @@ If you want the active selection to survive restarts, that's the natural next fe
 
 ```
 loyalty-mock-studio/
+├── docs/screenshot.png                # README image
 ├── fixtures/                          # All scenarios (commit these)
-│   ├── oauth-token/
-│   ├── promotion-execution/
-│   ├── promotion-reward/
-│   ├── voucher-list/
-│   ├── voucher-redeem/
-│   ├── member-info/
-│   └── transaction-history/
+│   └── <endpoint-id>/*.json           # one folder per endpoint (37 endpoints)
+│       e.g. promotion-execution/, vouchers/, member-benefits/, issue-voucher/, …
 └── src/
     ├── app/
     │   ├── api/
     │   │   ├── oauth/token/              # OAuth mock
-    │   │   ├── loyalty/...               # 6 Loyalty endpoints
+    │   │   ├── loyalty/<endpoint-id>/    # one route.ts per Loyalty endpoint (makeHandler)
     │   │   └── studio/                   # GUI control API (don't call from cartridge)
     │   └── page.tsx                      # The GUI
-    ├── components/studio/                # GUI pieces
+    ├── components/studio/                # GUI pieces (endpoint-tabs, scenario-editor, request-log, help-guide)
     └── lib/
         ├── endpoints.ts                  # Endpoint registry (add new ones here)
         ├── handler.ts                    # Shared scenario-lookup + response logic
         ├── fixtures.ts                   # JSON file I/O
         └── state.ts                      # In-memory active-scenario + request log
 ```
+
+### Adding a new endpoint (3 steps)
+
+1. Append an entry to `src/lib/endpoints.ts` (`{ id, name, method, mockPath: "/api/loyalty/<id>", sfPath, group, available, description }`).
+2. Create `src/app/api/loyalty/<id>/route.ts` with one line: `export const POST = makeHandler("<id>")` (or `GET`).
+3. Drop a fixture in `fixtures/<id>/01-success.json`. Reload — it appears as a new tab in its group.
 
 ## Caveats — fixtures reconciled to docs, not a live org
 
