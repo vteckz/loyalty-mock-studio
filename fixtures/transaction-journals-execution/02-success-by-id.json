@@ -1,5 +1,5 @@
 {
-  "name": "Transaction journal processed by existing ID (airline-style)",
+  "name": "Transaction journal processed by existing ID",
   "description": "Second documented input variant: process an existing transaction journal by its Id (supported in API v55.0+, doc lines 21937-21956). Response shape reuses the Loyalty Engine Realtime Output schema with a realistic Salesforce-style journal id; only points balance changed (no promotions/rewards applied), so badge/game/voucher collections are empty per the doc's note that the response contains only rewards the program process rules produced.",
   "request": {
     "body": {
@@ -52,7 +52,7 @@
           }
         ]
       },
-      "programName": "StarAir_Program",
+      "programName": "AcmeRewards",
       "simulationResults": null,
       "status": true
     }
