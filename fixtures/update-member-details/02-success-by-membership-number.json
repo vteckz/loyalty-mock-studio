@@ -7,7 +7,7 @@
         {
           "CurrentMembershipNumber": "M1234",
           "MembershipNumber": "M1234",
-          "Email": "adam.smith@nto.com",
+          "Email": "adam.smith@example.com",
           "EnrollmentDate": "2023-05-28",
           "LastName": "Smith"
         }
