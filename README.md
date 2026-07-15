@@ -15,7 +15,7 @@ Run it on `localhost`, point your SFCC service definitions at it, and develop th
 
 ## Why this exists
 
-The proposed integration has SFCC consuming the Loyalty Promotion Evaluation / Execution APIs and injecting `PriceAdjustment` objects into the cart at calculate-time, plus a separate voucher fetch/reserve/redeem/release flow as a payment method. Both flows need realistic responses to develop against. This studio gives you those without needing the sandbox.
+The proposed integration has SFCC consuming the Loyalty Promotion Evaluation / Execution APIs and injecting `PriceAdjustment` objects into the cart at calculate-time, plus a separate voucher fetch/reserve/redeem/release flow as a payment method. Both flows need realistic responses to develop against. This studio gives you those without needing the sandbox — and it also mocks an **alternative web session-gating pattern** (session-driven Dynamic Customer Groups + static promotions); see [Two integration patterns](#two-integration-patterns).
 
 ## Quick start
 
@@ -37,6 +37,8 @@ The green dot next to a scenario = the one your cartridge calls will currently r
 ## Mocked endpoints
 
 The studio mocks the **full out-of-the-box Loyalty Management Business API surface** — **37 endpoints across 9 groups** — all reconciled against the official **Loyalty Management Developer Guide v67.0 (Summer '26)**. Promotion endpoints map to **Global Promotions Management (GPM)**; the rest to the standard Loyalty Connect REST API. Every fixture's path, method, and response field names were verified against the guide (each new one passed an adversarial second-pass verification).
+
+On top of the Loyalty API, the studio also mocks a **7-endpoint web session-gating set** (the **Storefront** and **Provisioning** groups) for the alternative middleware pattern — **44 endpoints across 11 groups** in total. See [Two integration patterns](#two-integration-patterns) below.
 
 ### Core integration set (what the SFCC adapter actually calls)
 
@@ -69,6 +71,20 @@ The remaining endpoints round out the OOTB Loyalty surface so the dev can mock a
 > Some responses are partly **implementer-defined** in Salesforce (program-process `results[]` contents, promotion-rule event/reward maps). Those fixtures use the documented envelope with a plausible inner shape and say so in their `notes`. Add a new endpoint by following the 3-step pattern in `src/lib/endpoints.ts`.
 
 **Get Member Promotions** is the *alternative* pricing path (still an open question for the Salesforce side). It's a program process returning the member's eligible promotions rather than a priced cart. Its response *envelope* is doc-confirmed (the standard Loyalty Program Process Output — boolean `status`, `outputParameters.outputParameters.results[]`, `simulationDetails`); only the *contents* of each `results[]` item are implementer-defined, so those inner fields in the fixtures are a plausible default. The adapter switches to it by setting `LoyaltyConfig.PROMOTION_API = 'GET_MEMBER_PROMOTIONS'`.
+
+## Two integration patterns
+
+The studio supports **both** ways SFCC can consume Salesforce Loyalty:
+
+1. **Cartridge / GPM price-injection** (the endpoints above) — [`int_loyalty_adapter`](https://github.com/vteckz/int_loyalty_adapter) calls Promotion Evaluation & Execution at *cart calculate* and injects `PriceAdjustment`s. **Salesforce computes the discount.**
+2. **Web session-gating** (the **Storefront** + **Provisioning** groups) — a Loyalty Middleware returns eligible promotion *codes* on login; the storefront writes them to `session.custom.loyaltyPromotions`; SFCC **Dynamic Customer Groups** activate pre-built static promotions (PMIDs) per-session, so pricing + badging come from **SFCC's native engine**. Salesforce only decides *who gets which code*.
+
+**Full how-to for pattern 2:** [`docs/web-session-gating-howto.md`](docs/web-session-gating-howto.md) — the end-to-end developer guide (login gate → session attribute → customer group → PMID → badged PLP/PDP/cart → provisioning → cleanup).
+
+- **Storefront (4):** web-eligible-promotions (login gate), web-product-search (gated PLP + badging), web-product-detail (PDP), web-basket (free shipping + stacked badges)
+- **Provisioning (3):** ocapi-customer-group (dynamic group, `contains` rule), ocapi-promotion (PMID + lifecycle metadata + expired variant), ocapi-campaign-binding (promotion + customer-group binds)
+
+> These two groups mock the **Loyalty Middleware + SFCC OCAPI Data/Shop** (not the SF Loyalty core API), so the SFRA dev can build the login gate, badging, and provisioning against deterministic responses. Reconciled to the design + OCAPI shapes; swap in real sample responses when you have them.
 
 ### Promotion API switch (header)
 
@@ -151,8 +167,8 @@ If you want the active selection to survive restarts, that's the natural next fe
 loyalty-mock-studio/
 ├── docs/screenshot.png                # README image
 ├── fixtures/                          # All scenarios (commit these)
-│   └── <endpoint-id>/*.json           # one folder per endpoint (37 endpoints)
-│       e.g. promotion-execution/, vouchers/, member-benefits/, issue-voucher/, …
+│   └── <endpoint-id>/*.json           # one folder per endpoint (44 endpoints)
+│       e.g. promotion-execution/, vouchers/, member-benefits/, web-eligible-promotions/, ocapi-promotion/, …
 └── src/
     ├── app/
     │   ├── api/
