@@ -1,0 +1,31 @@
+{
+  "name": "Platinum member — 4 stacked promotions",
+  "description": "Demonstrates unlimited stacking: session attributes let a shopper hold multiple loyalty codes at once. Four codes → four Dynamic Customer Groups active simultaneously (product, shipping, points and apparel). Each maps to its own static PMID.",
+  "request": {
+    "query": { "customerNo": "0007892" }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "customerNo": "0007892",
+      "membershipNumber": "MEM-100002",
+      "loyaltyProgramMemberId": "0lMxx0000000002AAA",
+      "loyaltyTier": "Platinum",
+      "sessionAttribute": "loyaltyPromotions",
+      "sessionValue": "SFloyalty-20OFFLEGO,SFloyalty-FreeShipping,SFloyalty-DoublePoints,SFloyalty-15OFFAPPAREL",
+      "loyaltyPromotions": [
+        "SFloyalty-20OFFLEGO",
+        "SFloyalty-FreeShipping",
+        "SFloyalty-DoublePoints",
+        "SFloyalty-15OFFAPPAREL"
+      ],
+      "promotions": [
+        { "code": "SFloyalty-20OFFLEGO", "pmid": "SFloyalty-20OFFLEGO", "name": "Loyalty: 20% Off LEGO", "type": "product", "discountPercent": 20, "calloutMsg": "Loyalty Members: 20% Off LEGO", "badge": "20% Loyalty Discount", "customerGroupId": "CG-SFloyalty-20OFFLEGO", "campaignId": "Salesforce-Loyalty-Campaign", "plpUrl": "/s/RefArch/Search-Show?pmid=SFloyalty-20OFFLEGO", "effectiveDate": "2026-06-01T00:00:00.000Z", "expirationDate": "2026-08-01T00:00:00.000Z" },
+        { "code": "SFloyalty-FreeShipping", "pmid": "SFloyalty-FreeShipping", "name": "Loyalty: Free Shipping", "type": "shipping", "calloutMsg": "Loyalty Members: Free Shipping", "badge": "Free Shipping", "customerGroupId": "CG-SFloyalty-FreeShipping", "campaignId": "Salesforce-Loyalty-Campaign", "effectiveDate": "2026-06-01T00:00:00.000Z", "expirationDate": "2026-08-01T00:00:00.000Z" },
+        { "code": "SFloyalty-DoublePoints", "pmid": "SFloyalty-DoublePoints", "name": "Loyalty: Double Points", "type": "points", "calloutMsg": "Loyalty Members: Earn 2x Points", "badge": "2x Points", "customerGroupId": "CG-SFloyalty-DoublePoints", "campaignId": "Salesforce-Loyalty-Campaign", "effectiveDate": "2026-06-01T00:00:00.000Z", "expirationDate": "2026-08-01T00:00:00.000Z" },
+        { "code": "SFloyalty-15OFFAPPAREL", "pmid": "SFloyalty-15OFFAPPAREL", "name": "Loyalty: 15% Off Apparel", "type": "product", "discountPercent": 15, "calloutMsg": "Loyalty Members: 15% Off Apparel", "badge": "15% Loyalty Discount", "customerGroupId": "CG-SFloyalty-15OFFAPPAREL", "campaignId": "Salesforce-Loyalty-Campaign", "plpUrl": "/s/RefArch/Search-Show?pmid=SFloyalty-15OFFAPPAREL", "effectiveDate": "2026-06-01T00:00:00.000Z", "expirationDate": "2026-08-01T00:00:00.000Z" }
+      ]
+    }
+  },
+  "notes": "All four codes share ONE persistent SFCC campaign (Salesforce-Loyalty-Campaign). Stacking is bounded only by each PMID's own exclusivity/combinability config in SFCC, not by the gating mechanism."
+}

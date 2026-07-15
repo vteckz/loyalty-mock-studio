@@ -1,0 +1,40 @@
+{
+  "name": "Dynamic Customer Group created (session-attribute rule)",
+  "description": "SFCC OCAPI Data API response to PUT .../customer_groups/CG-SFloyalty-20OFFLEGO. The Middleware creates one dynamic group per unique promotion; its rule matches when the shopper's session.custom.loyaltyPromotions CONTAINS the code. This is the mechanism that activates the static PMID per-session.",
+  "request": {
+    "body": {
+      "id": "CG-SFloyalty-20OFFLEGO",
+      "description": "Dynamic group for SFloyalty-20OFFLEGO",
+      "rule": {
+        "operator": "CONTAINS",
+        "attribute_name": "session.custom.loyaltyPromotions",
+        "value": ["SFloyalty-20OFFLEGO"]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "_v": "23.2",
+      "_type": "customer_group",
+      "_resource_state": "b2fca1e0a1b2c3d4e5f60718293a4b5c",
+      "id": "CG-SFloyalty-20OFFLEGO",
+      "description": "Dynamic group for SFloyalty-20OFFLEGO",
+      "rule": {
+        "_type": "customer_group_rule",
+        "attribute_definitions": [],
+        "conditions": [
+          {
+            "_type": "condition",
+            "attribute_path": "session.custom.loyaltyPromotions",
+            "operator": "contains",
+            "value": "SFloyalty-20OFFLEGO"
+          }
+        ],
+        "condition_groups": [],
+        "match_mode": "all"
+      }
+    }
+  },
+  "notes": "OPERATOR IS L/DASH: the operator MUST be `contains` (a SUBSTRING test) with a single string value — session.custom.loyaltyPromotions is a comma-joined string (e.g. 'SFloyalty-20OFFLEGO,SFloyalty-FreeShipping'), so a set-membership/equality operator (is-one-of) would evaluate FALSE for any stacked member and the group would never activate. The design doc's rule ({operator:'CONTAINS', attribute_name, value}) is the intent; OCAPI serialises it as conditions[] with attribute_path + operator + value under a customer_group_rule (design intent in request.body, OCAPI shape in response). OCAPI operators are lower-case tokens with no spaces. 200 = update/idempotent (PUT); first create can return 201; _resource_state is the ETag."
+}

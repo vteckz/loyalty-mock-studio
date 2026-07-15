@@ -1,0 +1,28 @@
+{
+  "name": "Expired PMID (the record the cleanup sweep purges)",
+  "description": "The lifecycle counterpart to 01: a loyalty PMID that has passed its end_date. This is exactly the shape Trigger 2 (the native B2C cron sweep) and Trigger 1 (webhook) select for deletion — enabled:false, past end_date, c_loyaltyStatus EXPIRED, still flagged c_isLoyaltyManaged + c_loyaltyAutoCleanup. Use it to build/test the housekeeping path (section 5).",
+  "request": {
+    "query": { "id": "SFloyalty-20OFFLEGO" }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "_v": "23.2",
+      "_type": "promotion",
+      "_resource_state": "99ee88dd77cc66bb55aa44330022ff11",
+      "id": "SFloyalty-20OFFLEGO",
+      "name": { "default": "Loyalty: 20% Off LEGO" },
+      "callout_msg": { "default": "Loyalty Members: 20% Off LEGO" },
+      "enabled": false,
+      "searchable": false,
+      "exclusivity": "no",
+      "promotion_class": "product",
+      "start_date": "2026-03-01T00:00:00.000Z",
+      "end_date": "2026-05-01T00:00:00.000Z",
+      "c_isLoyaltyManaged": true,
+      "c_loyaltyStatus": "EXPIRED",
+      "c_loyaltyAutoCleanup": true
+    }
+  },
+  "notes": "Cron-sweep selection predicate (Trigger 2): c_isLoyaltyManaged==true AND c_loyaltyAutoCleanup==true AND end_date older than N days. Once selected, the script DELETEs the PMID and its CG-<code> group. B2C already disabled it natively at end_date (enabled:false) so no accidental discount occurred in the gap. A c_loyaltyStatus:'ARCHIVED' variant (keep the record but exclude from purge) is the same shape with c_loyaltyAutoCleanup:false."
+}

@@ -1,0 +1,47 @@
+{
+  "name": "Gated PDP — single LEGO product, loyalty badged",
+  "description": "SFCC OCAPI Shop product document for a single gated LEGO product (the PDP view). Same badging contract as the PLP tile: product_promotions carries the promotional_price + callout_msg, and c_loyaltyBadge drives the on-page badge. Serve this so the PDP template renders the struck-through price and loyalty callout deterministically.",
+  "request": {
+    "query": { "id": "lego-star-wars-75300" }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "_v": "23.2",
+      "_type": "product",
+      "id": "lego-star-wars-75300",
+      "name": "LEGO Star Wars Imperial TIE Fighter",
+      "primary_category_id": "lego",
+      "price": 39.99,
+      "prices": { "list-prices": 39.99, "sale-prices": 39.99 },
+      "currency": "USD",
+      "product_promotions": [
+        {
+          "_type": "product_promotion",
+          "promotion_id": "SFloyalty-20OFFLEGO",
+          "callout_msg": "Loyalty Members: 20% Off LEGO",
+          "promotional_price": 31.99
+        }
+      ],
+      "image_groups": [
+        {
+          "_type": "image_group",
+          "view_type": "large",
+          "images": [
+            {
+              "_type": "image",
+              "alt": "LEGO Star Wars Imperial TIE Fighter, large",
+              "dis_base_link": "https://example.com/dw/image/v2/RefArch/on/demandware.static/lego-star-wars-75300.jpg",
+              "title": "LEGO Star Wars Imperial TIE Fighter"
+            }
+          ]
+        }
+      ],
+      "inventory": { "_type": "inventory", "ats": 120, "orderable": true },
+      "c_isLoyaltyGated": true,
+      "c_loyaltyPromotionId": "SFloyalty-20OFFLEGO",
+      "c_loyaltyBadge": "20% Loyalty Discount"
+    }
+  },
+  "notes": "promotional_price (31.99) = list (39.99) * 0.80. On the PDP the storefront shows list price struck through, the promotional_price as the member price, and the c_loyaltyBadge callout. If the shopper isn't in the group, SFCC returns product_promotions:[] and the PDP shows list price only (mirror the not-qualified product-search case)."
+}

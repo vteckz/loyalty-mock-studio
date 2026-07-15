@@ -1,0 +1,18 @@
+{
+  "name": "Customer group bound to the loyalty campaign (the 2nd bind)",
+  "description": "The second of the two binds Section 3 requires per promotion: PUT .../campaigns/Salesforce-Loyalty-Campaign/customer_groups/CG-SFloyalty-20OFFLEGO. This is the link that scopes the persistent campaign to members of the dynamic gating group — pair it with 01 (the promotion bind).",
+  "request": {
+    "body": {}
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "_v": "23.2",
+      "_type": "campaign_customer_group_assignment",
+      "_resource_state": "cc33dd44ee55ff6600aa11bb22cc3344",
+      "campaign_id": "Salesforce-Loyalty-Campaign",
+      "customer_group_id": "CG-SFloyalty-20OFFLEGO"
+    }
+  },
+  "notes": "Two binds per promotion, both to the ONE indefinite campaign: 01 assigns the promotion (campaign_promotion_assignment); this assigns the customer group (campaign_customer_group_assignment). Together they make the campaign active for sessions whose loyaltyPromotions contains the code, running the PMID's discount only for gated members."
+}

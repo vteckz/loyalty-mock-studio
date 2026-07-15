@@ -1,0 +1,18 @@
+{
+  "name": "Promotion bound to the persistent loyalty campaign",
+  "description": "SFCC OCAPI Data API response to PUT .../campaigns/Salesforce-Loyalty-Campaign/promotions/SFloyalty-20OFFLEGO. Rather than a campaign per promotion, all loyalty PMIDs + customer groups bind to ONE persistent, always-on campaign. The Middleware makes two such binds per promotion (promotion assignment + customer-group assignment).",
+  "request": {
+    "body": {}
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "_v": "23.2",
+      "_type": "campaign_promotion_assignment",
+      "_resource_state": "aa00bb11cc22dd33ee44ff5566778899",
+      "campaign_id": "Salesforce-Loyalty-Campaign",
+      "promotion_id": "SFloyalty-20OFFLEGO"
+    }
+  },
+  "notes": "The companion call binds the customer group: PUT .../campaigns/Salesforce-Loyalty-Campaign/customer_groups/CG-SFloyalty-20OFFLEGO (response _type: campaign_customer_group_assignment, same shape with customer_group_id). One indefinite campaign keeps the object count flat; per-promotion activation is entirely driven by the session attribute + dynamic group, not by campaign scheduling."
+}

@@ -1,0 +1,100 @@
+{
+  "name": "Gated PLP — LEGO at 20% off, loyalty badged (gate ON)",
+  "description": "SFCC OCAPI Shop product_search result for Search-Show?pmid=SFloyalty-20OFFLEGO when the shopper's session HAS the code (Dynamic Customer Group satisfied). This is the correct 'product output + badging': each hit carries the list price plus a product_promotions entry (promotional_price = 20% off, callout_msg = the badge text). Mirror of the SFRA PLP tile data.",
+  "request": {
+    "query": { "q": "lego", "pmid": "SFloyalty-20OFFLEGO", "count": "3" }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "_v": "23.2",
+      "_type": "product_search_result",
+      "count": 3,
+      "total": 3,
+      "start": 0,
+      "query": { "text_query": { "fields": ["name"], "search_phrase": "lego" } },
+      "selected_refinements": { "cgid": "lego", "pmid": "SFloyalty-20OFFLEGO" },
+      "hits": [
+        {
+          "_type": "product_search_hit",
+          "product_id": "lego-star-wars-75300",
+          "product_name": "LEGO Star Wars Imperial TIE Fighter",
+          "product_type": { "item": true },
+          "price": 39.99,
+          "price_max": 39.99,
+          "prices": { "list-prices": 39.99, "sale-prices": 39.99 },
+          "product_promotions": [
+            {
+              "_type": "product_promotion",
+              "promotion_id": "SFloyalty-20OFFLEGO",
+              "callout_msg": "Loyalty Members: 20% Off LEGO",
+              "promotional_price": 31.99
+            }
+          ],
+          "image": {
+            "_type": "image",
+            "alt": "LEGO Star Wars Imperial TIE Fighter",
+            "dis_base_link": "https://example.com/dw/image/v2/RefArch/on/demandware.static/lego-star-wars-75300.jpg",
+            "title": "LEGO Star Wars Imperial TIE Fighter"
+          },
+          "c_isLoyaltyGated": true,
+          "c_loyaltyPromotionId": "SFloyalty-20OFFLEGO",
+          "c_loyaltyBadge": "20% Loyalty Discount"
+        },
+        {
+          "_type": "product_search_hit",
+          "product_id": "lego-technic-42115",
+          "product_name": "LEGO Technic Lamborghini Sian FKP 37",
+          "product_type": { "item": true },
+          "price": 449.99,
+          "price_max": 449.99,
+          "prices": { "list-prices": 449.99, "sale-prices": 449.99 },
+          "product_promotions": [
+            {
+              "_type": "product_promotion",
+              "promotion_id": "SFloyalty-20OFFLEGO",
+              "callout_msg": "Loyalty Members: 20% Off LEGO",
+              "promotional_price": 359.99
+            }
+          ],
+          "image": {
+            "_type": "image",
+            "alt": "LEGO Technic Lamborghini Sian FKP 37",
+            "dis_base_link": "https://example.com/dw/image/v2/RefArch/on/demandware.static/lego-technic-42115.jpg",
+            "title": "LEGO Technic Lamborghini Sian FKP 37"
+          },
+          "c_isLoyaltyGated": true,
+          "c_loyaltyPromotionId": "SFloyalty-20OFFLEGO",
+          "c_loyaltyBadge": "20% Loyalty Discount"
+        },
+        {
+          "_type": "product_search_hit",
+          "product_id": "lego-city-60321",
+          "product_name": "LEGO City Fire Brigade",
+          "product_type": { "item": true },
+          "price": 99.99,
+          "price_max": 99.99,
+          "prices": { "list-prices": 99.99, "sale-prices": 99.99 },
+          "product_promotions": [
+            {
+              "_type": "product_promotion",
+              "promotion_id": "SFloyalty-20OFFLEGO",
+              "callout_msg": "Loyalty Members: 20% Off LEGO",
+              "promotional_price": 79.99
+            }
+          ],
+          "image": {
+            "_type": "image",
+            "alt": "LEGO City Fire Brigade",
+            "dis_base_link": "https://example.com/dw/image/v2/RefArch/on/demandware.static/lego-city-60321.jpg",
+            "title": "LEGO City Fire Brigade"
+          },
+          "c_isLoyaltyGated": true,
+          "c_loyaltyPromotionId": "SFloyalty-20OFFLEGO",
+          "c_loyaltyBadge": "20% Loyalty Discount"
+        }
+      ]
+    }
+  },
+  "notes": "Badging comes from product_promotions[].callout_msg (the promo callout) + promotional_price (the 20%-off price the tile shows struck-through against list price). The c_loyaltyBadge / c_isLoyaltyGated custom attrs are the storefront's own badge hooks. In SFCC this response is produced natively once the Dynamic Customer Group activates the PMID for the session — the studio serves it directly so the SFRA/PLP template can be built against a deterministic shape. All prices reconcile: promotional_price = round(list * 0.80)."
+}

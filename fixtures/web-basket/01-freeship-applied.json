@@ -1,0 +1,58 @@
+{
+  "name": "Gated basket — 20% off LEGO + free shipping applied",
+  "description": "SFCC OCAPI Shop basket document showing BOTH headline loyalty promos applied. The product line carries the 20%-off price_adjustment (product-level, from SFloyalty-20OFFLEGO); the shipping line carries the free-shipping price_adjustment (shipping-level, from SFloyalty-FreeShipping). Free shipping is a SHIPPING discount, so it never appears in a product_search hit's product_promotions — the cart/checkout badge renders from shipping_items[].price_adjustments here.",
+  "request": {
+    "query": { "id": "abc123basketid" }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "_v": "23.2",
+      "_type": "basket",
+      "basket_id": "abc123basketid",
+      "currency": "USD",
+      "product_items": [
+        {
+          "_type": "product_item",
+          "item_id": "d0f1a2b3c4d5e6f7a8b9c0d1e2",
+          "product_id": "lego-star-wars-75300",
+          "product_name": "LEGO Star Wars Imperial TIE Fighter",
+          "quantity": 1,
+          "base_price": 39.99,
+          "price": 31.99,
+          "price_adjustments": [
+            {
+              "_type": "price_adjustment",
+              "promotion_id": "SFloyalty-20OFFLEGO",
+              "callout_msg": "Loyalty Members: 20% Off LEGO",
+              "price": -8.00
+            }
+          ],
+          "c_loyaltyBadge": "20% Loyalty Discount"
+        }
+      ],
+      "shipping_items": [
+        {
+          "_type": "shipping_item",
+          "item_id": "s1a2b3c4d5e6f7a8b9c0d1e2f3",
+          "base_price": 7.99,
+          "price": 0.00,
+          "price_adjustments": [
+            {
+              "_type": "price_adjustment",
+              "promotion_id": "SFloyalty-FreeShipping",
+              "callout_msg": "Loyalty Members: Free Shipping",
+              "price": -7.99
+            }
+          ],
+          "c_loyaltyBadge": "Free Shipping"
+        }
+      ],
+      "product_sub_total": 31.99,
+      "shipping_total": 0.00,
+      "order_total": 31.99,
+      "c_loyaltyBadges": ["20% Loyalty Discount", "Free Shipping"]
+    }
+  },
+  "notes": "Shipping badge lives on shipping_items[].price_adjustments (promotion_id SFloyalty-FreeShipping, price -7.99 → shipping_total 0.00), NOT in product_promotions. Product line: base_price 39.99, price_adjustment -8.00 → price 31.99 (matches the PLP promotional_price). c_loyaltyBadges is an order-level convenience array the storefront can render as a stacked-badge row. Both promos come from the same session gating: their PMIDs activated because SFloyalty-20OFFLEGO and SFloyalty-FreeShipping are in session.custom.loyaltyPromotions."
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Gold member — 20% off LEGO + free shipping",
+  "description": "Loyalty Middleware response the SFRA login controller consumes on authentication. The storefront joins loyaltyPromotions into session.custom.loyaltyPromotions; the pre-built Dynamic Customer Groups (rule: session.custom.loyaltyPromotions CONTAINS <code>) then activate the matching static PMIDs, unlocking product search (?pmid=) + badging. NOT a Salesforce Loyalty core API — this is the Middleware's own eligible-promotions endpoint that fronts the SF Loyalty voucher/tier query.",
+  "request": {
+    "query": { "customerNo": "0007890" }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "customerNo": "0007890",
+      "membershipNumber": "MEM-100001",
+      "loyaltyProgramMemberId": "0lMxx0000000001AAA",
+      "loyaltyTier": "Gold",
+      "sessionAttribute": "loyaltyPromotions",
+      "sessionValue": "SFloyalty-20OFFLEGO,SFloyalty-FreeShipping",
+      "loyaltyPromotions": ["SFloyalty-20OFFLEGO", "SFloyalty-FreeShipping"],
+      "promotions": [
+        {
+          "code": "SFloyalty-20OFFLEGO",
+          "pmid": "SFloyalty-20OFFLEGO",
+          "name": "Loyalty: 20% Off LEGO",
+          "type": "product",
+          "discountPercent": 20,
+          "calloutMsg": "Loyalty Members: 20% Off LEGO",
+          "badge": "20% Loyalty Discount",
+          "customerGroupId": "CG-SFloyalty-20OFFLEGO",
+          "campaignId": "Salesforce-Loyalty-Campaign",
+          "plpUrl": "/s/RefArch/Search-Show?pmid=SFloyalty-20OFFLEGO",
+          "sourceVoucherCode": "SAVE20LEGO",
+          "effectiveDate": "2026-06-01T00:00:00.000Z",
+          "expirationDate": "2026-08-01T00:00:00.000Z"
+        },
+        {
+          "code": "SFloyalty-FreeShipping",
+          "pmid": "SFloyalty-FreeShipping",
+          "name": "Loyalty: Free Shipping",
+          "type": "shipping",
+          "calloutMsg": "Loyalty Members: Free Shipping",
+          "badge": "Free Shipping",
+          "customerGroupId": "CG-SFloyalty-FreeShipping",
+          "campaignId": "Salesforce-Loyalty-Campaign",
+          "sourceVoucherCode": "FREESHIP",
+          "effectiveDate": "2026-06-01T00:00:00.000Z",
+          "expirationDate": "2026-08-01T00:00:00.000Z"
+        }
+      ]
+    }
+  },
+  "notes": "SFRA usage (login controller middleware): session.custom.loyaltyPromotions = body.loyaltyPromotions.join(','). The raw codes gate the Dynamic Customer Groups. The promotions[] metadata drives a 'My Rewards' surface directly (one tile per entry from badge/calloutMsg/plpUrl); product entries carry discountPercent + plpUrl, while shipping/points entries (Free Shipping, Double Points) have no plpUrl and link to the rewards landing page instead. OCAPI mobile parity: the same body is set on the session by the dw.ocapi.shop.auth.afterPOST hook. sourceVoucherCode ties each storefront code back to the SF Loyalty voucher the Middleware resolved."
+}

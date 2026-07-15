@@ -25,12 +25,14 @@ export interface EndpointMeta {
 export const GROUP_ORDER = [
   "Auth",
   "Promotions",
+  "Storefront",
   "Vouchers",
   "Members",
   "Enrollment",
   "Transactions",
   "Partners",
   "Clubs",
+  "Provisioning",
   "Admin",
 ] as const;
 

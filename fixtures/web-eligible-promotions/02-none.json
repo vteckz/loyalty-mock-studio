@@ -1,0 +1,21 @@
+{
+  "name": "Member with no active loyalty promotions (gate OFF)",
+  "description": "Control case: a logged-in member who currently qualifies for nothing. loyaltyPromotions is empty, so session.custom.loyaltyPromotions is set to '' — no Dynamic Customer Group activates, and the shopper sees list prices with no loyalty badges. Use this to prove the gate is closed by default.",
+  "request": {
+    "query": { "customerNo": "0007891" }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "customerNo": "0007891",
+      "membershipNumber": "MEM-100042",
+      "loyaltyProgramMemberId": "0lMxx0000000042AAA",
+      "loyaltyTier": "Silver",
+      "sessionAttribute": "loyaltyPromotions",
+      "sessionValue": "",
+      "loyaltyPromotions": [],
+      "promotions": []
+    }
+  },
+  "notes": "SFRA should still write the (empty) attribute so a prior session's codes are cleared on re-login: session.custom.loyaltyPromotions = (body.loyaltyPromotions || []).join(',')."
+}
