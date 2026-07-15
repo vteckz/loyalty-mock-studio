@@ -1,5 +1,5 @@
 {
-  "name": "Success — token issued",
+  "name": "Success, token issued",
   "description": "Standard OAuth 2.0 client_credentials grant response. The cartridge should cache this token until `issued_at + expires_in - 60s`.",
   "request": {
     "body": {
@@ -20,5 +20,5 @@
       "signature": "MOCK_SIGNATURE"
     }
   },
-  "notes": "Real responses do not include `expires_in` — the cartridge has to assume a default (e.g. 2h). Confirm with the SF admin which connected-app session policy is configured."
+  "notes": "Real responses do not include `expires_in`, the cartridge has to assume a default (e.g. 2h). Confirm with the SF admin which connected-app session policy is configured."
 }

@@ -1,6 +1,6 @@
 {
   "name": "Mixed statuses (Issued / Reserved / Redeemed / Expired / Cancelled)",
-  "description": "Verifies the cartridge only offers status === 'Issued'. RESERVED is excluded too — a voucher already held against another basket shouldn't be offered again. These are the five real voucher statuses.",
+  "description": "Verifies the cartridge only offers status === 'Issued'. RESERVED is excluded too, a voucher already held against another basket shouldn't be offered again. These are the five real voucher statuses.",
   "response": {
     "status": 200,
     "body": {

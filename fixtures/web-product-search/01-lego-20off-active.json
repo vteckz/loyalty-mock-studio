@@ -1,5 +1,5 @@
 {
-  "name": "Gated PLP — LEGO at 20% off, loyalty badged (gate ON)",
+  "name": "Gated PLP, LEGO at 20% off, loyalty badged (gate ON)",
   "description": "SFCC OCAPI Shop product_search result for Search-Show?pmid=SFloyalty-20OFFLEGO when the shopper's session HAS the code (Dynamic Customer Group satisfied). This is the correct 'product output + badging': each hit carries the list price plus a product_promotions entry (promotional_price = 20% off, callout_msg = the badge text). Mirror of the SFRA PLP tile data.",
   "request": {
     "query": { "q": "lego", "pmid": "SFloyalty-20OFFLEGO", "count": "3" }
@@ -96,5 +96,5 @@
       ]
     }
   },
-  "notes": "Badging comes from product_promotions[].callout_msg (the promo callout) + promotional_price (the 20%-off price the tile shows struck-through against list price). The c_loyaltyBadge / c_isLoyaltyGated custom attrs are the storefront's own badge hooks. In SFCC this response is produced natively once the Dynamic Customer Group activates the PMID for the session — the studio serves it directly so the SFRA/PLP template can be built against a deterministic shape. All prices reconcile: promotional_price = round(list * 0.80)."
+  "notes": "Badging comes from product_promotions[].callout_msg (the promo callout) + promotional_price (the 20%-off price the tile shows struck-through against list price). The c_loyaltyBadge / c_isLoyaltyGated custom attrs are the storefront's own badge hooks. In SFCC this response is produced natively once the Dynamic Customer Group activates the PMID for the session, the studio serves it directly so the SFRA/PLP template can be built against a deterministic shape. All prices reconcile: promotional_price = round(list * 0.80)."
 }

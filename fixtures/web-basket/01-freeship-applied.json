@@ -1,6 +1,6 @@
 {
-  "name": "Gated basket — 20% off LEGO + free shipping applied",
-  "description": "SFCC OCAPI Shop basket document showing BOTH headline loyalty promos applied. The product line carries the 20%-off price_adjustment (product-level, from SFloyalty-20OFFLEGO); the shipping line carries the free-shipping price_adjustment (shipping-level, from SFloyalty-FreeShipping). Free shipping is a SHIPPING discount, so it never appears in a product_search hit's product_promotions — the cart/checkout badge renders from shipping_items[].price_adjustments here.",
+  "name": "Gated basket, 20% off LEGO + free shipping applied",
+  "description": "SFCC OCAPI Shop basket document showing BOTH headline loyalty promos applied. The product line carries the 20%-off price_adjustment (product-level, from SFloyalty-20OFFLEGO); the shipping line carries the free-shipping price_adjustment (shipping-level, from SFloyalty-FreeShipping). Free shipping is a SHIPPING discount, so it never appears in a product_search hit's product_promotions, the cart/checkout badge renders from shipping_items[].price_adjustments here.",
   "request": {
     "query": { "id": "abc123basketid" }
   },

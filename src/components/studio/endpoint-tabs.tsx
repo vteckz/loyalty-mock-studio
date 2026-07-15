@@ -120,7 +120,7 @@ export function EndpointTabs({
                     </Badge>
                   )}
                   {isGuarded && (
-                    <Badge variant="destructive" className="text-[9px]" title="guarded — returns 409 in the selected mode">
+                    <Badge variant="destructive" className="text-[9px]" title="guarded, returns 409 in the selected mode">
                       409
                     </Badge>
                   )}

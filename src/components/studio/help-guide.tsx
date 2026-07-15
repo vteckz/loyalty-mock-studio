@@ -147,7 +147,7 @@ export function HelpGuide({ open, onClose, endpoints, baseUrl }: Props) {
             <Section icon={<PlugIcon className="size-4" />} title="1 · Point your cartridge at the mock">
               <p>
                 Copy this base URL into your SFCC service definitions (the
-                credential URLs in <Mono>metadata/services.xml</Mono>) — one
+                credential URLs in <Mono>metadata/services.xml</Mono>), one
                 service per endpoint below.
               </p>
               <div className="flex items-center gap-2">
@@ -187,13 +187,13 @@ export function HelpGuide({ open, onClose, endpoints, baseUrl }: Props) {
             <Section icon={<ListChecksIcon className="size-4" />} title="2 · Choose what the mock returns">
               <p>
                 Each endpoint (top tabs) has a set of <strong>scenarios</strong>{" "}
-                in the left column — one JSON file each. The scenario with the
+                in the left column, one JSON file each. The scenario with the
                 green dot is <strong>active</strong>: every incoming request to
                 that endpoint gets it.
               </p>
               <p>
                 Edit the response body, HTTP status and artificial latency in
-                the middle pane, then <strong>Save</strong> — the studio writes
+                the middle pane, then <strong>Save</strong>; the studio writes
                 back to <Mono>fixtures/&lt;endpoint&gt;/&lt;id&gt;.json</Mono>,
                 so a Save is a git diff you can commit. Add a brand-new scenario
                 by dropping a JSON file in <Mono>fixtures/&lt;endpoint&gt;/</Mono>{" "}
@@ -210,11 +210,11 @@ export function HelpGuide({ open, onClose, endpoints, baseUrl }: Props) {
               </p>
               <ul className="ml-4 list-disc space-y-1">
                 <li>
-                  <strong>Auto</strong> — both promotion endpoints answer
+                  <strong>Auto</strong>: both promotion endpoints answer
                   normally.
                 </li>
                 <li>
-                  <strong>GPM</strong> / <strong>GetMember</strong> — the chosen
+                  <strong>GPM</strong> / <strong>GetMember</strong>: the chosen
                   endpoint answers; the <em>other</em> promotion endpoint returns{" "}
                   <Mono>409</Mono>. So if the cartridge is pointed at the wrong
                   resource for the mode you set, it fails loudly instead of
@@ -233,20 +233,20 @@ export function HelpGuide({ open, onClose, endpoints, baseUrl }: Props) {
             </Section>
 
             <Section icon={<FlaskConicalIcon className="size-4" />} title="5 · Local test workflow">
-              <p>The adapter ships a contract-test harness that reads these very fixtures off disk — no server, tunnel or sandbox needed:</p>
+              <p>The adapter ships a contract-test harness that reads these very fixtures off disk, no server, tunnel or sandbox needed:</p>
               <CodeBlock copy={"cd ../int_loyalty_adapter && npm install && npm test"}>
                 {"cd ../int_loyalty_adapter && npm install && npm test"}
               </CodeBlock>
               <ul className="ml-4 list-disc space-y-1">
                 <li>
-                  <strong>Tier 1 (offline)</strong> — edit a fixture here →{" "}
+                  <strong>Tier 1 (offline)</strong>: edit a fixture here →{" "}
                   <Mono>npm test</Mono> re-checks the adapter against it.
                 </li>
                 <li>
-                  <strong>Tier 2</strong> — SFCC service mock mode on a sandbox.
+                  <strong>Tier 2</strong>: SFCC service mock mode on a sandbox.
                 </li>
                 <li>
-                  <strong>Tier 3</strong> — the live mock over ngrok, for
+                  <strong>Tier 3</strong>: the live mock over ngrok, for
                   interactive joint sessions only.
                 </li>
               </ul>
@@ -266,7 +266,7 @@ export function HelpGuide({ open, onClose, endpoints, baseUrl }: Props) {
               <p>
                 Fixtures are reconciled to the official{" "}
                 <strong>Loyalty Management Developer Guide</strong> (Summer
-                &apos;26) — <em>not</em> derived from a live org. Two contract
+                &apos;26), <em>not</em> derived from a live org. Two contract
                 facts worth knowing:
               </p>
               <ul className="ml-4 list-disc space-y-1">
@@ -277,12 +277,12 @@ export function HelpGuide({ open, onClose, endpoints, baseUrl }: Props) {
                   returns a <Mono>reservationKey</Mono>),{" "}
                   <Mono>Reinstate</Mono> (the release), and{" "}
                   <Mono>Redeem</Mono>. Same <Mono>/redeem</Mono> resource for
-                  all three — see the <Mono>03-reserve-success</Mono> /{" "}
+                  all three, see the <Mono>03-reserve-success</Mono> /{" "}
                   <Mono>04-reinstate-success</Mono> fixtures.
                 </li>
                 <li>
                   <strong>BOGOF is a discount on a line already in the cart</strong>
-                  , not an injected product — see{" "}
+                  , not an injected product, see{" "}
                   <Mono>04-bogof-as-line-discount</Mono>.
                 </li>
               </ul>

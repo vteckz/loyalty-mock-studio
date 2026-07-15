@@ -1,5 +1,5 @@
 {
-  "name": "Gated PDP — single LEGO product, loyalty badged",
+  "name": "Gated PDP, single LEGO product, loyalty badged",
   "description": "SFCC OCAPI Shop product document for a single gated LEGO product (the PDP view). Same badging contract as the PLP tile: product_promotions carries the promotional_price + callout_msg, and c_loyaltyBadge drives the on-page badge. Serve this so the PDP template renders the struck-through price and loyalty callout deterministically.",
   "request": {
     "query": { "id": "lego-star-wars-75300" }

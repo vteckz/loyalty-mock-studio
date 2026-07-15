@@ -2,11 +2,11 @@
 
 A local Salesforce Loyalty API mock with a GUI on top, built for the SFCC cartridge developer who has to integrate against Loyalty before the SF org is even ready.
 
-Run it on `localhost`, point your SFCC service definitions at it, and develop the whole flow — Promotion Evaluation → Promotion Execution → Voucher lifecycle → Member Info — without a real SF sandbox.
+Run it on `localhost`, point your SFCC service definitions at it, and develop the whole flow (Promotion Evaluation → Promotion Execution → Voucher lifecycle → Member Info) without a real SF sandbox.
 
-![Loyalty Mock Studio — grouped endpoint tabs, scenario picker, Monaco JSON editor, and a live request log](docs/screenshot.png)
+![Loyalty Mock Studio, grouped endpoint tabs, scenario picker, Monaco JSON editor, and a live request log](docs/screenshot.png)
 
-> **Companion cartridge (required):** the SFCC B2C Commerce adapter that consumes this mock is **[int_loyalty_adapter](https://github.com/vteckz/int_loyalty_adapter)**. It's the other half of the integration — the adapter's offline contract tests read this repo's `fixtures/` straight off disk (default path `../loyalty-mock-studio/fixtures`), so clone the two **side by side**:
+> **Companion cartridge (required):** the SFCC B2C Commerce adapter that consumes this mock is **[int_loyalty_adapter](https://github.com/vteckz/int_loyalty_adapter)**. It's the other half of the integration: the adapter's offline contract tests read this repo's `fixtures/` straight off disk (default path `../loyalty-mock-studio/fixtures`), so clone the two **side by side**:
 >
 > ```bash
 > git clone https://github.com/vteckz/loyalty-mock-studio.git
@@ -15,7 +15,7 @@ Run it on `localhost`, point your SFCC service definitions at it, and develop th
 
 ## Why this exists
 
-The proposed integration has SFCC consuming the Loyalty Promotion Evaluation / Execution APIs and injecting `PriceAdjustment` objects into the cart at calculate-time, plus a separate voucher fetch/reserve/redeem/release flow as a payment method. Both flows need realistic responses to develop against. This studio gives you those without needing the sandbox — and it also mocks an **alternative web session-gating pattern** (session-driven Dynamic Customer Groups + static promotions); see [Two integration patterns](#two-integration-patterns).
+The proposed integration has SFCC consuming the Loyalty Promotion Evaluation / Execution APIs and injecting `PriceAdjustment` objects into the cart at calculate-time, plus a separate voucher fetch/reserve/redeem/release flow as a payment method. Both flows need realistic responses to develop against. This studio gives you those without needing the sandbox, and it also mocks an **alternative web session-gating pattern** (session-driven Dynamic Customer Groups + static promotions); see [Two integration patterns](#two-integration-patterns).
 
 ## Quick start
 
@@ -26,19 +26,19 @@ npm run dev
 
 Open <http://localhost:3000>.
 
-- **Top tabs** — every mocked endpoint
-- **Left** — the scenarios available for that endpoint (each is one JSON file in `fixtures/`)
-- **Middle** — Monaco editor: edit the response, change HTTP status, inject latency, save back to disk
-- **Right** — live request log streamed over SSE; click a row to see headers, request body and response body
-- **Guide** button (top-right) — an in-app developer guide covering wiring, scenarios, the promotion-mode switch, the `x-mock-scenario` test header and the tunnel caveat. It opens automatically on your first visit.
+- **Top tabs**: every mocked endpoint
+- **Left**: the scenarios available for that endpoint (each is one JSON file in `fixtures/`)
+- **Middle**: the Monaco editor; edit the response, change HTTP status, inject latency, save back to disk
+- **Right**: a live request log streamed over SSE; click a row to see headers, request body and response body
+- **Guide** button (top-right): an in-app developer guide covering wiring, scenarios, the promotion-mode switch, the `x-mock-scenario` test header and the tunnel caveat. It opens automatically on your first visit.
 
 The green dot next to a scenario = the one your cartridge calls will currently receive.
 
 ## Mocked endpoints
 
-The studio mocks the **full out-of-the-box Loyalty Management Business API surface** — **37 endpoints across 9 groups** — all reconciled against the official **Loyalty Management Developer Guide v67.0 (Summer '26)**. Promotion endpoints map to **Global Promotions Management (GPM)**; the rest to the standard Loyalty Connect REST API. Every fixture's path, method, and response field names were verified against the guide (each new one passed an adversarial second-pass verification).
+The studio mocks the **full out-of-the-box Loyalty Management Business API surface** (**37 endpoints across 9 groups**), all reconciled against the official **Loyalty Management Developer Guide v67.0 (Summer '26)**. Promotion endpoints map to **Global Promotions Management (GPM)**; the rest to the standard Loyalty Connect REST API. Every fixture's path, method, and response field names were verified against the guide (each new one passed an adversarial second-pass verification).
 
-On top of the Loyalty API, the studio also mocks a **7-endpoint web session-gating set** (the **Storefront** and **Provisioning** groups) for the alternative middleware pattern — **44 endpoints across 11 groups** in total. See [Two integration patterns](#two-integration-patterns) below.
+On top of the Loyalty API, the studio also mocks a **7-endpoint web session-gating set** (the **Storefront** and **Provisioning** groups) for the alternative middleware pattern, **44 endpoints across 11 groups** in total. See [Two integration patterns](#two-integration-patterns) below.
 
 ### Core integration set (what the SFCC adapter actually calls)
 
@@ -70,16 +70,16 @@ The remaining endpoints round out the OOTB Loyalty surface so the dev can mock a
 
 > Some responses are partly **implementer-defined** in Salesforce (program-process `results[]` contents, promotion-rule event/reward maps). Those fixtures use the documented envelope with a plausible inner shape and say so in their `notes`. Add a new endpoint by following the 3-step pattern in `src/lib/endpoints.ts`.
 
-**Get Member Promotions** is the *alternative* pricing path (still an open question for the Salesforce side). It's a program process returning the member's eligible promotions rather than a priced cart. Its response *envelope* is doc-confirmed (the standard Loyalty Program Process Output — boolean `status`, `outputParameters.outputParameters.results[]`, `simulationDetails`); only the *contents* of each `results[]` item are implementer-defined, so those inner fields in the fixtures are a plausible default. The adapter switches to it by setting `LoyaltyConfig.PROMOTION_API = 'GET_MEMBER_PROMOTIONS'`.
+**Get Member Promotions** is the *alternative* pricing path (still an open question for the Salesforce side). It's a program process returning the member's eligible promotions rather than a priced cart. Its response *envelope* is doc-confirmed (the standard Loyalty Program Process Output: boolean `status`, `outputParameters.outputParameters.results[]`, `simulationDetails`); only the *contents* of each `results[]` item are implementer-defined, so those inner fields in the fixtures are a plausible default. The adapter switches to it by setting `LoyaltyConfig.PROMOTION_API = 'GET_MEMBER_PROMOTIONS'`.
 
 ## Two integration patterns
 
 The studio supports **both** ways SFCC can consume Salesforce Loyalty:
 
-1. **Cartridge / GPM price-injection** (the endpoints above) — [`int_loyalty_adapter`](https://github.com/vteckz/int_loyalty_adapter) calls Promotion Evaluation & Execution at *cart calculate* and injects `PriceAdjustment`s. **Salesforce computes the discount.**
-2. **Web session-gating** (the **Storefront** + **Provisioning** groups) — a Loyalty Middleware returns eligible promotion *codes* on login; the storefront writes them to `session.custom.loyaltyPromotions`; SFCC **Dynamic Customer Groups** activate pre-built static promotions (PMIDs) per-session, so pricing + badging come from **SFCC's native engine**. Salesforce only decides *who gets which code*.
+1. **Cartridge / GPM price-injection** (the endpoints above). [`int_loyalty_adapter`](https://github.com/vteckz/int_loyalty_adapter) calls Promotion Evaluation & Execution at *cart calculate* and injects `PriceAdjustment`s. **Salesforce computes the discount.**
+2. **Web session-gating** (the **Storefront** + **Provisioning** groups). A Loyalty Middleware returns eligible promotion *codes* on login; the storefront writes them to `session.custom.loyaltyPromotions`; SFCC **Dynamic Customer Groups** activate pre-built static promotions (PMIDs) per-session, so pricing + badging come from **SFCC's native engine**. Salesforce only decides *who gets which code*.
 
-**Full how-to for pattern 2:** [`docs/web-session-gating-howto.md`](docs/web-session-gating-howto.md) — the end-to-end developer guide (login gate → session attribute → customer group → PMID → badged PLP/PDP/cart → provisioning → cleanup).
+**Full how-to for pattern 2:** [`docs/web-session-gating-howto.md`](docs/web-session-gating-howto.md), the end-to-end developer guide (login gate → session attribute → customer group → PMID → badged PLP/PDP/cart → provisioning → cleanup).
 
 - **Storefront (4):** web-eligible-promotions (login gate), web-product-search (gated PLP + badging), web-product-detail (PDP), web-basket (free shipping + stacked badges)
 - **Provisioning (3):** ocapi-customer-group (dynamic group, `contains` rule), ocapi-promotion (PMID + lifecycle metadata + expired variant), ocapi-campaign-binding (promotion + customer-group binds)
@@ -88,12 +88,12 @@ The studio supports **both** ways SFCC can consume Salesforce Loyalty:
 
 ### Promotion API switch (header)
 
-The header has a **Promotion API** toggle — `Auto | GPM | GetMember` — that mirrors the adapter's `LoyaltyConfig.PROMOTION_API`. It can't reach into the cartridge (that config lives in the SFCC code), but it makes the studio match the mode you're testing:
+The header has a **Promotion API** toggle (`Auto | GPM | GetMember`) that mirrors the adapter's `LoyaltyConfig.PROMOTION_API`. It can't reach into the cartridge (that config lives in the SFCC code), but it makes the studio match the mode you're testing:
 
-- **Auto** (default) — both promotion endpoints answer normally.
-- **GPM** / **GetMember** — the chosen promotion endpoint answers normally; the *other* one returns a **409** with a message pointing at `LoyaltyConfig.PROMOTION_API`. So if the cartridge is pointed at the wrong resource for the mode you set, you find out loudly instead of via a silent wrong answer. The guarded tab is dimmed and badged `409`; the active one is badged `mode`.
+- **Auto** (default): both promotion endpoints answer normally.
+- **GPM** / **GetMember**: the chosen promotion endpoint answers normally; the *other* one returns a **409** with a message pointing at `LoyaltyConfig.PROMOTION_API`. So if the cartridge is pointed at the wrong resource for the mode you set, you find out loudly instead of via a silent wrong answer. The guarded tab is dimmed and badged `409`; the active one is badged `mode`.
 
-> **Two things to know.** (1) **Voucher reserve/release IS supported** — the Redeem Voucher resource takes an `action` field (type `ReservationAction`, standard since API **v62.0**): `Reserve` (Issued→Reserved, returns a `reservationKey`), `Reinstate` (Reserved→Issued, the "release"), and `Redeem` (the default). It's the same `/redeem` resource for all three, not separate endpoints — see the `03-reserve-success` / `04-reinstate-success` fixtures. This matches the original proposal's "list → reserve → redeem/release" flow. (2) **BOGOF is modelled as a discount on a line already in the cart**, not as an injected product — see the `04-bogof-as-line-discount` fixture. Injecting a product the shopper didn't add isn't expressible in the GPM Cart response and is an open question for the Salesforce-side team.
+> **Two things to know.** (1) **Voucher reserve/release IS supported**: the Redeem Voucher resource takes an `action` field (type `ReservationAction`, standard since API **v62.0**): `Reserve` (Issued→Reserved, returns a `reservationKey`), `Reinstate` (Reserved→Issued, the "release"), and `Redeem` (the default). It's the same `/redeem` resource for all three, not separate endpoints; see the `03-reserve-success` / `04-reinstate-success` fixtures. This matches the original proposal's "list → reserve → redeem/release" flow. (2) **BOGOF is modelled as a discount on a line already in the cart**, not as an injected product; see the `04-bogof-as-line-discount` fixture. Injecting a product the shopper didn't add isn't expressible in the GPM Cart response and is an open question for the Salesforce-side team.
 
 ## How a request gets answered
 
@@ -114,31 +114,31 @@ curl -X POST http://localhost:3000/api/loyalty/promotion-execution \
   -d '{}'
 ```
 
-This is what the **contract test harness** should do — every fixture file becomes one test case that asserts the cartridge handles that response correctly.
+This is what the **contract test harness** should do: every fixture file becomes one test case that asserts the cartridge handles that response correctly.
 
 ## Adding / editing scenarios
 
 Two ways:
 
-1. **In the GUI** — pick the scenario, edit in Monaco, click **Save**. The studio writes back to `fixtures/<endpoint>/<id>.json`. Commit the diff.
-2. **In your editor** — drop a new `.json` file into `fixtures/<endpoint>/`. Schema:
+1. **In the GUI**, pick the scenario, edit in Monaco, click **Save**. The studio writes back to `fixtures/<endpoint>/<id>.json`. Commit the diff.
+2. **In your editor**, drop a new `.json` file into `fixtures/<endpoint>/`. Schema:
 
    ```jsonc
    {
      "name": "Human-readable name shown in the GUI",
      "description": "What this scenario is for",
-     "request": { "body": { /* informational only — example of what produced this response */ } },
+     "request": { "body": { /* informational only, example of what produced this response */ } },
      "response": {
        "status": 200,
        "headers": { /* optional */ },
        "body": { /* whatever JSON SF would return */ }
      },
-     "latencyMs": 800,        // optional — artificial delay
+     "latencyMs": 800,        // optional, artificial delay
      "notes": "Edge cases the dev should test against"  // optional
    }
    ```
 
-   Reload the GUI tab — the file appears.
+   Reload the GUI tab and the file appears.
 
 ## Suggested workflow for the SFCC dev
 
@@ -151,13 +151,13 @@ Two ways:
    - `04-bogof-as-line-discount` → the free item is a discount on a line already in the cart (no product injection)
    - `05-error-gpm-not-enabled` → cartridge falls through to non-loyalty pricing, does NOT error the cart
 4. **Order placement** → `/api/loyalty/promotion-reward` (accrue) + `/api/loyalty/vouchers/redeem`.
-5. **Voucher flow** — list (`?voucherStatus=Issued`) → apply as a basket adjustment + **Reserve** (Issued→Reserved, keep the `reservationKey`) → on removal/abandon **Reinstate** (release) → **Redeem** with the `reservationKey` at order placement. The `03-mixed-statuses` fixture tests that you only offer `status=Issued` (Reserved is held, so it isn't offered either). Reservation is governed by the adapter's `LoyaltyConfig.VOUCHER_USE_RESERVATION` — turn it off to fall back to hold-the-code (e.g. for orgs below API v62.0).
+5. **Voucher flow**: list (`?voucherStatus=Issued`) → apply as a basket adjustment + **Reserve** (Issued→Reserved, keep the `reservationKey`) → on removal/abandon **Reinstate** (release) → **Redeem** with the `reservationKey` at order placement. The `03-mixed-statuses` fixture tests that you only offer `status=Issued` (Reserved is held, so it isn't offered either). Reservation is governed by the adapter's `LoyaltyConfig.VOUCHER_USE_RESERVATION`; turn it off to fall back to hold-the-code (e.g. for orgs below API v62.0).
 
 ## State persistence
 
 - The **active scenario per endpoint** lives in memory. Restart the dev server = everything resets to "first fixture per endpoint".
 - The **request log** is an in-memory ring buffer (200 entries).
-- **Fixture files are on disk** — Save in the GUI = git diff = PR.
+- **Fixture files are on disk**: Save in the GUI = git diff = PR.
 
 If you want the active selection to survive restarts, that's the natural next feature.
 
@@ -188,8 +188,8 @@ loyalty-mock-studio/
 
 1. Append an entry to `src/lib/endpoints.ts` (`{ id, name, method, mockPath: "/api/loyalty/<id>", sfPath, group, available, description }`).
 2. Create `src/app/api/loyalty/<id>/route.ts` with one line: `export const POST = makeHandler("<id>")` (or `GET`).
-3. Drop a fixture in `fixtures/<id>/01-success.json`. Reload — it appears as a new tab in its group.
+3. Drop a fixture in `fixtures/<id>/01-success.json`. Reload, it appears as a new tab in its group.
 
-## Caveats — fixtures reconciled to docs, not a live org
+## Caveats, fixtures reconciled to docs, not a live org
 
-The fixtures were rewritten to match the shapes in the official **Loyalty Management Developer Guide** (Summer '26) — the promotion fixtures mirror the guide's own Cart example. They were **not derived from a real sandbox**, and two things still need confirmation from whoever builds the Loyalty side: (1) whether they use this GPM "Promotion Evaluation and Execution" resource vs. a Loyalty `GetMemberPromotions` program process, and (2) how/whether a "free product the shopper didn't add" is expressed. As soon as you have real sample responses, paste them into the GUI and **Save** — the studio doesn't care what's in the body.
+The fixtures were rewritten to match the shapes in the official **Loyalty Management Developer Guide** (Summer '26), the promotion fixtures mirror the guide's own Cart example. They were **not derived from a real sandbox**, and two things still need confirmation from whoever builds the Loyalty side: (1) whether they use this GPM "Promotion Evaluation and Execution" resource vs. a Loyalty `GetMemberPromotions` program process, and (2) how/whether a "free product the shopper didn't add" is expressed. As soon as you have real sample responses, paste them into the GUI and **Save**, the studio doesn't care what's in the body.

@@ -1,5 +1,5 @@
 {
-  "name": "BOGOF — modelled as a line discount (NOT an injected product)",
+  "name": "BOGOF, modelled as a line discount (NOT an injected product)",
   "description": "Important reality check vs the original proposal. In the GPM Cart response, 'Buy 1 Pizza, Get 1 Burger Free' shows up as a discount on the Burger line that's ALREADY in the cart (its after-discount amount drops toward 0). There is NO field that tells Commerce to inject a product the shopper didn't add.",
   "response": {
     "status": 200,

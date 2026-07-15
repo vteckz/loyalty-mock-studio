@@ -1,6 +1,6 @@
 {
   "name": "Recent transaction journals",
-  "description": "POST .../transaction-history with body { membershipNumber, journalType, periodStartDate, periodEndDate }. Matches the documented Loyalty View Transaction Journal History Output exactly: top level { message, status (bool), totalCount, transactionJournals[] } and PascalCase journal fields (ActivityDate, JournalTypeId, TransactionAmount, …) — not camelCase.",
+  "description": "POST .../transaction-history with body { membershipNumber, journalType, periodStartDate, periodEndDate }. Matches the documented Loyalty View Transaction Journal History Output exactly: top level { message, status (bool), totalCount, transactionJournals[] } and PascalCase journal fields (ActivityDate, JournalTypeId, TransactionAmount, …), not camelCase.",
   "request": {
     "body": {
       "membershipNumber": "MEM-100001",

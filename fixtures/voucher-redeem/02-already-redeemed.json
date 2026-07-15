@@ -1,5 +1,5 @@
 {
-  "name": "Error — voucher already redeemed (409)",
+  "name": "Error, voucher already redeemed (409)",
   "description": "Verify the cartridge handles a double-redeem (retry, webhook redelivery) gracefully at order placement rather than failing the order. Status + errorCode match the documented Redeem Voucher response (HTTP 409, ALREADY_REDEEMED_VOUCHER).",
   "response": {
     "status": 409,

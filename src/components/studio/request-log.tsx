@@ -93,7 +93,7 @@ export function RequestLog({ entries, highlightEndpointId, onClear }: Props) {
               <div className="flex w-full items-center justify-between text-[10px] text-muted-foreground">
                 <code className="truncate">{e.path}</code>
                 <span>
-                  {e.scenarioId ?? "—"} · {e.response.latencyMs}ms
+                  {e.scenarioId ?? "n/a"} · {e.response.latencyMs}ms
                 </span>
               </div>
               {expanded && (

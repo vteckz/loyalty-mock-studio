@@ -1,6 +1,6 @@
 {
-  "name": "Reinstate — release a reserved voucher",
-  "description": "POST .../redeem with body { action: 'Reinstate', reservationKey }. Moves the voucher Reserved → Issued — the 'release' the cartridge fires when the shopper removes the voucher or abandons the basket. Response matches the documented Redeem Voucher Output 'Reinstate - Reserved to Issued' sample: { remainingAmount, status }.",
+  "name": "Reinstate, release a reserved voucher",
+  "description": "POST .../redeem with body { action: 'Reinstate', reservationKey }. Moves the voucher Reserved → Issued, the 'release' the cartridge fires when the shopper removes the voucher or abandons the basket. Response matches the documented Redeem Voucher Output 'Reinstate - Reserved to Issued' sample: { remainingAmount, status }.",
   "request": {
     "body": {
       "action": "Reinstate",
@@ -16,5 +16,5 @@
       "status": "Issued"
     }
   },
-  "notes": "Called by VoucherApplier.remove. Reinstate needs the reservationKey returned by the earlier Reserve. Like reserve, a failure here is non-fatal — the local adjustment is still stripped. (A reinstate can also resolve to status 'Expired' if the voucher lapsed while reserved.)"
+  "notes": "Called by VoucherApplier.remove. Reinstate needs the reservationKey returned by the earlier Reserve. Like reserve, a failure here is non-fatal, the local adjustment is still stripped. (A reinstate can also resolve to status 'Expired' if the voucher lapsed while reserved.)"
 }

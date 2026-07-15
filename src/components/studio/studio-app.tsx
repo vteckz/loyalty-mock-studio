@@ -148,7 +148,7 @@ export function StudioApp() {
 
   const copyBaseUrl = () => {
     navigator.clipboard.writeText(baseUrl);
-    toast.success("Base URL copied — paste into the cartridge service config");
+    toast.success("Base URL copied, paste into the cartridge service config");
   };
 
   const handleSetMode = useCallback(
@@ -165,7 +165,7 @@ export function StudioApp() {
       toast.success(
         mode === "auto"
           ? "Serving both promotion APIs"
-          : `Promotion mode: ${MODE_LABEL[mode]} — the other promotion endpoint now returns 409`,
+          : `Promotion mode: ${MODE_LABEL[mode]}, the other promotion endpoint now returns 409`,
       );
       await refresh();
     },
@@ -215,7 +215,7 @@ export function StudioApp() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <code className="rounded bg-muted px-2 py-1 text-xs">{baseUrl || "—"}</code>
+            <code className="rounded bg-muted px-2 py-1 text-xs">{baseUrl || "n/a"}</code>
             <Button size="sm" variant="outline" onClick={copyBaseUrl} disabled={!baseUrl}>
               Copy base URL
             </Button>

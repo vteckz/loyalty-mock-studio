@@ -1,6 +1,6 @@
 {
   "name": "Customer group bound to the loyalty campaign (the 2nd bind)",
-  "description": "The second of the two binds Section 3 requires per promotion: PUT .../campaigns/Salesforce-Loyalty-Campaign/customer_groups/CG-SFloyalty-20OFFLEGO. This is the link that scopes the persistent campaign to members of the dynamic gating group — pair it with 01 (the promotion bind).",
+  "description": "The second of the two binds Section 3 requires per promotion: PUT .../campaigns/Salesforce-Loyalty-Campaign/customer_groups/CG-SFloyalty-20OFFLEGO. This is the link that scopes the persistent campaign to members of the dynamic gating group, pair it with 01 (the promotion bind).",
   "request": {
     "body": {}
   },

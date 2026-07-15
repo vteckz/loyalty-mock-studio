@@ -1,5 +1,5 @@
 {
-  "name": "Success — transaction journals created",
+  "name": "Success, transaction journals created",
   "description": "Order-placement accrual. Send the order's transaction(s) with the appliedPromotions returned by the pricing call; Loyalty creates the transaction journals and accrues rewards. Response matches the documented Promotion Reward Application output exactly: { transactionJournalList: [ Transaction Journal Details ] } where each item has id + discountsAppliedList[] / gamesAssignedList[] / voucherIssuedList[].",
   "request": {
     "body": {

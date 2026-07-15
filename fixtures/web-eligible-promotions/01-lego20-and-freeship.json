@@ -1,6 +1,6 @@
 {
-  "name": "Gold member — 20% off LEGO + free shipping",
-  "description": "Loyalty Middleware response the SFRA login controller consumes on authentication. The storefront joins loyaltyPromotions into session.custom.loyaltyPromotions; the pre-built Dynamic Customer Groups (rule: session.custom.loyaltyPromotions CONTAINS <code>) then activate the matching static PMIDs, unlocking product search (?pmid=) + badging. NOT a Salesforce Loyalty core API — this is the Middleware's own eligible-promotions endpoint that fronts the SF Loyalty voucher/tier query.",
+  "name": "Gold member, 20% off LEGO + free shipping",
+  "description": "Loyalty Middleware response the SFRA login controller consumes on authentication. The storefront joins loyaltyPromotions into session.custom.loyaltyPromotions; the pre-built Dynamic Customer Groups (rule: session.custom.loyaltyPromotions CONTAINS <code>) then activate the matching static PMIDs, unlocking product search (?pmid=) + badging. NOT a Salesforce Loyalty core API, this is the Middleware's own eligible-promotions endpoint that fronts the SF Loyalty voucher/tier query.",
   "request": {
     "query": { "customerNo": "0007890" }
   },

@@ -1,5 +1,5 @@
 {
-  "name": "Redeem — voucher redeemed",
+  "name": "Redeem, voucher redeemed",
   "description": "POST .../redeem (default action = Redeem). Matches the documented Redeem Voucher Output exactly: { remainingAmount, status, currencyIsoCode }. Note the output does NOT echo voucherCode/voucherId, and the field is remainingAmount (not remainingValue). Called at order placement.",
   "request": {
     "body": {

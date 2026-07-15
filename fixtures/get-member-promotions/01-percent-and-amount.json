@@ -1,6 +1,6 @@
 {
   "name": "Two eligible promotions (percent + fixed amount)",
-  "description": "GetMemberPromotions program-process response. The ENVELOPE is the standard Loyalty Program Process Output, doc-confirmed across every process: { status (boolean), message, simulationDetails, outputParameters: { outputParameters: { results: [...] } } }. The CONTENTS of results[] are IMPLEMENTER-DEFINED — the per-promotion fields here (rewardType/discountValue) are the adapter's convention; promotionId/promotionName/loyaltyPromotionType mirror the doc's GetMemberPromotions sample.",
+  "description": "GetMemberPromotions program-process response. The ENVELOPE is the standard Loyalty Program Process Output, doc-confirmed across every process: { status (boolean), message, simulationDetails, outputParameters: { outputParameters: { results: [...] } } }. The CONTENTS of results[] are IMPLEMENTER-DEFINED, the per-promotion fields here (rewardType/discountValue) are the adapter's convention; promotionId/promotionName/loyaltyPromotionType mirror the doc's GetMemberPromotions sample.",
   "request": {
     "body": { "processParameters": [{ "MembershipNumber": "MEM-100001" }] }
   },
@@ -32,5 +32,5 @@
       }
     }
   },
-  "notes": "Unlike GPM promotion-execution, this does NOT return a priced cart — just eligible promotions. PromotionApplier.applyMemberPromotions applies each reward as an order-level discount. The envelope (status boolean, outputParameters.outputParameters.results, simulationDetails) is fixed and doc-confirmed; only the inner result fields are implementer-defined — confirm them with whoever configures the GetMemberPromotions process."
+  "notes": "Unlike GPM promotion-execution, this does NOT return a priced cart, just eligible promotions. PromotionApplier.applyMemberPromotions applies each reward as an order-level discount. The envelope (status boolean, outputParameters.outputParameters.results, simulationDetails) is fixed and doc-confirmed; only the inner result fields are implementer-defined, confirm them with whoever configures the GetMemberPromotions process."
 }

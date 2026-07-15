@@ -1,6 +1,6 @@
 {
-  "name": "Gated PLP — same LEGO search, gate OFF (no code in session)",
-  "description": "Control: the identical LEGO search but the shopper's session does NOT contain SFloyalty-20OFFLEGO, so the Dynamic Customer Group is not satisfied and the PMID is inactive for them. product_promotions is empty, no promotional_price, no loyalty badge — list price only. Pair this with 01 to prove the gate.",
+  "name": "Gated PLP, same LEGO search, gate OFF (no code in session)",
+  "description": "Control: the identical LEGO search but the shopper's session does NOT contain SFloyalty-20OFFLEGO, so the Dynamic Customer Group is not satisfied and the PMID is inactive for them. product_promotions is empty, no promotional_price, no loyalty badge, list price only. Pair this with 01 to prove the gate.",
   "request": {
     "query": { "q": "lego", "pmid": "SFloyalty-20OFFLEGO", "count": "3" }
   },
@@ -69,5 +69,5 @@
       ]
     }
   },
-  "notes": "Same products, list prices only — no product_promotions, no c_loyaltyBadge. Note selected_refinements omits pmid because the promotion never activates for this session. This is exactly what a non-qualifying (or logged-out) shopper sees, and is the QA baseline for the gate."
+  "notes": "Same products, list prices only, no product_promotions, no c_loyaltyBadge. Note selected_refinements omits pmid because the promotion never activates for this session. This is exactly what a non-qualifying (or logged-out) shopper sees, and is the QA baseline for the gate."
 }

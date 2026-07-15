@@ -1,5 +1,5 @@
 {
-  "name": "Platinum member — 4 stacked promotions",
+  "name": "Platinum member, 4 stacked promotions",
   "description": "Demonstrates unlimited stacking: session attributes let a shopper hold multiple loyalty codes at once. Four codes → four Dynamic Customer Groups active simultaneously (product, shipping, points and apparel). Each maps to its own static PMID.",
   "request": {
     "query": { "customerNo": "0007892" }

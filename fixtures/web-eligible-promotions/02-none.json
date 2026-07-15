@@ -1,6 +1,6 @@
 {
   "name": "Member with no active loyalty promotions (gate OFF)",
-  "description": "Control case: a logged-in member who currently qualifies for nothing. loyaltyPromotions is empty, so session.custom.loyaltyPromotions is set to '' — no Dynamic Customer Group activates, and the shopper sees list prices with no loyalty badges. Use this to prove the gate is closed by default.",
+  "description": "Control case: a logged-in member who currently qualifies for nothing. loyaltyPromotions is empty, so session.custom.loyaltyPromotions is set to '', no Dynamic Customer Group activates, and the shopper sees list prices with no loyalty badges. Use this to prove the gate is closed by default.",
   "request": {
     "query": { "customerNo": "0007891" }
   },
